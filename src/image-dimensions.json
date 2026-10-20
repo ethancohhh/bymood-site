@@ -1,0 +1,146 @@
+{
+  "haven-bedroom": [
+    694,
+    541
+  ],
+  "haven-library": [
+    1600,
+    759
+  ],
+  "haven-living": [
+    1600,
+    902
+  ],
+  "haven-plan": [
+    636,
+    651
+  ],
+  "nemeto-kitchen": [
+    1600,
+    1143
+  ],
+  "nemeto-living": [
+    804,
+    482
+  ],
+  "nemeto-plan": [
+    1267,
+    1222
+  ],
+  "nemeto-section": [
+    973,
+    589
+  ],
+  "nemeto-stairs": [
+    874,
+    526
+  ],
+  "renovation-1": [
+    1600,
+    789
+  ],
+  "renovation-2": [
+    1600,
+    784
+  ],
+  "renovation-3": [
+    1600,
+    789
+  ],
+  "grenoble-1-apres": [
+    1200,
+    800
+  ],
+  "grenoble-1-avant": [
+    1200,
+    675
+  ],
+  "grenoble-2-apres": [
+    1200,
+    801
+  ],
+  "grenoble-2-avant": [
+    1200,
+    675
+  ],
+  "grenoble-3-apres": [
+    1200,
+    800
+  ],
+  "grenoble-3-avant": [
+    1200,
+    900
+  ],
+  "paris-1-apres": [
+    1200,
+    800
+  ],
+  "paris-1-avant": [
+    1200,
+    900
+  ],
+  "paris-2-avant": [
+    1200,
+    900
+  ],
+  "paris-2-apres": [
+    1200,
+    807
+  ],
+  "paris-3-avant": [
+    1200,
+    900
+  ],
+  "paris-3-apres": [
+    1200,
+    800
+  ],
+  "paris-4-apres": [
+    1200,
+    800
+  ],
+  "paris-4-avant": [
+    1200,
+    900
+  ],
+  "toulouse-1-apres": [
+    1200,
+    800
+  ],
+  "toulouse-1-avant": [
+    1200,
+    800
+  ],
+  "toulouse-2-apres": [
+    1200,
+    801
+  ],
+  "toulouse-2-avant": [
+    1200,
+    800
+  ],
+  "toulouse-3-apres": [
+    1200,
+    800
+  ],
+  "toulouse-3-avant": [
+    1200,
+    800
+  ],
+  "toulouse-4-apres": [
+    1200,
+    800
+  ],
+  "toulouse-4-avant": [
+    1200,
+    900
+  ],
+  "toulouse-5-apres": [
+    1200,
+    800
+  ],
+  "toulouse-5-avant": [
+    1200,
+    900
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "name": "bymood.",
+  "nameStatus": "Identité visuelle du site — logos fournis par Ethan ; identité légale à renseigner",
+  "url": "https://ethancohhh.github.io/bymood-site/",
+  "indexing": false,
+  "email": "",
+  "phone": "",
+  "contactEndpoint": "",
+  "legal": {
+    "company": "[À renseigner]",
+    "status": "[À renseigner]",
+    "address": "[À renseigner]",
+    "registration": "[À renseigner]",
+    "publicationDirector": "[À renseigner]",
+    "hosting": "[À renseigner]",
+    "privacyContact": "[À renseigner]",
+    "retention": "[À renseigner]"
+  }
+}
