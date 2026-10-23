@@ -8,7 +8,7 @@ export function RenovationGallery({ renovation }: { renovation: Renovation }) {
     <div className="renovation-pair-grid">{(['before', 'after'] as const).map((state, position) => {
       const photo = pair[state];
       const label = state === 'before' ? 'Avant' : 'Après';
-      const caption = `${renovation.title} · ${pair.title} · ${label} · Projet d’exemple`;
+      const caption = `${renovation.title} · ${pair.title} · ${label} · Prestation réalisée`;
       const viewer = { 'data-viewer': renovation.slug, 'data-viewer-order': index * 2 + position, 'data-alt': photo.alt, 'data-caption': caption };
       return <figure key={state}>
         <figcaption><span>{label}</span><a className="text-link" href={sitePath(`/images/${photo.image}-1600.webp`)} target="_blank" rel="noopener" {...viewer}>Agrandir<span className="sr-only"> : {pair.title}, {label.toLowerCase()}</span><Arrow diagonal /></a></figcaption>

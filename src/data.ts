@@ -21,7 +21,7 @@ export const contact = {
 // Ancres conservées pour les liens des versions précédentes.
 export const navigation = [
   ['Catalogue', '/catalogue/'],
-  ['Notre approche', 'approche'], ['Rénovation', '/catalogue/#renovation'],
+  ['Notre approche', 'approche'],
   ['Notre équipe', 'a-propos'],
 ] as const;
 
@@ -95,8 +95,8 @@ export const questions = [
   { question: 'De quoi ai-je besoin pour commencer ?', answer: 'Indiquez la ville, la pièce concernée, quelques dimensions si vous les connaissez et ce que vous souhaitez améliorer. Une première idée du budget est utile, sans être obligatoire.' },
 ];
 
-// Exemples fournis par Ethan. Auteur et rôle de l’équipe non confirmés :
-// ne pas les présenter comme des réalisations de bymood. ou d’Aliriza.
+// Prestations réalisées : statut confirmé par Ethan le 23 octobre 2026.
+// Crédits photographiques et localisations précises restent à documenter.
 export type RenovationPair = {
   title: string; description: string;
   before: { image: string; alt: string };

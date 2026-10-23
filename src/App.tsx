@@ -14,6 +14,7 @@ import { SocialLinks } from './components/SocialLinks';
 import { ScrollReveals } from './components/ScrollReveals';
 import { ImageViewer } from './components/ImageViewer';
 import { RenovationGallery } from './components/RenovationGallery';
+import { ArchitecturalDrawing } from './components/ArchitecturalDrawing';
 
 function chooseProject(type: string, label: string) {
   window.dispatchEvent(new CustomEvent('project-interest', { detail: { type, label } }));
@@ -24,6 +25,7 @@ function Hero() {
     <div className="container hero-inner">
       <div className="hero-composition">
         <div className="hero-copy">
+          <span className="drawing-label hero-eyebrow"><span className="drawing-cross" aria-hidden="true" />Le lieu. L’idée. Le dessin.</span>
           <h1>ARCHITECTURE<br />DESIGN<br /><span>RÉNOVATION</span></h1>
           <p>Des rangements mieux pensés, une pièce à réorganiser, un intérieur à transformer.</p>
           <div className="hero-actions">
@@ -32,10 +34,20 @@ function Hero() {
           <SocialLinks />
         </div>
         <figure className="hero-image">
-          <Picture name="haven-living" alt="Rendu 3D de l’étude HAVEN : salon ouvert sur la cuisine, avec mobilier et rangements intégrés." eager sizes="(max-width: 767px) 100vw, 58vw" />
+          <div className="hero-drawing-stage">
+            <ArchitecturalDrawing />
+            <span className="drawing-label hero-view-label">01 / Imaginer les volumes</span>
+            <Picture className="hero-render" name="haven-living" alt="Rendu 3D de l’étude HAVEN : salon ouvert sur la cuisine, avec mobilier et rangements intégrés." eager sizes="(max-width: 767px) 100vw, 58vw" />
+            <a className="hero-plan" href={sitePath('/projets/haven/')} aria-label="Découvrir le plan et l’étude HAVEN">
+              <Picture name="haven-plan" alt="Extrait du plan de l’étude HAVEN, organisation du rez-de-chaussée." sizes="(max-width: 767px) 35vw, 15vw" />
+              <span className="drawing-label">02 / Plan<Arrow diagonal /></span>
+            </a>
+            <span className="hero-side-label drawing-label" aria-hidden="true">bymood. — Carnet de conception</span>
+          </div>
           <figcaption><span>HAVEN · Étude d’habitat contemporain</span><span>Étude de conception · Rendu 3D</span></figcaption>
         </figure>
       </div>
+      <div className="hero-colophon drawing-label"><span>Concevoir l’espace, jusque dans les détails.</span><span>Plans · Matières · Volumes<span className="drawing-cross" aria-hidden="true" /></span></div>
     </div>
   </section>;
 }
@@ -49,7 +61,7 @@ function HomeNeeds() {
 
 function RenovationImage({ renovation, eager = false, group = 'renovations' }: { renovation: Renovation; eager?: boolean; group?: string }) {
   const series = !!renovation.pairs;
-  const caption = series ? `${renovation.title} · ${renovation.pairs![0].title} · Après · Projet d’exemple` : `${renovation.title} · Inspiration avant / après, chantier non attribué à bymood.`;
+  const caption = series ? `${renovation.title} · ${renovation.pairs![0].title} · Après · Prestation réalisée` : `${renovation.title} · Prestation réalisée · Avant / après`;
   const viewer = { 'data-viewer': group, 'data-viewer-order': series && group === renovation.slug ? 1 : undefined, 'data-alt': renovation.alt, 'data-caption': caption };
   return <figure className="renovation-image">
     <a href={sitePath('/images/' + renovation.image + '-1600.webp')} target="_blank" rel="noopener" {...viewer} aria-label={'Agrandir : ' + renovation.title + (series ? ' — après' : ' — avant et après')}><Picture name={renovation.image} alt={renovation.alt} eager={eager} sizes="(max-width: 767px) 100vw, 65vw" /></a>
@@ -128,11 +140,11 @@ function ProjectPage({ project }: { project: Project }) {
 function RenovationPage({ renovation }: { renovation: Renovation }) {
   return <><Header home={false} currentPath={`/renovation/${renovation.slug}/`} /><main id="main" className="project-page renovation-page container">
     <a className="back-link text-link" href={sitePath("/catalogue/#renovation")}><Arrow />Retour aux rénovations</a>
-    <div className="project-page-heading"><div><span className="eyebrow">Rénovation · {renovation.pairs ? 'Projet d’exemple' : 'Exemple d’inspiration'}</span><h1>{renovation.title}</h1><p>{renovation.summary}</p></div></div>
-    {renovation.pairs && <p className="project-example-note">Projet d’exemple pour la maquette. Le nom est un intitulé de présentation ; les légendes décrivent les éléments visibles sur les photos.</p>}
+    <div className="project-page-heading"><div><span className="eyebrow">Rénovation · Prestation réalisée</span><h1>{renovation.title}</h1><p>{renovation.summary}</p></div></div>
+    {renovation.pairs && <p className="project-example-note">Prestation réalisée · Les vues avant / après présentent les transformations de cet intérieur.</p>}
     <RenovationImage renovation={renovation} eager group={renovation.pairs ? renovation.slug : undefined} />
     {renovation.pairs && <RenovationGallery renovation={renovation} />}
-    <section className="project-decisions"><span className="eyebrow">Lecture des images</span><h2>Ce qui change.</h2><ol className="study-decisions">{renovation.changes.map((change, index) => <li key={change.title}><span className="item-number">0{index + 1}</span><h3>{change.title}</h3><p>{change.text}</p></li>)}</ol><p className="source-note">Exemple d’inspiration fourni par Ethan. Les commentaires décrivent les éléments visibles sur les photographies. Ce projet n’est pas présenté comme un chantier réalisé par bymood.</p></section>
+    <section className="project-decisions"><span className="eyebrow">Lecture des images</span><h2>Ce qui change.</h2><ol className="study-decisions">{renovation.changes.map((change, index) => <li key={change.title}><span className="item-number">0{index + 1}</span><h3>{change.title}</h3><p>{change.text}</p></li>)}</ol><p className="source-note">Prestation réalisée · Photographies fournies par Ethan. Les commentaires décrivent les transformations visibles.</p></section>
     <div className="project-end"><h2>Et votre<br />{renovation.pairs ? 'intérieur ?' : 'salle de bains ?'}</h2><a className="button" href={sitePath("/#project-form")}>{contact.cta}<Arrow diagonal /></a></div>
   </main><Footer /><ScrollReveals /></>;
 }
@@ -140,7 +152,7 @@ function RenovationPage({ renovation }: { renovation: Renovation }) {
 function LegalPage({ privacy }: { privacy: boolean }) {
   const legal = demoContent.enabled ? demoContent.legal : site.legal;
   const items = [['Éditeur du site', legal.company], ['Statut', legal.status], ['Adresse', legal.address], ['Immatriculation', legal.registration], ['Directeur de publication', legal.publicationDirector], ['Hébergement', legal.hosting]];
-  return <><Header home={false} /><main id="main" className="legal-page container"><a className="text-link" href={sitePath("/")}>Retour à l’accueil<Arrow /></a><span className="eyebrow">Informations du site</span><h1>{privacy ? 'Confidentialité' : 'Mentions légales'}</h1><p className="legal-draft">Maquette fictive : les informations d’entreprise ci-dessous sont des exemples de présentation à remplacer dans la version définitive.</p>{privacy ? <><h2>Vos informations</h2><p>{site.contactEndpoint ? 'Le formulaire transmet les informations saisies au service configuré afin de traiter votre demande de projet.' : site.email ? 'Le formulaire prépare un message dans votre messagerie. La transmission a lieu uniquement lorsque vous envoyez ce message.' : 'Dans cette version du site, le formulaire ne transmet pas vos réponses à bymood. Il crée un récapitulatif directement dans votre navigateur, que vous pouvez télécharger. Vos coordonnées sont facultatives.'}</p><h2>Navigation et cookies</h2><p>Cette version du site n’utilise ni outil de mesure d’audience ni cookie publicitaire, et ne stocke pas localement vos réponses. La police et les images sont hébergées avec le site. L’hébergeur peut traiter certaines données techniques nécessaires à son fonctionnement.</p><h2>Responsable et contact</h2><p>{legal.company}<br />Contact relatif aux données : {legal.privacyContact}</p><h2>À préciser avant l’activation des demandes</h2><p>Avant d’activer l’envoi de demandes, cette page devra préciser le responsable du traitement, la base juridique, les destinataires, les durées de conservation et les modalités d’exercice des droits, selon les outils effectivement utilisés.</p><p>Durée de conservation : {legal.retention}</p></> : <><dl className="legal-details">{items.map(([key, value]) => <div key={key}><dt>{key}</dt><dd>{value}</dd></div>)}</dl><h2>Visuels et propriété intellectuelle</h2><p>Les compositions avant / après de salles de bains et les photographies des dossiers « Projet Paris », « Projet Grenoble » et « Projet Toulouse » sont utilisées comme exemples pour cette maquette. Les noms des dossiers sont des intitulés de présentation. Ces images ne sont pas attribuées à des chantiers réalisés par bymood. ou Aliriza. Leur auteur et les droits de diffusion restent à documenter avant une ouverture commerciale.</p><p>Les plans et rendus 3D des études HAVEN et NEMETO proviennent du portfolio d’Aliriza Bay. Ils illustrent un travail de conception et ne représentent pas des chantiers réalisés par bymood.</p><p>Les logos « bymood. » et « By. » constituent l’identité visuelle présentée sur ce site. L’identité de l’éditeur et les droits de diffusion restent à confirmer avant sa publication commerciale.</p></>}</main><Footer /></>;
+  return <><Header home={false} /><main id="main" className="legal-page container"><a className="text-link" href={sitePath("/")}>Retour à l’accueil<Arrow /></a><span className="eyebrow">Informations du site</span><h1>{privacy ? 'Confidentialité' : 'Mentions légales'}</h1><p className="legal-draft">Maquette fictive : les informations d’entreprise ci-dessous sont des exemples de présentation à remplacer dans la version définitive.</p>{privacy ? <><h2>Vos informations</h2><p>{site.contactEndpoint ? 'Le formulaire transmet les informations saisies au service configuré afin de traiter votre demande de projet.' : site.email ? 'Le formulaire prépare un message dans votre messagerie. La transmission a lieu uniquement lorsque vous envoyez ce message.' : 'Dans cette version du site, le formulaire ne transmet pas vos réponses à bymood. Il crée un récapitulatif directement dans votre navigateur, que vous pouvez télécharger. Vos coordonnées sont facultatives.'}</p><h2>Navigation et cookies</h2><p>Cette version du site n’utilise ni outil de mesure d’audience ni cookie publicitaire, et ne stocke pas localement vos réponses. La police et les images sont hébergées avec le site. L’hébergeur peut traiter certaines données techniques nécessaires à son fonctionnement.</p><h2>Responsable et contact</h2><p>{legal.company}<br />Contact relatif aux données : {legal.privacyContact}</p><h2>À préciser avant l’activation des demandes</h2><p>Avant d’activer l’envoi de demandes, cette page devra préciser le responsable du traitement, la base juridique, les destinataires, les durées de conservation et les modalités d’exercice des droits, selon les outils effectivement utilisés.</p><p>Durée de conservation : {legal.retention}</p></> : <><dl className="legal-details">{items.map(([key, value]) => <div key={key}><dt>{key}</dt><dd>{value}</dd></div>)}</dl><h2>Visuels et propriété intellectuelle</h2><p>Les compositions avant / après de salles de bains et les photographies des projets Paris, Grenoble et Toulouse présentent des prestations réalisées, statut confirmé par Ethan. Les photographies sont fournies par Ethan ; leurs crédits et droits de diffusion restent à documenter. Les noms des projets restent des intitulés de présentation et ne confirment pas à eux seuls leur localisation.</p><p>Les plans et rendus 3D des études HAVEN et NEMETO proviennent du portfolio d’Aliriza Bay. Ils illustrent un travail de conception et ne représentent pas des chantiers réalisés par bymood.</p><p>Les logos « bymood. » et « By. » constituent l’identité visuelle présentée sur ce site. L’identité de l’éditeur et les droits de diffusion restent à confirmer avant sa publication commerciale.</p></>}</main><Footer /></>;
 }
 
 function SiteContent({ path = '/' }: { path?: string }) {

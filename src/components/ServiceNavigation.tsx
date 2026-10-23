@@ -21,10 +21,10 @@ export function ServiceNavigation() {
     update(); window.addEventListener('scroll', update, { passive: true }); window.addEventListener('resize', update);
     return () => { cancelAnimationFrame(frame); window.removeEventListener('scroll', update); window.removeEventListener('resize', update); document.documentElement.classList.remove('has-service-nav'); };
   }, []);
-  return <nav className="service-navigation" aria-label="Exemples de prestations" data-ready={ready}>
+  return <nav className="service-navigation" aria-label="Inspirations et prestation réalisée" data-ready={ready}>
     <div className="container">
       <div className="service-index-links">{exampleServices.map((service, index) => <a className="text-link" key={service.slug} href={sitePath(`#${service.slug}`)} aria-current={active === service.slug ? 'location' : undefined}><span>0{index + 1}</span>{service.title}<Arrow diagonal /></a>)}</div>
-      <label className="service-index-select" htmlFor="explore-service"><span>Explorer une prestation</span><select id="explore-service" value={active} onChange={event => { setActive(event.target.value); window.location.hash = event.target.value; }}>{exampleServices.map(service => <option key={service.slug} value={service.slug}>{service.title}</option>)}</select></label>
+      <label className="service-index-select" htmlFor="explore-service"><span>Explorer un aménagement</span><select id="explore-service" value={active} onChange={event => { setActive(event.target.value); window.location.hash = event.target.value; }}>{exampleServices.map(service => <option key={service.slug} value={service.slug}>{service.title}</option>)}</select></label>
     </div>
   </nav>;
 }

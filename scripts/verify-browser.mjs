@@ -195,7 +195,11 @@ try {
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `Route overflow: ${route}`);
     if (route === '/catalogue/') {
       assert.equal(await page.locator('#main-navigation a[aria-current="page"]').innerText(), 'Catalogue');
-      assert.equal(await page.locator('.catalogue-services .catalogue-card').count(), 3);
+      assert.equal(await page.locator('.catalogue-services .catalogue-card').count(), 2);
+      assert.deepEqual(await page.locator('main > section[id]').evaluateAll(sections => sections.map(section => section.id)), ['renovation', 'inspirations', 'conception-3d']);
+      assert.deepEqual(await page.locator('#inspirations h3').allTextContents(), ['Coin TV & rangements', 'Pièce multifonction']);
+      assert.equal(await page.locator('#renovation').getByRole('heading', { name: 'Salle de bains', exact: true }).count(), 1);
+      assert.equal(await page.locator('#main-navigation').getByRole('link', { name: 'Rénovation', exact: true }).count(), 0);
       assert.equal(await page.locator('.study-card').count(), 2);
       assert.equal(await page.locator('.catalogue-renovation-card').count(), 6);
       assert.equal(await page.locator('#main-navigation a').filter({ hasText: /^(Prestations|Conception 3D)$/ }).count(), 0);
@@ -204,7 +208,7 @@ try {
       await page.locator('.catalogue-services .catalogue-card').first().click();
       await page.waitForURL(base + '/prestations/#coin-tv-rangements');
       await page.getByRole('link', { name: 'Retour au catalogue', exact: true }).click();
-      await page.waitForURL(base + '/catalogue/#prestations');
+      await page.waitForURL(base + '/catalogue/');
       await page.locator('.study-card').first().click();
       await page.waitForURL(base + '/projets/haven/');
       await page.getByRole('link', { name: 'Retour aux études', exact: true }).click();

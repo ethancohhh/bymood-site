@@ -1,0 +1,176 @@
+/* Le dessin comme signature : axes, contours et documents de conception. */
+:root {
+  --font-technical: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+  --drawing-guide: rgb(23 59 75 / .19);
+  --drawing-contour: rgb(23 59 75 / .55);
+}
+.drawing-label, .eyebrow, .item-number, .secondary-caption,
+.hero-image > figcaption, .project-page-heading dt, .project-cover figcaption {
+  font-family: var(--font-technical);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  letter-spacing: .035em;
+  line-height: 1.65;
+}
+.drawing-label { color: var(--color-primary); }
+.drawing-cross { display: inline-block; position: relative; width: 15px; height: 15px; flex-shrink: 0; }
+.drawing-cross::before, .drawing-cross::after { content: ''; position: absolute; background: currentColor; }
+.drawing-cross::before { width: 15px; height: 1px; top: 7px; left: 0; }
+.drawing-cross::after { width: 1px; height: 15px; top: 0; left: 7px; }
+.architectural-drawing { position: absolute; pointer-events: none; color: var(--color-primary); overflow: visible; }
+.architectural-drawing path, .architectural-drawing circle { vector-effect: non-scaling-stroke; stroke-width: 1; }
+.drawing-guides { stroke: var(--drawing-guide); }
+.drawing-contours { stroke: var(--drawing-contour); }
+.drawing-circle { stroke-dasharray: .005 .012; }
+
+/* Une planche composée : le rendu et le plan appartiennent à la même étude. */
+.hero { position: relative; padding: 44px 0 0; overflow: clip; background: var(--color-paper); }
+.hero-inner { position: relative; }
+.hero-composition { grid-template-columns: minmax(0, .94fr) minmax(0, 1.06fr); gap: 4%; }
+.hero-copy { position: relative; z-index: 1; padding-block: 30px 50px; }
+.hero-eyebrow { display: flex; gap: 16px; align-items: center; margin-bottom: 30px; }
+.hero-copy h1 { font-size: clamp(30px, 3.65vw, 54px); line-height: 1.15; letter-spacing: -.055em; }
+.hero-copy > p { max-width: 390px; margin-top: 28px; }
+.hero-actions { margin-top: 30px; }
+.hero-actions .button { min-width: 180px; }
+.hero-image { position: relative; min-width: 0; }
+.hero-drawing-stage { position: relative; padding: 40px 30px 75px 20px; }
+.hero-drawing-stage > .architectural-drawing { width: calc(100% + 58px); height: calc(100% + 38px); left: -29px; top: -22px; }
+.hero-render { position: relative; width: 100%; height: clamp(340px, 32vw, 465px); object-fit: cover; border-radius: 48% 48% 0 0; }
+.hero-view-label { position: absolute; left: 20px; top: 4px; }
+.hero-side-label { position: absolute; right: 0; top: 80px; writing-mode: vertical-rl; }
+.hero-plan { position: absolute; width: 36%; bottom: 16px; left: -24px; padding: 12px; background: var(--color-white); border: 1px solid var(--color-line); transform: rotate(-5deg); transition: transform var(--transition); }
+.hero-plan > img { width: 100%; height: auto; aspect-ratio: 1.35; object-fit: contain; }
+.hero-plan > span { display: flex; justify-content: space-between; gap: 8px; padding-top: 8px; border-top: 1px solid var(--color-line); }
+.hero-plan .arrow { width: 15px; height: 20px; }
+.hero-plan:hover, .hero-plan:focus-visible { transform: rotate(0); }
+.hero-image > figcaption { padding: 10px 30px 0 0; gap: 12px; align-items: start; }
+.hero-image > figcaption span { max-width: 56%; }
+.hero-colophon { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding-block: 20px; margin-top: 40px; border-top: 1px solid var(--drawing-guide); }
+.hero-colophon > span:last-child { display: inline-flex; align-items: center; gap: 28px; }
+.home-needs { border-bottom: 1px solid var(--drawing-guide); padding-block: 34px 36px; }
+
+/* Repères de lecture sur une même trame, dans les pages et les études. */
+.section-heading > .eyebrow { position: relative; gap: 16px; }
+.section-heading > .eyebrow::after { content: ''; height: 1px; background: currentColor; opacity: .25; flex: 1; margin-left: 14px; }
+.section-heading > .eyebrow > span { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; flex-shrink: 0; border: 1px solid currentColor; border-radius: 50%; }
+.heading-content { padding-left: 54px; }
+.approach-section { position: relative; }
+.approach-section > .approach-intro { margin-left: 54px; }
+.process-step > .item-number { border-color: var(--drawing-contour); }
+.process-step > .item-number::after { content: ''; position: absolute; width: 8px; height: 8px; right: -5px; top: 15px; border-radius: 50%; border: 1px solid var(--color-primary); background: var(--color-paper); }
+.process-step::before { background: var(--drawing-guide); }
+.method-output { font-style: normal; }
+.team-grid dt .team-portrait { outline: 1px solid var(--drawing-contour); outline-offset: 10px; margin-left: 11px; margin-top: 11px; }
+.team-grid > div { position: relative; }
+.team-grid > div::before { content: '+'; position: absolute; right: 0; top: -16px; font: 24px var(--font-technical); color: var(--color-taupe); background: var(--color-sand); padding-left: 12px; }
+.project-page-heading { border-bottom: 1px solid var(--drawing-guide); padding-bottom: 30px; }
+.project-cover { position: relative; padding: 20px; border: 1px solid var(--drawing-guide); margin-top: 32px; }
+.project-cover::before, .project-cover::after { content: '+'; position: absolute; font: 22px var(--font-technical); color: var(--color-primary); line-height: 1; }
+.project-cover::before { top: -12px; left: -7px; }
+.project-cover::after { bottom: -9px; right: -7px; }
+.annotation-number { font-family: var(--font-technical); font-style: normal; }
+.image-pin { box-shadow: none; outline: 1px solid var(--color-primary); outline-offset: 4px; font-family: var(--font-technical); font-style: normal; }
+
+/* Le catalogue prend le rythme d’un carnet, avec une hiérarchie des échelles. */
+.catalogue-intro { position: relative; isolation: isolate; padding-bottom: 60px; }
+.catalogue-intro h1 { max-width: 900px; font-size: clamp(34px, 4.8vw, 68px); }
+.catalogue-intro > p { max-width: 610px; }
+.catalogue-drawing { z-index: -1; width: 350px; height: 350px; right: 0; top: 35px; opacity: .65; }
+.catalogue-intro > .text-link { position: relative; z-index: 1; }
+.catalogue-index { margin-top: 40px; position: relative; background: var(--color-paper); }
+.catalogue-index a { font-family: var(--font-technical); font-style: normal; font-size: 12px; }
+.catalogue-service-grid { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); column-gap: 7%; row-gap: 48px; }
+.catalogue-services .catalogue-card:first-child { grid-row: span 2; align-self: start; }
+.catalogue-services .catalogue-card .image-frame { aspect-ratio: auto; }
+.catalogue-services .catalogue-card .image-frame img { height: auto; }
+.catalogue-entry-number { display: flex; align-items: center; gap: 12px; padding-bottom: 14px; border-top: 1px solid var(--drawing-guide); padding-top: 12px; }
+.catalogue-entry-number > span { color: var(--color-taupe); }
+.catalogue-entry-number .arrow { margin-left: auto; width: 16px; height: 16px; }
+.catalogue-services .catalogue-card:not(:first-child) { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1fr); gap: 0 22px; align-content: start; }
+.catalogue-services .catalogue-card:not(:first-child) .catalogue-entry-number { grid-column: 1 / -1; }
+.catalogue-services .catalogue-card:not(:first-child) .image-frame { aspect-ratio: auto; align-self: start; }
+.catalogue-services .catalogue-card:not(:first-child) .catalogue-card-copy { padding-top: 0; }
+.catalogue-services .catalogue-card:not(:first-child) h3 { font-size: 23px; }
+.catalogue-services .catalogue-card:not(:first-child) .text-link { margin-top: 10px; }
+.catalogue-studies .study-gallery { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 8%; align-items: start; }
+.catalogue-studies .study-card:nth-child(2) { margin-top: 120px; }
+.study-visual { display: block; position: relative; padding-bottom: 52px; }
+.study-sheet-label { display: block; padding-block: 12px; border-top: 1px solid var(--color-line-dark); color: var(--color-on-dark); }
+.study-plan { display: block; position: absolute; width: 34%; bottom: 0; right: -18px; padding: 12px; background: var(--color-paper); border: 1px solid var(--color-line); transform: rotate(4deg); }
+.study-plan img { width: 100%; height: auto; aspect-ratio: 1.2; object-fit: contain; }
+.study-plan .drawing-label { display: block; border-top: 1px solid var(--color-line); padding-top: 6px; }
+.catalogue-studies .study-card-copy { padding-top: 18px; }
+.catalogue-studies .study-card h3 { font-size: clamp(32px, 3.5vw, 52px); }
+.catalogue-renovations .catalogue-renovation-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 7%; row-gap: 56px; }
+.catalogue-renovations .catalogue-card:nth-child(even) { margin-top: 68px; }
+.catalogue-renovations .catalogue-card .image-frame { position: relative; border: 1px solid var(--drawing-guide); padding: 12px; }
+.catalogue-end { border-top: 1px solid var(--drawing-guide); }
+.catalogue-services.catalogue-inspirations .catalogue-card { display: flex; grid-row: auto; }
+.catalogue-inspirations .catalogue-card:nth-child(2) { margin-top: 80px; }
+.catalogue-services.catalogue-inspirations .catalogue-card-copy { padding-top: 22px; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-drawing-stage .drawing-outline { animation: drafting-line 1300ms var(--motion-ease) both; }
+  .hero-drawing-stage .drawing-guides { animation: drafting-guides 650ms ease both; }
+  .hero-plan { animation: plan-enter 850ms var(--motion-ease) 350ms both; }
+  .hero-plan:focus-visible { animation: none; }
+}
+@keyframes drafting-line { from { stroke-dasharray: 1; stroke-dashoffset: 1; } to { stroke-dasharray: 1; stroke-dashoffset: 0; } }
+@keyframes drafting-guides { from { opacity: 0; } to { opacity: 1; } }
+@keyframes plan-enter { from { opacity: 0; translate: 0 12px; } to { opacity: 1; translate: 0 0; } }
+
+@media (max-width: 1179px) {
+  .hero-copy h1 { font-size: clamp(28px, 3.6vw, 43px); }
+  .hero-eyebrow { letter-spacing: 0; gap: 10px; }
+  .hero-drawing-stage { padding-inline: 12px 22px; }
+  .hero-render { height: 360px; }
+  .hero-plan { left: -10px; width: 40%; }
+  .hero-image > figcaption { flex-direction: column; gap: 4px; }
+  .hero-image > figcaption span { max-width: 100%; }
+  .catalogue-services .catalogue-card:not(:first-child) { display: flex; }
+  .catalogue-services .catalogue-card:not(:first-child) .image-frame { width: 100%; aspect-ratio: auto; }
+  .catalogue-services .catalogue-card:not(:first-child) .catalogue-card-copy { padding-top: 20px; }
+  .catalogue-drawing { width: 280px; right: 0; top: 80px; opacity: .35; }
+}
+@media (max-width: 767px) {
+  .hero { padding-top: 22px; }
+  .hero-composition { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .hero-copy { padding-block: 0 16px; }
+  .hero-eyebrow { margin-bottom: 20px; font-size: 12px; }
+  .hero-copy h1 { font-size: clamp(28px, 7.65vw, 52px); letter-spacing: -.045em; }
+  .hero-copy > p { margin-top: 20px; }
+  .hero-actions { margin-top: 22px; }
+  .hero-drawing-stage { padding: 36px 22px 62px 18px; }
+  .hero-drawing-stage > .architectural-drawing { width: calc(100% + 20px); height: calc(100% + 10px); top: -10px; left: -10px; }
+  .hero-view-label { left: 18px; top: 4px; }
+  .hero-render { height: clamp(245px, 70vw, 390px); }
+  .hero-plan { left: 0; bottom: 8px; width: max(128px, 38%); padding: 9px; }
+  .hero-plan > span { font-size: 12px; gap: 3px; white-space: nowrap; }
+  .hero-side-label { top: 66px; font-size: 12px; }
+  .hero-image > figcaption { padding-right: 0; }
+  .hero-colophon { margin-top: 24px; padding-block: 16px; }
+  .hero-colophon > span:first-child { max-width: 235px; }
+  .hero-colophon > span:last-child { font-size: 0; gap: 0; }
+  .hero-colophon .drawing-cross { font-size: 12px; }
+  .heading-content { padding-left: 0; }
+  .section-heading > .eyebrow { gap: 12px; }
+  .section-heading > .eyebrow::after { margin-left: 0; min-width: 15px; }
+  .section-heading > .eyebrow > span { width: 32px; height: 32px; }
+  .approach-section > .approach-intro { margin-left: 0; }
+  .process-step > .item-number::after { right: 14px; top: auto; bottom: -5px; }
+  .project-cover { padding: 10px; }
+  .catalogue-intro { padding-bottom: 34px; }
+  .catalogue-intro h1 { font-size: clamp(30px, 8vw, 44px); }
+  .catalogue-drawing { width: 155px; height: 155px; top: 38px; right: -6px; opacity: .35; }
+  .catalogue-intro > .eyebrow { position: relative; margin-top: 50px; max-width: 240px; }
+  .catalogue-service-grid, .catalogue-studies .study-gallery, .catalogue-renovations .catalogue-renovation-grid { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+  .catalogue-services .catalogue-card:first-child { grid-row: auto; }
+  .catalogue-services .catalogue-card:first-child .image-frame { aspect-ratio: auto; }
+  .catalogue-studies .study-card:nth-child(2), .catalogue-renovations .catalogue-card:nth-child(even) { margin-top: 0; }
+  .study-plan { right: 4px; padding: 9px; width: 35%; }
+  .study-visual { padding-bottom: 44px; }
+  .catalogue-studies .study-card h3 { font-size: 36px; }
+  .catalogue-inspirations .catalogue-card:nth-child(2) { margin-top: 0; }
+}

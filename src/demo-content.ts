@@ -1,7 +1,7 @@
-/** Contenus fictifs autorisés pour finaliser la maquette, sans valeur d’offre commerciale. */
+/** Données de maquette et pistes d’aménagement ; statuts des visuels explicités par entrée. */
 export const demoContent = {
   enabled: true,
-  notice: 'Maquette de présentation · Prestations et informations d’exemple à adapter.',
+  notice: 'Maquette de présentation · Informations d’entreprise et coordonnées d’exemple à adapter.',
   area: {
     title: 'Paris et l’ouest parisien',
     detail: 'Paris, Versailles, Saint-Germain-en-Laye et les communes voisines.',
@@ -21,7 +21,7 @@ export const demoContent = {
 
 export const exampleServices = [
   {
-    slug: 'coin-tv-rangements', title: 'Coin TV & rangements', type: 'Bibliothèque / rangement',
+    status: 'inspiration' as const, slug: 'coin-tv-rangements', title: 'Coin TV & rangements', type: 'Bibliothèque / rangement',
     summary: 'Organiser le mur du salon pour réunir écran, livres et objets du quotidien dans un ensemble cohérent.',
     need: 'Votre mobilier s’est accumulé au fil du temps et le salon manque de rangement. Vous cherchez une composition qui rassemble les usages sans encombrer la pièce.',
     example: 'Dans un salon d’appartement, une composition associe des caissons bas fermés, des étagères et une place pour l’écran. Les références, les finitions et les dimensions sont choisies pour la pièce.',
@@ -32,7 +32,7 @@ export const exampleServices = [
     budget: 'Dimensions de la composition, mobilier standard ou fabriqué sur mesure, matériaux, éclairage et conditions de pose.',
   },
   {
-    slug: 'piece-multifonction', title: 'Pièce multifonction', type: 'Optimisation d’espace',
+    status: 'inspiration' as const, slug: 'piece-multifonction', title: 'Pièce multifonction', type: 'Optimisation d’espace',
     summary: 'Faire une place au travail, à la lecture ou aux loisirs dans une pièce qui accueille déjà plusieurs usages.',
     need: 'Vous souhaitez créer un bureau ou un espace personnel sans consacrer une pièce entière à cette fonction.',
     example: 'Dans une chambre, un bureau prend place près de la fenêtre et les rangements se regroupent sur un mur. La proposition compare la place du mobilier et les passages à conserver.',
@@ -43,12 +43,12 @@ export const exampleServices = [
     budget: 'Nombre de fonctions, mobilier réutilisé ou neuf, fabrication sur mesure, éclairage et interventions nécessaires.',
   },
   {
-    slug: 'salle-de-bains', title: 'Salle de bains', type: 'Salle d’eau',
-    summary: 'Repenser les équipements, les revêtements et l’organisation d’une pièce utilisée chaque jour.',
+    status: 'completed' as const, slug: 'salle-de-bains', title: 'Salle de bains', type: 'Salle d’eau',
+    summary: 'Une baignoire remplacée par une douche vitrée, avec des revêtements beiges et des équipements noirs.',
     need: 'La salle de bains ne correspond plus à vos usages ou à vos goûts. Vous souhaitez préciser ce qui peut être conservé, remplacé ou déplacé.',
-    example: 'Une proposition explore le remplacement d’une baignoire par une douche, une nouvelle palette de matériaux et des rangements adaptés. La faisabilité reste à examiner dans le logement.',
-    image: 'renovation-3', alt: 'Composition photographique avant et après d’une salle de bains, utilisée comme inspiration.',
-    caption: 'Photographies d’inspiration fournies par Ethan · Chantier non attribué à bymood.',
+    example: 'La baignoire sous la fenêtre en arche est remplacée par une douche vitrée. Les revêtements beiges veinés, la porte en bois clair et les équipements noirs composent la nouvelle ambiance.',
+    image: 'renovation-3', alt: 'Prestation réalisée : salle de bains avant et après le remplacement d’une baignoire par une douche.',
+    caption: 'Prestation réalisée · Salle de bains avant / après · Photographies fournies par Ethan.',
     included: ['Échange sur les usages, les équipements et les contraintes connues.', 'Proposition d’agencement et sélection des matériaux et équipements.', 'Définition des travaux, des intervenants et des étapes au devis.'],
     limits: 'Les réseaux, l’étanchéité, la ventilation et les contraintes du bâtiment doivent être examinés avant de fixer le périmètre des travaux.',
     budget: 'État de l’existant, déplacement des équipements, préparation des supports, matériaux et accès au chantier.',

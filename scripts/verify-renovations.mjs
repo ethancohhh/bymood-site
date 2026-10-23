@@ -18,7 +18,7 @@ try {
     assert.equal(await page.locator('h1').count(), 1);
     assert.equal(await page.locator('.renovation-pair').count(), pairs);
     assert.equal(await page.locator('.renovation-gallery img').count(), pairs * 2);
-    assert.match(await page.locator('.project-example-note').innerText(), /Projet d’exemple/);
+    assert.match(await page.locator('.project-example-note').innerText(), /Prestation réalisée/);
     assert.equal(await page.locator('.project-end .button').getAttribute('href'), new URL(base + '/').pathname + '#project-form');
     assert.deepEqual(await page.locator('.renovation-gallery img').evaluateAll(images => images.filter(image => !image.complete || !image.naturalWidth).map(image => image.src)), []);
     for (const width of [320, 375, 768, 1024, 1440]) {
@@ -47,7 +47,7 @@ try {
       const expected = `${city}-${Math.floor(index / 2) + 1}-${index % 2 ? 'apres' : 'avant'}-1600.webp`;
       assert.ok((await page.locator('.viewer-stage img').getAttribute('src')).endsWith(expected), 'Gallery order and deduplication');
       assert.match(await page.locator('#viewer-caption').innerText(), index % 2 ? /Après/ : /Avant/);
-      assert.match(await page.locator('#viewer-caption').innerText(), /Projet d’exemple/);
+      assert.match(await page.locator('#viewer-caption').innerText(), /Prestation réalisée/);
       await page.keyboard.press('ArrowRight');
     }
     assert.match(await page.locator('.viewer-stage img').getAttribute('src'), new RegExp(`${city}-1-avant-1600.webp$`));

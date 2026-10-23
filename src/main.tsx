@@ -5,6 +5,7 @@ import { site } from './data';
 import { routePath } from './urls';
 import './styles.css';
 import './studio.css';
+import './architecture.css';
 
 const root = document.getElementById('root')!;
 const page = resolvePage(routePath(window.location.pathname));
