@@ -14,7 +14,8 @@ export function ServiceNavigation() {
       cancelAnimationFrame(frame);
       frame = requestAnimationFrame(() => {
         const sections = exampleServices.map(item => document.getElementById(item.slug));
-        const current = sections.filter(section => section && section.getBoundingClientRect().top <= 150).at(-1);
+        const readingLine = Math.max(document.querySelector('.service-navigation')?.getBoundingClientRect().bottom ?? 0, parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0) + 2;
+        const current = sections.filter(section => section && section.getBoundingClientRect().top <= readingLine).at(-1);
         setActive(current?.id || exampleServices[0].slug);
       });
     };

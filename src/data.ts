@@ -21,8 +21,8 @@ export const contact = {
 // Ancres conservées pour les liens des versions précédentes.
 export const navigation = [
   ['Catalogue', '/catalogue/'],
-  ['Notre approche', 'approche'],
-  ['Notre équipe', 'a-propos'],
+  ['Approche', 'approche'],
+  ['Équipe', 'a-propos'],
 ] as const;
 
 export const expertise = [

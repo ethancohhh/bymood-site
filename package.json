@@ -12,7 +12,8 @@
     "test:browser": "node scripts/verify-browser.mjs",
     "test:visit": "node scripts/verify-visit.mjs",
     "test:renovations": "node scripts/verify-renovations.mjs",
-    "test:routes": "node scripts/verify-routing.mjs"
+    "test:routes": "node scripts/verify-routing.mjs",
+    "test:header": "node scripts/verify-header.mjs"
   },
   "dependencies": {
     "react": "19.2.4",
