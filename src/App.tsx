@@ -15,6 +15,8 @@ import { ScrollReveals } from './components/ScrollReveals';
 import { ImageViewer } from './components/ImageViewer';
 import { RenovationGallery } from './components/RenovationGallery';
 import { MethodIllustration } from './components/MethodIllustration';
+import { ArchitecturalDrawing } from './components/ArchitecturalDrawing';
+import { HeroArchitecturalPlan } from './components/HeroArchitecturalPlan';
 
 function chooseProject(type: string, label: string) {
   window.dispatchEvent(new CustomEvent('project-interest', { detail: { type, label } }));
@@ -34,8 +36,9 @@ function Hero() {
           <SocialLinks />
         </div>
         <figure className="hero-image hero-reference">
-          <div className="hero-reference-stage">
-            <img className="hero-reference-image" src={sitePath('/images/architectural-reference.png')} alt="Plan d’intérieur en perspective, accompagné de vues techniques et de lignes de construction. Aperçu avec filigrane Shutterstock." width="476" height="280" fetchPriority="high" decoding="async" />
+          <div className="hero-reference-stage hero-plan-stage">
+            <ArchitecturalDrawing />
+            <HeroArchitecturalPlan />
           </div>
           <figcaption className="hero-reference-caption drawing-label"><span>Concevoir l’espace, jusque dans les détails.</span><span>Étude graphique</span></figcaption>
         </figure>

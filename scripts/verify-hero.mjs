@@ -9,38 +9,58 @@ await mkdir('qa', { recursive: true });
 try {
   for (const width of [320, 375, 768, 1024, 1440]) {
     const context = await browser.newContext({ viewport: { width, height: 1000 }, reducedMotion: 'reduce' });
-    const page = await context.newPage(); const errors = [];
+    const page = await context.newPage();
+    const errors = []; const photos = [];
     page.on('pageerror', e => errors.push(e.message));
+    page.on('request', r => { if (/haven-(living|plan).*webp|architectural-reference/.test(r.url())) photos.push(r.url()); });
     await page.goto(base, { waitUntil: 'networkidle' });
-    const photo = page.locator('.hero-reference-image');
-    assert.equal(await photo.count(), 1);
-    assert.equal(await photo.evaluate(i => i.complete && i.naturalWidth === 476 && i.naturalHeight === 280), true);
-    assert.equal(await page.locator('.hero-architectural-plan, .hero-colophon').count(), 0);
+    assert.equal(await page.getByRole('img', { name: 'Un intérieur dessiné en perspective' }).count(), 1);
+    assert.equal(await page.locator('.hero-image img, .hero-plan').count(), 0);
+    assert.deepEqual(photos, [], 'The replaced photographs must not be downloaded on the homepage');
     assert.deepEqual(await page.locator('.hero-reference-caption > span').allTextContents(), ['Concevoir l’espace, jusque dans les détails.', 'Étude graphique']);
-    assert.ok(await page.locator('.hero-reference-caption').evaluate(e => e.getBoundingClientRect().top >= document.querySelector('.hero-reference-image').getBoundingClientRect().bottom));
+    assert.equal(await page.locator('.hero-architectural-plan image, .hero-colophon').count(), 0);
+    assert.ok(await page.locator('.hero-reference-caption').evaluate(e => e.getBoundingClientRect().top >= document.querySelector('.hero-architectural-plan').getBoundingClientRect().bottom));
     assert.notEqual(await page.locator('.hero').evaluate(e => getComputedStyle(e).backgroundColor), await page.locator('body').evaluate(e => getComputedStyle(e).backgroundColor));
-    assert.match(await page.locator('#a-propos .team-grid dt').nth(0).textContent(), /Ethan Cohen/);
-    assert.match(await page.locator('#a-propos .team-grid dt').nth(1).textContent(), /Aliriza Bay/);
-    assert.match(await page.locator('#approche h2').innerText(), /Un accompagnement complet/);
+    assert.equal(await page.locator('#approche h2').textContent(), 'Un accompagnement complet, de l’idée à la réalisation.');
+    assert.match(await page.locator('#a-propos .team-grid').textContent(), /Ethan Cohen/);
+    assert.match(await page.locator('#a-propos .team-grid').textContent(), /Aliriza Bay/);
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
+    assert.equal(await page.locator('.plan-wall-trace').first().evaluate(e => getComputedStyle(e).animationName), 'none');
+    assert.equal(await page.locator('.plan-wall-trace').first().evaluate(e => getComputedStyle(e).strokeDasharray), 'none');
+    assert.deepEqual(errors, []);
     if ([375, 1440].includes(width)) {
       const audit = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
       assert.deepEqual(audit.violations, []);
     }
-    await page.screenshot({ path: `qa/hero-reference-${width}.png` });
-    await page.locator('#approche').screenshot({ path: `qa/approach-copy-${width}.png` });
-    await page.locator('#a-propos').screenshot({ path: `qa/team-names-${width}.png` });
+    await page.screenshot({ path: `qa/architectural-hero-${width}.png` });
+    await page.locator('.hero-reference').screenshot({ path: `qa/architectural-plan-${width}.png` });
     await page.locator('.hero-actions a').click(); await page.waitForURL(base + '/catalogue/');
-    assert.equal(await page.locator('.study-card').count(), 2); assert.deepEqual(errors, []);
-    checks.push({ width, scenario: 'Image fournie, contraste beige, légendes sous le schéma, noms et navigation', errors }); await context.close();
+    assert.equal(await page.locator('.study-card').count(), 2);
+    checks.push({ width, scenario: 'Dessin accessible, aucune ancienne photo chargée, dimensions et Catalogue', errors });
+    await context.close();
   }
   for (const width of [375, 1440]) {
-    const context = await browser.newContext({ viewport: { width, height: 1000 }, javaScriptEnabled: false, reducedMotion: 'reduce' });
-    const page = await context.newPage(); await page.goto(base);
-    assert.equal(await page.locator('.hero-reference-image').evaluate(i => i.complete && i.naturalWidth > 0), true);
-    assert.equal(await page.locator('.hero-reference-caption').count(), 1);
-    await page.locator('.hero-actions a').click(); await page.waitForURL(base + '/catalogue/');
-    checks.push({ width, scenario: 'Image, légendes et navigation sans JavaScript' }); await context.close();
+    const context = await browser.newContext({ viewport: { width, height: 1000 } });
+    const page = await context.newPage(); await page.goto(base, { waitUntil: 'domcontentloaded' });
+    await page.waitForFunction(() => { const e = document.querySelector('.plan-wall-trace'); if (!e) return false; const n = parseFloat(getComputedStyle(e).strokeDashoffset); return n > 0 && n < 1; });
+    const intermediate = await page.locator('.plan-wall-trace').first().evaluate(e => getComputedStyle(e).strokeDashoffset);
+    await page.screenshot({ path: `qa/architectural-motion-${width}.png` });
+    await page.waitForTimeout(1700);
+    assert.equal(parseFloat(await page.locator('.plan-wall-trace').first().evaluate(e => getComputedStyle(e).strokeDashoffset)), 0);
+    assert.equal(await page.locator('.plan-furniture').evaluate(e => getComputedStyle(e).opacity), '1');
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    assert.equal(await page.locator('.plan-wall-trace').first().evaluate(e => getComputedStyle(e).strokeDasharray), 'none');
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    assert.equal(await page.locator('.plan-furniture').evaluate(e => getComputedStyle(e).opacity), '1');
+    checks.push({ width, scenario: 'Tracé intermédiaire puis complet et mouvement réduit en direct', intermediate });
+    await context.close();
+    const staticContext = await browser.newContext({ viewport: { width, height: 1000 }, javaScriptEnabled: false, reducedMotion: 'reduce' });
+    const staticPage = await staticContext.newPage(); await staticPage.goto(base);
+    assert.equal(await staticPage.getByRole('img', { name: 'Un intérieur dessiné en perspective' }).count(), 1);
+    assert.equal(await staticPage.locator('.plan-wall-trace').first().evaluate(e => getComputedStyle(e).strokeDasharray), 'none');
+    await staticPage.locator('.hero-actions a').click(); await staticPage.waitForURL(base + '/catalogue/');
+    checks.push({ width, scenario: 'Dessin complet et navigation sans JavaScript' }); await staticContext.close();
   }
 } finally {
   await writeFile('qa/hero-report.json', JSON.stringify(checks, null, 2)); await browser.close();
