@@ -14,8 +14,6 @@ import { SocialLinks } from './components/SocialLinks';
 import { ScrollReveals } from './components/ScrollReveals';
 import { ImageViewer } from './components/ImageViewer';
 import { RenovationGallery } from './components/RenovationGallery';
-import { ArchitecturalDrawing } from './components/ArchitecturalDrawing';
-import { HeroArchitecturalPlan } from './components/HeroArchitecturalPlan';
 import { MethodIllustration } from './components/MethodIllustration';
 
 function chooseProject(type: string, label: string) {
@@ -35,17 +33,13 @@ function Hero() {
           </div>
           <SocialLinks />
         </div>
-        <figure className="hero-image hero-blueprint">
-          <div className="hero-drawing-stage hero-plan-stage">
-            <ArchitecturalDrawing />
-            <span className="drawing-label hero-view-label">01 / Dessiner les possibles</span>
-            <HeroArchitecturalPlan />
-            <span className="hero-side-label drawing-label" aria-hidden="true">bymood. — Carnet de conception</span>
-            <span className="hero-plan-note drawing-label">Étude graphique</span>
+        <figure className="hero-image hero-reference">
+          <div className="hero-reference-stage">
+            <img className="hero-reference-image" src={sitePath('/images/architectural-reference.png')} alt="Plan d’intérieur en perspective, accompagné de vues techniques et de lignes de construction. Aperçu avec filigrane Shutterstock." width="476" height="280" fetchPriority="high" decoding="async" />
           </div>
+          <figcaption className="hero-reference-caption drawing-label"><span>Concevoir l’espace, jusque dans les détails.</span><span>Étude graphique</span></figcaption>
         </figure>
       </div>
-      <div className="hero-colophon drawing-label"><span>Concevoir l’espace, jusque dans les détails.</span><span>Plans · Matières · Volumes<span className="drawing-cross" aria-hidden="true" /></span></div>
     </div>
   </section>;
 }
@@ -91,8 +85,8 @@ function Approach() {
     { visual: 'works' as const, label: 'Travaux', title: process[2].title, text: process[2].text, output: process[2].output },
   ];
   return <section id="approche" className="section container approach-section">
-    <SectionTitle number="01" label="Notre approche" text="Nous avançons par étapes pour passer de vos besoins à une proposition concrète, puis à des travaux clairement définis.">De votre idée<br />à un projet défini.</SectionTitle>
-    <p className="approach-intro">Conception des aménagements, choix des fournitures et organisation des travaux : le périmètre se définit ensemble.</p>
+    <SectionTitle number="01" label="Notre approche" text="Nous avançons par étapes pour passer de vos besoins à une proposition concrète, puis à des travaux clairement définis.">Un accompagnement complet : d’une idée jusqu’à sa réalisation</SectionTitle>
+    <p className="approach-intro">Projection de votre idée dans la vraie vie avec un rendu 3D, choix des fournitures et organisation des travaux</p>
     <ol className="method-grid approach-visual-grid">{stages.map((stage, index) => <li className="process-step" key={stage.visual}>
       <div className="method-stage-heading"><span className="item-number"><span>0{index + 1}</span></span><span className="method-stage-label">{stage.label}</span></div>
       <MethodIllustration stage={stage.visual} />
@@ -108,8 +102,8 @@ function About() {
     <div className="container team-layout">
       <div className="team-intro"><span className="eyebrow"><span>02</span>Notre équipe</span></div>
       <dl className="team-grid">
-        <div><dt><span className="team-portrait"><img src={sitePath("/team/ethan.webp")} className="portrait-ethan" alt="Portrait d’Ethan, en charge de la relation client" width={1200} height={800} loading="lazy" /></span>Ethan<span>Relation client & suivi de projet</span></dt><dd className="team-phone"><a href={sitePath(ethanContact.href)}>{ethanContact.phone}</a></dd><dd>Votre interlocuteur pour comprendre vos besoins, préciser le projet et suivre les échanges à chaque étape.</dd></div>
-        <div><dt><span className="team-portrait"><img src={sitePath("/team/aliriza.webp")} alt="Portrait d’Aliriza, en charge de la conception et du design" width={640} height={682} loading="lazy" /></span>Aliriza<span>Architecte d’intérieur & designer</span></dt><dd className="team-phone"><a href={sitePath("tel:+33764230084")}>07 64 23 00 84</a></dd><dd>Conception des aménagements, rendus 3D et coordination des intervenants, de la préparation au suivi du chantier.</dd></div>
+        <div><dt><span className="team-portrait"><img src={sitePath("/team/ethan.webp")} className="portrait-ethan" alt="Portrait d’Ethan Cohen, en charge de la relation client" width={1200} height={800} loading="lazy" /></span>Ethan Cohen<span>Relation client & suivi de projet</span></dt><dd className="team-phone"><a href={sitePath(ethanContact.href)}>{ethanContact.phone}</a></dd><dd>Votre interlocuteur pour comprendre vos besoins, préciser le projet et suivre les échanges à chaque étape.</dd></div>
+        <div><dt><span className="team-portrait"><img src={sitePath("/team/aliriza.webp")} alt="Portrait d’Aliriza Bay, en charge de la conception et du design" width={640} height={682} loading="lazy" /></span>Aliriza Bay<span>Architecte d’intérieur & designer</span></dt><dd className="team-phone"><a href={sitePath("tel:+33764230084")}>07 64 23 00 84</a></dd><dd>Conception des aménagements, rendus 3D et coordination des intervenants, de la préparation au suivi du chantier.</dd></div>
       </dl>
     </div>
   </section>;

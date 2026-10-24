@@ -39,8 +39,6 @@
 .hero-drawing-stage > .architectural-drawing { width: calc(100% + 58px); height: calc(100% + 38px); left: -29px; top: -22px; }
 .hero-view-label { position: absolute; left: 20px; top: 4px; }
 .hero-side-label { position: absolute; right: 0; top: 80px; writing-mode: vertical-rl; }
-.hero-colophon { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding-block: 20px; margin-top: 40px; border-top: 1px solid var(--drawing-guide); }
-.hero-colophon > span:last-child { display: inline-flex; align-items: center; gap: 28px; }
 .home-needs { border-bottom: 1px solid var(--drawing-guide); padding-block: 34px 36px; }
 
 /* Repères de lecture sur une même trame, dans les pages et les études. */
@@ -104,8 +102,6 @@
 .catalogue-services.catalogue-inspirations .catalogue-card-copy { padding-top: 22px; }
 
 @media (prefers-reduced-motion: no-preference) {
-  .hero-drawing-stage .drawing-outline { animation: drafting-line 1300ms var(--motion-ease) both; }
-  .hero-drawing-stage .drawing-guides { animation: drafting-guides 650ms ease both; }
 }
 @keyframes drafting-line { from { stroke-dasharray: 1; stroke-dashoffset: 1; } to { stroke-dasharray: 1; stroke-dashoffset: 0; } }
 @keyframes drafting-guides { from { opacity: 0; } to { opacity: 1; } }
@@ -131,10 +127,6 @@
   .hero-drawing-stage > .architectural-drawing { width: calc(100% + 20px); height: calc(100% + 10px); top: -10px; left: -10px; }
   .hero-view-label { left: 18px; top: 4px; }
   .hero-side-label { top: 66px; font-size: 12px; }
-  .hero-colophon { margin-top: 24px; padding-block: 16px; }
-  .hero-colophon > span:first-child { max-width: 235px; }
-  .hero-colophon > span:last-child { font-size: 0; gap: 0; }
-  .hero-colophon .drawing-cross { font-size: 12px; }
   .heading-content { padding-left: 0; }
   .section-heading > .eyebrow { gap: 12px; }
   .section-heading > .eyebrow::after { margin-left: 0; min-width: 15px; }
@@ -156,48 +148,20 @@
   .catalogue-inspirations .catalogue-card:nth-child(2) { margin-top: 0; }
 }
 
-/* Étude graphique originale : projection axonométrique, sans données de chantier. */
-.hero-blueprint { animation: none; }
-.hero-plan-stage { padding: 42px 0 12px; }
-.hero-plan-stage > .architectural-drawing { width: 100%; height: calc(100% - 36px); left: 0; top: 12px; opacity: .28; }
-.hero-plan-stage .hero-view-label { left: 0; }
-.hero-plan-stage .hero-side-label { right: -12px; top: 98px; }
-.hero-plan-note { display: block; text-align: right; padding-right: 10px; }
-.hero-architectural-plan { position: relative; display: block; width: 100%; height: auto; aspect-ratio: 5 / 4; overflow: visible; color: var(--color-primary); }
-.hero-architectural-plan :is(path, polygon, rect, circle, ellipse) { vector-effect: non-scaling-stroke; stroke-linejoin: round; }
-.plan-construction { stroke: var(--color-primary); stroke-width: .7; opacity: .25; }
-.plan-centre-axis { stroke-dasharray: 8 7; }
-.plan-floor { fill: var(--color-paper); stroke: var(--drawing-contour); stroke-width: .7; filter: drop-shadow(0 12px 10px rgb(23 59 75 / .09)); }
-.plan-room-tones { fill: var(--color-sand); opacity: .3; }
-.plan-furniture { stroke: var(--color-primary); stroke-width: 1; stroke-opacity: .68; }
-.plan-upholstery { fill: var(--color-sand-light); }
-.plan-openings { stroke: var(--color-primary); stroke-width: .8; stroke-opacity: .65; }
-.plan-tile { stroke: var(--color-primary); stroke-width: .55; stroke-opacity: .23; }
-.plan-wall { stroke: var(--color-primary); stroke-width: .85; }
-.plan-wall-front { fill: #cbd0c9; }
-.plan-wall-side { fill: #e2e2d7; }
-.plan-wall-top { fill: var(--color-paper); stroke-width: 1.15; }
-.plan-detail-lines { stroke: var(--color-primary); stroke-width: .7; opacity: .45; }
-@media (prefers-reduced-motion: no-preference) {
-  .plan-construction { animation: plan-guides-in 550ms ease both; }
-  .plan-floor { animation: plan-surface-in 600ms ease both; }
-  .plan-wall-trace { stroke-dasharray: 1; animation: plan-wall-draw 1400ms var(--motion-ease) 100ms both; }
-  .plan-furniture, .plan-openings { animation: plan-details-in 700ms ease 450ms both; }
-}
-@keyframes plan-guides-in { from { opacity: 0; } to { opacity: .25; } }
-@keyframes plan-surface-in { from { opacity: 0; } to { opacity: 1; } }
-@keyframes plan-wall-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
-@keyframes plan-details-in { from { opacity: 0; } to { opacity: 1; } }
+/* Référence architecturale fournie : fichier original, filigrane conservé. */
+.hero { background: var(--color-sand-light); padding-bottom: 48px; }
+.hero-reference { animation: none; }
+.hero-reference-stage { padding: 24px 0; }
+.hero-reference-image { display: block; width: 100%; height: auto; mix-blend-mode: multiply; }
+.hero-reference-caption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 24px; padding-top: 12px; color: var(--color-primary); }
+.hero-reference-caption > span:first-child { max-width: 360px; }
+.hero-reference-caption > span:last-child { margin-left: auto; white-space: nowrap; }
 @media (max-width: 1179px) {
-  .hero-plan-stage { padding-top: 40px; }
-  .hero-plan-stage .hero-side-label { right: -6px; font-size: 12px; }
+  .hero-reference-caption { flex-direction: column; gap: 8px; }
+  .hero-reference-caption > span:last-child { margin-left: 0; }
 }
 @media (max-width: 767px) {
-  .hero-plan-stage { padding: 34px 0 8px; }
-  .hero-plan-stage > .architectural-drawing { width: 100%; height: calc(100% - 24px); left: 0; top: 12px; opacity: .22; }
-  .hero-plan-stage .hero-view-label { left: 0; }
-  .hero-plan-stage .hero-side-label { right: -5px; top: 66px; }
-  .hero-plan-note { padding-right: 0; }
-  .plan-furniture { stroke-width: .85; }
-  .plan-construction { stroke-width: .6; }
+  .hero { padding-bottom: 32px; }
+  .hero-reference-stage { padding-block: 12px 18px; }
+  .hero-reference-caption { padding-top: 0; }
 }

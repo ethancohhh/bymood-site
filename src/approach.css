@@ -40,6 +40,7 @@
 }
 @media (max-width: 767px) {
   .approach-section { padding-bottom: 40px; }
+  .approach-section .heading-content h2 { font-size: clamp(25px, 7.6vw, 31px); }
   .approach-section .approach-intro { margin-bottom: 30px; }
   .approach-visual-grid { grid-template-columns: minmax(0, 1fr); gap: 28px; }
   .approach-visual-grid .process-step { display: grid; grid-template-columns: minmax(0, 1fr) 104px; gap: 0 10px; grid-template-areas: 'stage visual' 'title visual' 'body body' 'output output' 'detail detail'; border-bottom: 1px solid var(--color-line); padding-bottom: 28px; }
