@@ -44,7 +44,6 @@ function Hero() {
             </a>
             <span className="hero-side-label drawing-label" aria-hidden="true">bymood. — Carnet de conception</span>
           </div>
-          <figcaption><span>HAVEN · Étude d’habitat contemporain</span><span>Étude de conception · Rendu 3D</span></figcaption>
         </figure>
       </div>
       <div className="hero-colophon drawing-label"><span>Concevoir l’espace, jusque dans les détails.</span><span>Plans · Matières · Volumes<span className="drawing-cross" aria-hidden="true" /></span></div>
