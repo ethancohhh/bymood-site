@@ -5,7 +5,7 @@
   --drawing-contour: rgb(23 59 75 / .55);
 }
 .drawing-label, .eyebrow, .item-number, .secondary-caption,
-.hero-image > figcaption, .project-page-heading dt, .project-cover figcaption {
+.project-page-heading dt, .project-cover figcaption {
   font-family: var(--font-technical);
   font-style: normal;
   font-weight: 400;
@@ -24,7 +24,7 @@
 .drawing-contours { stroke: var(--drawing-contour); }
 .drawing-circle { stroke-dasharray: .005 .012; }
 
-/* Une planche composée : le rendu et le plan appartiennent à la même étude. */
+/* Le premier écran associe le texte au dessin architectural. */
 .hero { position: relative; padding: 44px 0 0; overflow: clip; background: var(--color-paper); }
 .hero-inner { position: relative; }
 .hero-composition { grid-template-columns: minmax(0, .94fr) minmax(0, 1.06fr); gap: 4%; }
@@ -37,16 +37,8 @@
 .hero-image { position: relative; min-width: 0; }
 .hero-drawing-stage { position: relative; padding: 40px 30px 75px 20px; }
 .hero-drawing-stage > .architectural-drawing { width: calc(100% + 58px); height: calc(100% + 38px); left: -29px; top: -22px; }
-.hero-render { position: relative; width: 100%; height: clamp(340px, 32vw, 465px); object-fit: cover; border-radius: 48% 48% 0 0; }
 .hero-view-label { position: absolute; left: 20px; top: 4px; }
 .hero-side-label { position: absolute; right: 0; top: 80px; writing-mode: vertical-rl; }
-.hero-plan { position: absolute; width: 36%; bottom: 16px; left: -24px; padding: 12px; background: var(--color-white); border: 1px solid var(--color-line); transform: rotate(-5deg); transition: transform var(--transition); }
-.hero-plan > img { width: 100%; height: auto; aspect-ratio: 1.35; object-fit: contain; }
-.hero-plan > span { display: flex; justify-content: space-between; gap: 8px; padding-top: 8px; border-top: 1px solid var(--color-line); }
-.hero-plan .arrow { width: 15px; height: 20px; }
-.hero-plan:hover, .hero-plan:focus-visible { transform: rotate(0); }
-.hero-image > figcaption { padding: 10px 30px 0 0; gap: 12px; align-items: start; }
-.hero-image > figcaption span { max-width: 56%; }
 .hero-colophon { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding-block: 20px; margin-top: 40px; border-top: 1px solid var(--drawing-guide); }
 .hero-colophon > span:last-child { display: inline-flex; align-items: center; gap: 28px; }
 .home-needs { border-bottom: 1px solid var(--drawing-guide); padding-block: 34px 36px; }
@@ -114,21 +106,14 @@
 @media (prefers-reduced-motion: no-preference) {
   .hero-drawing-stage .drawing-outline { animation: drafting-line 1300ms var(--motion-ease) both; }
   .hero-drawing-stage .drawing-guides { animation: drafting-guides 650ms ease both; }
-  .hero-plan { animation: plan-enter 850ms var(--motion-ease) 350ms both; }
-  .hero-plan:focus-visible { animation: none; }
 }
 @keyframes drafting-line { from { stroke-dasharray: 1; stroke-dashoffset: 1; } to { stroke-dasharray: 1; stroke-dashoffset: 0; } }
 @keyframes drafting-guides { from { opacity: 0; } to { opacity: 1; } }
-@keyframes plan-enter { from { opacity: 0; translate: 0 12px; } to { opacity: 1; translate: 0 0; } }
 
 @media (max-width: 1179px) {
   .hero-copy h1 { font-size: clamp(28px, 3.6vw, 43px); }
   .hero-eyebrow { letter-spacing: 0; gap: 10px; }
   .hero-drawing-stage { padding-inline: 12px 22px; }
-  .hero-render { height: 360px; }
-  .hero-plan { left: -10px; width: 40%; }
-  .hero-image > figcaption { flex-direction: column; gap: 4px; }
-  .hero-image > figcaption span { max-width: 100%; }
   .catalogue-services .catalogue-card:not(:first-child) { display: flex; }
   .catalogue-services .catalogue-card:not(:first-child) .image-frame { width: 100%; aspect-ratio: auto; }
   .catalogue-services .catalogue-card:not(:first-child) .catalogue-card-copy { padding-top: 20px; }
@@ -145,11 +130,7 @@
   .hero-drawing-stage { padding: 36px 22px 62px 18px; }
   .hero-drawing-stage > .architectural-drawing { width: calc(100% + 20px); height: calc(100% + 10px); top: -10px; left: -10px; }
   .hero-view-label { left: 18px; top: 4px; }
-  .hero-render { height: clamp(245px, 70vw, 390px); }
-  .hero-plan { left: 0; bottom: 8px; width: max(128px, 38%); padding: 9px; }
-  .hero-plan > span { font-size: 12px; gap: 3px; white-space: nowrap; }
   .hero-side-label { top: 66px; font-size: 12px; }
-  .hero-image > figcaption { padding-right: 0; }
   .hero-colophon { margin-top: 24px; padding-block: 16px; }
   .hero-colophon > span:first-child { max-width: 235px; }
   .hero-colophon > span:last-child { font-size: 0; gap: 0; }
@@ -173,4 +154,50 @@
   .study-visual { padding-bottom: 44px; }
   .catalogue-studies .study-card h3 { font-size: 36px; }
   .catalogue-inspirations .catalogue-card:nth-child(2) { margin-top: 0; }
+}
+
+/* Étude graphique originale : projection axonométrique, sans données de chantier. */
+.hero-blueprint { animation: none; }
+.hero-plan-stage { padding: 42px 0 12px; }
+.hero-plan-stage > .architectural-drawing { width: 100%; height: calc(100% - 36px); left: 0; top: 12px; opacity: .28; }
+.hero-plan-stage .hero-view-label { left: 0; }
+.hero-plan-stage .hero-side-label { right: -12px; top: 98px; }
+.hero-plan-note { display: block; text-align: right; padding-right: 10px; }
+.hero-architectural-plan { position: relative; display: block; width: 100%; height: auto; aspect-ratio: 5 / 4; overflow: visible; color: var(--color-primary); }
+.hero-architectural-plan :is(path, polygon, rect, circle, ellipse) { vector-effect: non-scaling-stroke; stroke-linejoin: round; }
+.plan-construction { stroke: var(--color-primary); stroke-width: .7; opacity: .25; }
+.plan-centre-axis { stroke-dasharray: 8 7; }
+.plan-floor { fill: var(--color-paper); stroke: var(--drawing-contour); stroke-width: .7; filter: drop-shadow(0 12px 10px rgb(23 59 75 / .09)); }
+.plan-room-tones { fill: var(--color-sand); opacity: .3; }
+.plan-furniture { stroke: var(--color-primary); stroke-width: 1; stroke-opacity: .68; }
+.plan-upholstery { fill: var(--color-sand-light); }
+.plan-openings { stroke: var(--color-primary); stroke-width: .8; stroke-opacity: .65; }
+.plan-tile { stroke: var(--color-primary); stroke-width: .55; stroke-opacity: .23; }
+.plan-wall { stroke: var(--color-primary); stroke-width: .85; }
+.plan-wall-front { fill: #cbd0c9; }
+.plan-wall-side { fill: #e2e2d7; }
+.plan-wall-top { fill: var(--color-paper); stroke-width: 1.15; }
+.plan-detail-lines { stroke: var(--color-primary); stroke-width: .7; opacity: .45; }
+@media (prefers-reduced-motion: no-preference) {
+  .plan-construction { animation: plan-guides-in 550ms ease both; }
+  .plan-floor { animation: plan-surface-in 600ms ease both; }
+  .plan-wall-trace { stroke-dasharray: 1; animation: plan-wall-draw 1400ms var(--motion-ease) 100ms both; }
+  .plan-furniture, .plan-openings { animation: plan-details-in 700ms ease 450ms both; }
+}
+@keyframes plan-guides-in { from { opacity: 0; } to { opacity: .25; } }
+@keyframes plan-surface-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes plan-wall-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes plan-details-in { from { opacity: 0; } to { opacity: 1; } }
+@media (max-width: 1179px) {
+  .hero-plan-stage { padding-top: 40px; }
+  .hero-plan-stage .hero-side-label { right: -6px; font-size: 12px; }
+}
+@media (max-width: 767px) {
+  .hero-plan-stage { padding: 34px 0 8px; }
+  .hero-plan-stage > .architectural-drawing { width: 100%; height: calc(100% - 24px); left: 0; top: 12px; opacity: .22; }
+  .hero-plan-stage .hero-view-label { left: 0; }
+  .hero-plan-stage .hero-side-label { right: -5px; top: 66px; }
+  .hero-plan-note { padding-right: 0; }
+  .plan-furniture { stroke-width: .85; }
+  .plan-construction { stroke-width: .6; }
 }

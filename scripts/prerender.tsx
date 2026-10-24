@@ -16,7 +16,6 @@ for (const page of pages) {
     .replace(/(<meta property="og:title" content=")[^"]*("\s*\/>)/, `$1${escape(page.title)}$2`)
     .replace(/(<meta property="og:description" content=")[^"]*("\s*\/>)/, `$1${escape(page.description)}$2`)
     .replace('content="noindex, nofollow"', indexable ? 'content="index, follow"' : 'content="noindex, nofollow"');
-  if (page.path !== '/') html = html.replace(/\s*<link rel="preload" href="[^"]*\/images\/haven-living-1600.webp"[^>]*>/, '');
   if (base) html = html.replace('</head>', `<link rel="canonical" href="${escape(base + page.path)}"/><meta property="og:url" content="${escape(base + page.path)}"/></head>`).replace(/(<meta property="og:image" content=")[^"]*("\s*\/?>)/, `$1${escape(base)}/images/social.jpg$2`);
   await mkdir(output.slice(0, output.lastIndexOf('/')), { recursive: true });
   await writeFile(output, html);

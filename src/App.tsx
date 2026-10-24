@@ -15,6 +15,7 @@ import { ScrollReveals } from './components/ScrollReveals';
 import { ImageViewer } from './components/ImageViewer';
 import { RenovationGallery } from './components/RenovationGallery';
 import { ArchitecturalDrawing } from './components/ArchitecturalDrawing';
+import { HeroArchitecturalPlan } from './components/HeroArchitecturalPlan';
 
 function chooseProject(type: string, label: string) {
   window.dispatchEvent(new CustomEvent('project-interest', { detail: { type, label } }));
@@ -33,16 +34,13 @@ function Hero() {
           </div>
           <SocialLinks />
         </div>
-        <figure className="hero-image">
-          <div className="hero-drawing-stage">
+        <figure className="hero-image hero-blueprint">
+          <div className="hero-drawing-stage hero-plan-stage">
             <ArchitecturalDrawing />
-            <span className="drawing-label hero-view-label">01 / Imaginer les volumes</span>
-            <Picture className="hero-render" name="haven-living" alt="Rendu 3D de l’étude HAVEN : salon ouvert sur la cuisine, avec mobilier et rangements intégrés." eager sizes="(max-width: 767px) 100vw, 58vw" />
-            <a className="hero-plan" href={sitePath('/projets/haven/')} aria-label="Découvrir le plan et l’étude HAVEN">
-              <Picture name="haven-plan" alt="Extrait du plan de l’étude HAVEN, organisation du rez-de-chaussée." sizes="(max-width: 767px) 35vw, 15vw" />
-              <span className="drawing-label">02 / Plan<Arrow diagonal /></span>
-            </a>
+            <span className="drawing-label hero-view-label">01 / Dessiner les possibles</span>
+            <HeroArchitecturalPlan />
             <span className="hero-side-label drawing-label" aria-hidden="true">bymood. — Carnet de conception</span>
+            <span className="hero-plan-note drawing-label">Étude graphique</span>
           </div>
         </figure>
       </div>
