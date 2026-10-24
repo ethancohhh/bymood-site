@@ -1,7 +1,6 @@
 import { sitePath } from "../urls";
 import { useEffect, useRef, useState } from 'react';
 import { brand, contact, navigation, site } from '../data';
-import { demoContent } from '../demo-content';
 import { Arrow } from './ui';
 
 export function Header({ home = true, currentPath = '' }: { home?: boolean; currentPath?: string }) {
@@ -57,6 +56,5 @@ export function Header({ home = true, currentPath = '' }: { home?: boolean; curr
         <a className="nav-cta" href={sitePath(href('project-form'))} onClick={() => setOpen(false)}>{contact.cta}<Arrow diagonal /></a>
       </nav>
     </header>
-    {demoContent.enabled && <aside className="prototype-notice" aria-label="Version de démonstration">{demoContent.notice}</aside>}
   </>;
 }

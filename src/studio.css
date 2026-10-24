@@ -293,8 +293,6 @@
 }
 
 /* Structure de la maquette et exemples de prestations. */
-.prototype-notice { padding: 9px var(--gutter); text-align: center; background: var(--color-paper); border-bottom: 1px solid var(--color-line); color: var(--color-muted); font-size: 12px; line-height: 1.6; }
-.header.menu-open + .prototype-notice { visibility: hidden; }
 .services-overview-link { margin-top: 20px; }
 .services-intro { padding-block: 40px 64px; }
 .services-intro > .eyebrow { margin-top: 36px; }

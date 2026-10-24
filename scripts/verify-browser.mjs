@@ -266,7 +266,7 @@ try {
   assert.equal(await staticPage.locator('h1').count(), 1);
   assert.equal(await staticPage.locator('.home-needs h2').count(), 1);
   assert.equal(await staticPage.locator('.renovation-card, .study-card').count(), 0);
-  assert.equal(await staticPage.locator('.prototype-notice').count(), 1);
+  assert.equal(await staticPage.locator('.prototype-notice').count(), 0);
   assert.equal(await staticPage.locator('.reveal-pending').count(), 0);
   assert.equal(await staticPage.getByRole('button', { name: 'Créer mon récapitulatif' }).isDisabled(), true, 'Without JavaScript, answers must not be submitted in the URL');
   await staticPage.locator('.hero-actions a').click();
