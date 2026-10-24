@@ -7,7 +7,7 @@ export function ScrollReveals() {
     const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
     const targets = Array.from(document.querySelectorAll<HTMLElement>(
       '.catalogue-card, .catalogue-note, .catalogue-end, .need-link, .renovation-pair-heading, .renovation-pair-grid > figure, .service-heading, .service-media, .service-description, .service-scope > div, .section-heading, .universe-link, .renovation-card, .study-card, .renovation-attribution, .study-gallery-note, .renovation-page > .renovation-image, .need-item, .other-ideas, .study-intro, .document-comparison > figure, .study-decisions > li, .study-foot, .secondary-study, .process-step, .method-detail, .team-intro, .team-grid > div, .contact-copy, .contact-form, .project-page-heading, .project-cover, .project-story > div, .project-decisions > .eyebrow, .project-decisions > h2, .source-note, .project-detail-photo, .project-end, .footer-top, .footer-bottom, .footer-note',
-    ));
+    )).filter(target => !(target.matches('.method-detail') && target.closest('.process-step')));
     const revealed = new Set<HTMLElement>();
     let observer: IntersectionObserver | undefined;
 

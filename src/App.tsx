@@ -16,6 +16,7 @@ import { ImageViewer } from './components/ImageViewer';
 import { RenovationGallery } from './components/RenovationGallery';
 import { ArchitecturalDrawing } from './components/ArchitecturalDrawing';
 import { HeroArchitecturalPlan } from './components/HeroArchitecturalPlan';
+import { MethodIllustration } from './components/MethodIllustration';
 
 function chooseProject(type: string, label: string) {
   window.dispatchEvent(new CustomEvent('project-interest', { detail: { type, label } }));
@@ -51,7 +52,7 @@ function Hero() {
 
 function HomeNeeds() {
   return <section id="expertise" className="container home-needs" aria-labelledby="home-needs-title">
-    <h2 id="home-needs-title">Votre point de départ</h2>
+    <h2 id="home-needs-title">Par où commencer</h2>
     <div className="needs-compact"><div>{expertise.map((item, index) => <a className="text-link need-link" key={item.title} href={sitePath("#project-form")} aria-labelledby={`need-${index}`} onClick={() => chooseProject(item.type, item.type)}><span className="need-copy"><span id={`need-${index}`} className="need-title">{item.title}</span><span className="need-examples">{item.examples}</span></span><Arrow diagonal /></a>)}</div></div>
   </section>;
 }
@@ -83,13 +84,22 @@ function Decisions({ project }: { project: Project }) {
 }
 
 function Approach() {
+  const stages = [
+    { visual: 'quote' as const, label: 'Devis', title: process[0].title, text: process[0].text, output: process[0].output },
+    { visual: 'design' as const, label: 'Rendu 3D · Dossier complet', title: process[1].title, text: process[1].text },
+    { visual: 'review' as const, label: 'Vérification', title: 'Vérification avec le client', text: process[1].output },
+    { visual: 'works' as const, label: 'Travaux', title: process[2].title, text: process[2].text, output: process[2].output },
+  ];
   return <section id="approche" className="section container approach-section">
     <SectionTitle number="01" label="Notre approche" text="Nous avançons par étapes pour passer de vos besoins à une proposition concrète, puis à des travaux clairement définis.">De votre idée<br />à un projet défini.</SectionTitle>
     <p className="approach-intro">Conception des aménagements, choix des fournitures et organisation des travaux : le périmètre se définit ensemble.</p>
-    <div className="method-grid">{process.map((step, index) => <article className="process-step" key={step.title}>
-      <span className="item-number"><span>0{index + 1}</span></span><h3>{step.title}</h3><p>{step.text}</p><span className="method-output">{step.output}</span>
-    </article>)}</div>
-    <details className="method-detail"><summary>Un cadre clair avant les travaux<Arrow /></summary><p>Avant le démarrage, nous précisons ensemble le périmètre, les fournitures, les éventuelles exclusions et le calendrier. Le suivi s’appuie sur ces éléments. À la réception, nous faisons le point avec vous sur les travaux et les éventuelles reprises nécessaires.</p></details>
+    <ol className="method-grid approach-visual-grid">{stages.map((stage, index) => <li className="process-step" key={stage.visual}>
+      <div className="method-stage-heading"><span className="item-number"><span>0{index + 1}</span></span><span className="method-stage-label">{stage.label}</span></div>
+      <MethodIllustration stage={stage.visual} />
+      <h3>{stage.title}</h3><p>{stage.text}</p>
+      {stage.output && <span className="method-output">{stage.output}</span>}
+      {stage.visual === 'review' && <details className="method-detail"><summary>Un cadre clair avant les travaux<Arrow /></summary><p>Avant le démarrage, nous précisons ensemble le périmètre, les fournitures, les éventuelles exclusions et le calendrier. Le suivi s’appuie sur ces éléments. À la réception, nous faisons le point avec vous sur les travaux et les éventuelles reprises nécessaires.</p></details>}
+    </li>)}</ol>
   </section>;
 }
 
@@ -163,7 +173,7 @@ function SiteContent({ path = '/' }: { path?: string }) {
   const project = projects.find(item => path === '/projets/' + item.slug + '/' || path === '/projets/' + item.slug);
   if (project) return <ProjectPage project={project} />;
   if (path !== '/') return <><Header home={false} /><main id="main" className="legal-page container"><span className="eyebrow">404</span><h1>Cette page n’existe pas, ou a changé d’adresse.</h1><a className="button" href={sitePath("/")}>Retour à l’accueil<Arrow /></a></main><Footer /></>;
-  return <><Header /><main id="main"><Hero /><HomeNeeds /><Approach /><About /><Contact /></main><Footer /><ScrollReveals /></>;
+  return <><Header /><main id="main"><Hero /><Approach /><HomeNeeds /><About /><Contact /></main><Footer /><ScrollReveals /></>;
 }
 
 export function App({ path = '/' }: { path?: string }) {

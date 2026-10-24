@@ -58,7 +58,7 @@ try {
     await page.screenshot({ path: `qa/motion-enter-${width}.png` });
     await page.waitForTimeout(1100);
     const delays = await page.locator('.process-step').evaluateAll(elements => elements.map(element => getComputedStyle(element).getPropertyValue('--reveal-delay').trim() || '0ms'));
-    assert.deepEqual(delays, width === 1440 ? ['0ms', '110ms', '220ms'] : ['0ms', '0ms', '0ms']);
+    assert.deepEqual(delays, width === 1440 ? ['0ms', '110ms', '220ms', '330ms'] : ['0ms', '0ms', '0ms', '0ms']);
     assert.equal(await first.evaluate(element => getComputedStyle(element).opacity), '1');
     assert.equal(await first.evaluate(element => getComputedStyle(element).transform), 'none');
     await page.screenshot({ path: `qa/motion-complete-${width}.png` });
@@ -147,7 +147,9 @@ try {
       assert.equal(await page.getByRole('slider').count(), 0, 'A plan and a perspective must not use an before/after slider');
       assert.equal(await page.locator('.catalogue-card, .renovation-card, .study-card').count(), 0, 'Detailed galleries belong to the catalogue, not the homepage');
       assert.equal(await page.locator('.need-link').count(), 3);
-      assert.equal(await page.locator('.process-step').count(), 3);
+      assert.equal(await page.locator('.process-step').count(), 4);
+      assert.deepEqual(await page.locator('main > section[id]').evaluateAll(sections => sections.map(section => section.id)), ['accueil', 'approche', 'expertise', 'a-propos', 'contact']);
+      assert.equal(await page.locator('#home-needs-title').innerText(), 'Par où commencer');
       await page.getByRole('link', { name: 'Aménager un espace pour un nouvel usage', exact: true }).click();
       assert.equal(await page.locator('#project').inputValue(), 'Optimisation d’espace');
       await page.locator('#form-notice').waitFor({ state: 'visible' });
