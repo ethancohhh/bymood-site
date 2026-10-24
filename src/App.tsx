@@ -85,8 +85,8 @@ function Approach() {
     { visual: 'works' as const, label: 'Travaux', title: process[2].title, text: process[2].text, output: process[2].output },
   ];
   return <section id="approche" className="section container approach-section">
-    <SectionTitle number="01" label="Notre approche" text="Nous avançons par étapes pour passer de vos besoins à une proposition concrète, puis à des travaux clairement définis.">Un accompagnement complet : d’une idée jusqu’à sa réalisation</SectionTitle>
-    <p className="approach-intro">Projection de votre idée dans la vraie vie avec un rendu 3D, choix des fournitures et organisation des travaux</p>
+    <SectionTitle number="01" label="Notre approche" text="Nous avançons par étapes pour passer de vos besoins à une proposition concrète, puis à des travaux clairement définis.">Un accompagnement complet, de l’idée à la réalisation.</SectionTitle>
+    <p className="approach-intro">Visualisez votre futur intérieur en 3D, puis définissons ensemble les fournitures et l’organisation des travaux.</p>
     <ol className="method-grid approach-visual-grid">{stages.map((stage, index) => <li className="process-step" key={stage.visual}>
       <div className="method-stage-heading"><span className="item-number"><span>0{index + 1}</span></span><span className="method-stage-label">{stage.label}</span></div>
       <MethodIllustration stage={stage.visual} />
