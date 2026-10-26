@@ -1,5 +1,5 @@
 import { spawnSync } from 'node:child_process';
-import { mkdtemp, readFile, writeFile, rm } from 'node:fs/promises';
+import { mkdtemp, writeFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -26,10 +26,6 @@ if (run('git', ['status', '--porcelain']).trim()) {
 const archive = run('git', ['archive', '--format=tar', 'HEAD'], source, { encoding: 'buffer' });
 const staging = await mkdtemp(join(tmpdir(), 'bymood-public-'));
 run('tar', ['-xf', '-'], staging, { input: archive });
-await rm(join(staging, '.openai'), { recursive: true, force: true });
-const configuration = JSON.parse(await readFile(join(staging, 'site.config.json'), 'utf8'));
-configuration.url = siteUrl;
-await writeFile(join(staging, 'site.config.json'), JSON.stringify(configuration, null, 2) + '\n');
 await writeFile(join(staging, 'README.md'), `# bymood.\n\nMaquette de site Architecture intérieure · Design · Rénovation.\n\nSite : ${siteUrl}\n\nLes photographies avant/après présentent des prestations réalisées. Les inspirations d’aménagement et les études 3D conservent leurs statuts et attributions. Les informations d’entreprise d’exemple restent à adapter. Le formulaire prépare un récapitulatif local sans transmission.\n\n## Développement\n\nNode.js 22 ou supérieur.\n\n\`\`\`sh\nnpm ci\nnpm run dev\nnpm run build\n\`\`\`\n\n## Publication\n\nGitHub Actions construit et publie automatiquement le site sur GitHub Pages à chaque push sur main. L’URL et le sous-dossier sont fournis par GitHub Pages au build.\n`);
 
 run('git', ['init', '--initial-branch=main'], staging);

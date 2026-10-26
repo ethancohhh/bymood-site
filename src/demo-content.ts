@@ -13,7 +13,7 @@ export const demoContent = {
     address: 'Adresse d’exemple · Versailles, Yvelines',
     registration: 'Identifiant professionnel à remplacer dans la version définitive',
     publicationDirector: 'Responsable de la maquette bymood.',
-    hosting: 'Sites · hébergement privé de la maquette',
+    hosting: 'GitHub Pages · GitHub, Inc., San Francisco, États-Unis',
     privacyContact: 'contact@bymood.example — adresse fictive, sans réception',
     retention: 'Aucune conservation des réponses par le site dans le mode actuel de récapitulatif local',
   },

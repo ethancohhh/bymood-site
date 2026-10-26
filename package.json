@@ -14,7 +14,8 @@
     "test:renovations": "node scripts/verify-renovations.mjs",
     "test:routes": "node scripts/verify-routing.mjs",
     "test:header": "node scripts/verify-header.mjs",
-    "test:hero": "node scripts/verify-hero.mjs"
+    "test:hero": "node scripts/verify-hero.mjs",
+    "qa:clean": "node -e \"require('fs').rmSync('qa',{recursive:true,force:true})\""
   },
   "dependencies": {
     "react": "19.2.4",
