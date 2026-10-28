@@ -85,8 +85,8 @@ export const process = [
 ];
 
 export const questions = [
-  { question: 'Comment le budget se construit-il ?', answer: 'Les dimensions, les fournitures, l’état de l’existant et les interventions nécessaires permettent de construire le devis. Les exemples de la maquette ne constituent pas des offres chiffrées.' },
-  { question: 'Peut-on adapter ces exemples à mon logement ?', answer: 'Les exemples servent de point de départ. Les usages, les dimensions, les éléments à conserver et les contraintes du logement permettent de préciser une proposition adaptée.' },
+  { question: 'Comment le budget se construit-il ?', answer: 'Les dimensions, les fournitures, l’état de l’existant et les interventions nécessaires permettent de construire le devis. Chaque devis est établi pour votre projet, après un premier échange.' },
+  { question: 'Peut-on adapter ces réalisations à mon logement ?', answer: 'Nos réalisations et inspirations servent de point de départ. Les usages, les dimensions, les éléments à conserver et les contraintes du logement permettent de préciser une proposition adaptée.' },
   { question: 'Que peut comprendre votre projet ?', answer: 'Selon votre besoin, l’accompagnement associe conception, choix des fournitures et travaux. Le devis précise les prestations prévues, les exclusions et les conditions de réalisation.' },
   { question: 'De quoi ai-je besoin pour commencer ?', answer: 'Indiquez la ville, la pièce concernée, quelques dimensions si vous les connaissez et ce que vous souhaitez améliorer. Une première idée du budget est utile, sans être obligatoire.' },
 ];
@@ -110,7 +110,7 @@ function photoPair(city: string, number: number, title: string, description: str
 
 export const renovations: Renovation[] = [
   {
-    slug: 'projet-paris', title: 'Projet Paris', category: 'Pièces de vie & aménagement', image: 'paris-1-apres',
+    slug: 'renovation-salon-cheminee', title: 'Projet rénovation de salon et cheminée', category: 'Pièces de vie & aménagement', image: 'paris-1-apres',
     alt: 'Après : salon aux tons clairs, cheminée blanche, étagères en bois et canapé d’angle.',
     summary: 'Un salon aux tons clairs, une cuisine recomposée et un bureau intégré : quatre regards sur la transformation d’un intérieur.',
     changes: [
@@ -126,7 +126,7 @@ export const renovations: Renovation[] = [
     ],
   },
   {
-    slug: 'projet-grenoble', title: 'Projet Grenoble', category: 'Cuisine & espaces de vie', image: 'grenoble-1-apres',
+    slug: 'renovation-cuisine-ouverte-salon', title: 'Projet rénovation cuisine ouverte & salon', category: 'Cuisine & espaces de vie', image: 'grenoble-1-apres',
     alt: 'Après : pièce de vie ouverte avec salon, cheminée claire, cuisine et structure en bois apparente.',
     summary: 'Une pièce de vie ouverte, un îlot bleu et une salle de bains graphique : trois vues pour comprendre les changements d’ambiance et d’organisation.',
     changes: [
@@ -141,7 +141,7 @@ export const renovations: Renovation[] = [
     ],
   },
   {
-    slug: 'projet-toulouse', title: 'Projet Toulouse', category: 'Intérieur & rangements', image: 'toulouse-1-apres',
+    slug: 'renovation-cuisine-entree-rangements', title: 'Projet rénovation cuisine, entrée & rangements', category: 'Intérieur & rangements', image: 'toulouse-1-apres',
     alt: 'Après : cuisine blanche et bleu clair, îlot avec assises bleues, banquette et poutres foncées.',
     summary: 'Cuisine, entrée, rangements, salon et escalier : cinq séquences avant / après autour des usages et des matières d’un intérieur.',
     changes: [

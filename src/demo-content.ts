@@ -1,12 +1,10 @@
-/** Données de maquette et pistes d’aménagement ; statuts des visuels explicités par entrée. */
+/** Coordonnées, informations légales et pistes d’aménagement ; statuts des visuels explicités par entrée. */
 export const demoContent = {
   enabled: true,
-  notice: 'Zone d’intervention et adresse email d’exemple, à confirmer.',
   area: {
-    title: 'Paris et l’ouest parisien',
-    detail: 'Paris, Versailles, Saint-Germain-en-Laye et les communes voisines.',
+    title: 'Paris et Île-de-France',
+    detail: 'Nous intervenons à domicile, à Paris et en Île-de-France.',
   },
-  email: 'contact@bymood.example',
   legal: {
     company: 'Aliriza Bay, entrepreneur individuel (EI), exerçant sous le nom bymood.',
     status: 'Entreprise individuelle (micro-entreprise)',
@@ -27,7 +25,7 @@ export const exampleServices = [
     need: 'Votre mobilier s’est accumulé au fil du temps et le salon manque de rangement. Vous cherchez une composition qui rassemble les usages sans encombrer la pièce.',
     example: 'Dans un salon d’appartement, une composition associe des caissons bas fermés, des étagères et une place pour l’écran. Les références, les finitions et les dimensions sont choisies pour la pièce.',
     image: 'haven-library', alt: 'Bibliothèque et coin lecture du rendu 3D HAVEN, utilisés comme inspiration d’aménagement.',
-    caption: 'Inspiration : étude HAVEN, portfolio d’Aliriza Bay · Rendu 3D.',
+    caption: 'Inspiration · Étude HAVEN, conception Aliriza Bay · Rendu 3D.',
     included: ['Échange sur les usages, les dimensions et les équipements à conserver.', 'Proposition d’implantation, sélection du mobilier et des finitions.', 'Organisation de la fourniture et de la pose prévues au devis.'],
     limits: 'La reprise des murs, les modifications électriques et l’intégration d’équipements audiovisuels se définissent séparément selon le logement.',
     budget: 'Dimensions de la composition, mobilier standard ou fabriqué sur mesure, matériaux, éclairage et conditions de pose.',
@@ -38,7 +36,7 @@ export const exampleServices = [
     need: 'Vous souhaitez créer un bureau ou un espace personnel sans consacrer une pièce entière à cette fonction.',
     example: 'Dans une chambre, un bureau prend place près de la fenêtre et les rangements se regroupent sur un mur. La proposition compare la place du mobilier et les passages à conserver.',
     image: 'haven-bedroom', alt: 'Bureau près de la fenêtre et rangements de la chambre HAVEN, présentés comme inspiration.',
-    caption: 'Inspiration : étude HAVEN, portfolio d’Aliriza Bay · Rendu 3D.',
+    caption: 'Inspiration · Étude HAVEN, conception Aliriza Bay · Rendu 3D.',
     included: ['Repérage des habitudes et des fonctions à faire cohabiter.', 'Plan d’aménagement et vues pour comparer les choix.', 'Sélection du mobilier, de l’éclairage et des interventions prévues.'],
     limits: 'Les modifications de cloisons, l’isolation acoustique et les adaptations techniques demandent une étude et un périmètre spécifiques.',
     budget: 'Nombre de fonctions, mobilier réutilisé ou neuf, fabrication sur mesure, éclairage et interventions nécessaires.',

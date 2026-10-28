@@ -34,16 +34,16 @@ export function CataloguePage() {
         <span className="image-frame"><Picture name={service.image} alt={service.alt} sizes="(max-width: 767px) 100vw, 33vw" /></span>
         <div className="catalogue-card-copy"><span className="eyebrow">Inspiration · Étude 3D</span><h3>{service.title}</h3><p>{service.summary}</p><span className="text-link">Explorer cette inspiration<Arrow diagonal /></span></div>
       </a>)}</div>
-      <p className="catalogue-note">Le coin TV & rangements et la pièce multifonction sont des inspirations d’aménagement, illustrées par des rendus 3D. Ils ne sont pas présentés comme des prestations réalisées.</p>
+      <p className="catalogue-note">Le coin TV & rangements et la pièce multifonction sont des inspirations d’aménagement, illustrées par des rendus 3D.</p>
     </section>
     <section id="conception-3d" className="section studies-section catalogue-studies"><span id="realisations" className="legacy-anchor" />
       <div className="container">
-        <SectionTitle number="03" label="Conception & rendus 3D" text="HAVEN et NEMETO sont issus du portfolio d’Aliriza Bay. Plans et rendus montrent un travail de conception, distinct des photographies de rénovation.">Imaginer les volumes.<br />Préciser les choix.</SectionTitle>
+        <SectionTitle number="03" label="Conception & rendus 3D" text="HAVEN et NEMETO sont des études de conception d’Aliriza Bay : plans et rendus 3D pour visualiser un projet avant les travaux.">Imaginer les volumes.<br />Préciser les choix.</SectionTitle>
         <div className="study-gallery">{projects.map(project => <a className="study-card" key={project.slug} href={sitePath(`/projets/${project.slug}/`)}>
           <span className="study-visual"><span className="drawing-label study-sheet-label">{project.number} / {project.name} — Étude de conception</span><span className="image-frame"><Picture name={project.image} alt={project.alt} /></span><span className="study-plan"><Picture name={project.plan.image} alt={project.plan.alt} sizes="(max-width: 767px) 35vw, 15vw" /><span className="drawing-label">Le plan</span></span></span>
           <div className="study-card-copy"><span className="eyebrow">Étude de conception · {project.year}</span><h3>{project.name}</h3><p>{project.subtitle}</p><span className="secondary-caption">{project.area} · Plans & rendus 3D</span><span className="text-link">Découvrir l’étude {project.name}<Arrow diagonal /></span></div>
         </a>)}</div>
-        <p className="study-gallery-note">Les études 3D sont des propositions d’aménagement ; elles ne sont pas des chantiers livrés par bymood.</p>
+        <p className="study-gallery-note">Les études 3D présentent des propositions d’aménagement, avant réalisation.</p>
       </div>
     </section>
     <section className="container catalogue-end section" aria-labelledby="catalogue-next"><div><span className="eyebrow">Votre point de départ</span><h2 id="catalogue-next">Une idée pour<br />votre logement ?</h2><p>Décrivez vos envies et les contraintes que vous connaissez déjà pour préparer votre projet.</p></div><a className="button" href={sitePath("/#project-form")}>{contact.cta}<Arrow diagonal /></a></section>

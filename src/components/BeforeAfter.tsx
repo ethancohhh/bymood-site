@@ -11,8 +11,8 @@ export function BeforeAfter({ before, after, beforeAlt, afterAlt, beforeLabel, a
   const id = useId();
   if (mode === 'plan-render') return <div className="document-comparison">
     {[{ image: before, alt: beforeAlt, label: beforeLabel }, { image: after, alt: afterAlt, label: afterLabel }].map((document, index) => <figure key={document.image} className={index === 0 ? 'plan-document' : 'render-document'}>
-      {index === 1 && afterName ? <AnnotatedImage name={afterName} alt={document.alt} group={group} caption={`${document.label} · Étude du portfolio d’Aliriza Bay`} /> : <a href={sitePath(document.image)} target="_blank" rel="noopener" data-viewer={group} data-alt={document.alt} data-caption={`${document.label} · Étude du portfolio d’Aliriza Bay`} aria-label={documentLabels?.[index] ?? `Agrandir : ${document.label}`}><img src={sitePath(document.image)} alt={document.alt} width={getImageSize(document.image)[0]} height={getImageSize(document.image)[1]} loading="lazy" decoding="async" /></a>}
-      <figcaption><span>{document.label}</span><a href={sitePath(document.image)} target="_blank" rel="noopener" data-viewer={group} data-alt={document.alt} data-caption={`${document.label} · Étude du portfolio d’Aliriza Bay`}>Agrandir</a></figcaption>
+      {index === 1 && afterName ? <AnnotatedImage name={afterName} alt={document.alt} group={group} caption={`${document.label} · Conception Aliriza Bay`} /> : <a href={sitePath(document.image)} target="_blank" rel="noopener" data-viewer={group} data-alt={document.alt} data-caption={`${document.label} · Conception Aliriza Bay`} aria-label={documentLabels?.[index] ?? `Agrandir : ${document.label}`}><img src={sitePath(document.image)} alt={document.alt} width={getImageSize(document.image)[0]} height={getImageSize(document.image)[1]} loading="lazy" decoding="async" /></a>}
+      <figcaption><span>{document.label}</span><a href={sitePath(document.image)} target="_blank" rel="noopener" data-viewer={group} data-alt={document.alt} data-caption={`${document.label} · Conception Aliriza Bay`}>Agrandir</a></figcaption>
     </figure>)}
   </div>;
   return <div className={`comparison ${mode}`}>

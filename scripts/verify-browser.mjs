@@ -150,7 +150,7 @@ try {
     }
     await context.close();
   }
-  for (const route of ['/catalogue/', '/renovation/projet-paris/', '/renovation/projet-grenoble/', '/renovation/projet-toulouse/', '/prestations/', '/projets/haven/', '/projets/nemeto/', '/renovation/moderniser-une-douche/', '/renovation/repenser-une-salle-de-bains/', '/renovation/transformer-une-baignoire-en-douche/', '/mentions-legales/', '/confidentialite/', '/404.html']) {
+  for (const route of ['/catalogue/', '/renovation/renovation-salon-cheminee/', '/renovation/renovation-cuisine-ouverte-salon/', '/renovation/renovation-cuisine-entree-rangements/', '/prestations/', '/projets/haven/', '/projets/nemeto/', '/renovation/moderniser-une-douche/', '/renovation/repenser-une-salle-de-bains/', '/renovation/transformer-une-baignoire-en-douche/', '/mentions-legales/', '/confidentialite/', '/404.html']) {
     const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
     const page = await context.newPage();
     const response = await page.goto(base + route, { waitUntil: 'networkidle' });
@@ -185,7 +185,7 @@ try {
       await page.getByRole('link', { name: 'Retour aux études', exact: true }).click();
       await page.waitForURL(base + '/catalogue/#conception-3d');
       await page.locator('.catalogue-renovation-card').first().click();
-      await page.waitForURL(base + '/renovation/projet-paris/');
+      await page.waitForURL(base + '/renovation/renovation-salon-cheminee/');
       await page.getByRole('link', { name: 'Retour aux rénovations', exact: true }).click();
       await page.waitForURL(base + '/catalogue/#renovation');
 

@@ -3,17 +3,17 @@ import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
 
 const base = process.env.QA_URL || 'http://127.0.0.1:4173';
-const cases = [{ city: 'paris', pairs: 4 }, { city: 'grenoble', pairs: 3 }, { city: 'toulouse', pairs: 5 }];
+const cases = [{ city: 'paris', slug: 'renovation-salon-cheminee', pairs: 4 }, { city: 'grenoble', slug: 'renovation-cuisine-ouverte-salon', pairs: 3 }, { city: 'toulouse', slug: 'renovation-cuisine-entree-rangements', pairs: 5 }];
 const reports = [];
 const browser = await chromium.launch({ channel: 'chrome', headless: true });
 await mkdir('qa', { recursive: true });
 try {
-  for (const { city, pairs } of cases) {
+  for (const { city, slug, pairs } of cases) {
     const context = await browser.newContext({ viewport: { width: 375, height: 900 }, reducedMotion: 'reduce' });
     const page = await context.newPage();
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
-    assert.equal((await page.goto(`${base}/renovation/projet-${city}/`)).status(), 200);
+    assert.equal((await page.goto(`${base}/renovation/${slug}/`)).status(), 200);
     await page.evaluate(async () => { document.querySelectorAll('img').forEach(image => { image.loading = 'eager'; }); await document.fonts.ready; await Promise.all(Array.from(document.images, image => image.decode().catch(() => {}))); });
     assert.equal(await page.locator('h1').count(), 1);
     assert.equal(await page.locator('.renovation-pair').count(), pairs);
@@ -64,8 +64,8 @@ try {
   const page = await staticContext.newPage();
   await page.goto(base + '/catalogue/');
   assert.equal(await page.locator('.catalogue-renovation-card').count(), 6);
-  for (const { city, pairs } of cases) {
-    await page.goto(`${base}/renovation/projet-${city}/`);
+  for (const { city, slug, pairs } of cases) {
+    await page.goto(`${base}/renovation/${slug}/`);
     assert.equal(await page.locator('.renovation-gallery img').count(), pairs * 2);
     assert.equal(await page.locator('.reveal-pending').count(), 0);
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
