@@ -6,6 +6,7 @@ import { routePath } from './urls';
 import './styles.css';
 import './studio.css';
 import './architecture.css';
+import './hero-axo.css';
 import './header.css';
 import './approach.css';
 

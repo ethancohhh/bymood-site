@@ -15,35 +15,29 @@ import { ScrollReveals } from './components/ScrollReveals';
 import { ImageViewer } from './components/ImageViewer';
 import { RenovationGallery } from './components/RenovationGallery';
 import { MethodIllustration } from './components/MethodIllustration';
-import { ArchitecturalDrawing } from './components/ArchitecturalDrawing';
-import { HeroArchitecturalPlan } from './components/HeroArchitecturalPlan';
+import { HeroAxoBanner } from './components/hero-axo/svg/HeroAxoBanner';
 
 function chooseProject(type: string, label: string) {
   window.dispatchEvent(new CustomEvent('project-interest', { detail: { type, label } }));
 }
 
 function Hero() {
-  return <section id="accueil" className="hero">
+  return <section id="accueil" className="hero hero-axo-banner">
     <div className="container hero-inner">
-      <div className="hero-composition">
-        <div className="hero-copy">
-          <span className="drawing-label hero-eyebrow"><span className="drawing-cross" aria-hidden="true" />Le lieu. L’idée. Le dessin.</span>
-          <h1>ARCHITECTURE<br />DESIGN<br /><span>RÉNOVATION</span></h1>
-          <p>Des rangements mieux pensés, une pièce à réorganiser, un intérieur à transformer.</p>
-          <div className="hero-actions">
-            <a className="button" href={sitePath("/catalogue/")}>Catalogue<Arrow diagonal /></a>
-          </div>
-          <SocialLinks />
+      <div className="hero-copy">
+        <span className="drawing-label hero-eyebrow"><span className="drawing-cross" aria-hidden="true" />Le lieu. L’idée. Le dessin.</span>
+        <h1>ARCHITECTURE<br />DESIGN<br /><span>RÉNOVATION</span></h1>
+        <p>Des rangements mieux pensés, une pièce à réorganiser, un intérieur à transformer.</p>
+        <div className="hero-actions">
+          <a className="button" href={sitePath("/catalogue/")}>Catalogue<Arrow diagonal /></a>
         </div>
-        <figure className="hero-image hero-reference">
-          <div className="hero-reference-stage hero-plan-stage">
-            <ArchitecturalDrawing />
-            <HeroArchitecturalPlan />
-          </div>
-          <figcaption className="hero-reference-caption drawing-label"><span>Concevoir l’espace, jusque dans les détails.</span><span>Étude graphique</span></figcaption>
-        </figure>
+        <SocialLinks />
       </div>
     </div>
+    <figure className="hero-banner">
+      <div className="hero-banner-stage"><HeroAxoBanner /></div>
+      <figcaption className="container hero-reference-caption drawing-label"><span>Concevoir l’espace, jusque dans les détails.</span><span>Étude graphique</span></figcaption>
+    </figure>
   </section>;
 }
 
