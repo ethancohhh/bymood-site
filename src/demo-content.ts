@@ -15,7 +15,7 @@ export const demoContent = {
     publicationDirector: 'Responsable de la maquette bymood.',
     hosting: 'GitHub Pages · GitHub, Inc., San Francisco, États-Unis',
     privacyContact: 'contact@bymood.example — adresse fictive, sans réception',
-    retention: 'Aucune conservation des réponses par le site dans le mode actuel de récapitulatif local',
+    retention: 'Aucune donnée saisie : le site ne comporte pas de formulaire',
   },
 };
 

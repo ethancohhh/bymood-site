@@ -9,7 +9,6 @@ import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { Arrow, Picture, SectionTitle } from './components/ui';
 import { BeforeAfter } from './components/BeforeAfter';
-import { ContactForm } from './components/ContactForm';
 import { SocialLinks } from './components/SocialLinks';
 import { ScrollReveals } from './components/ScrollReveals';
 import { ImageViewer } from './components/ImageViewer';
@@ -17,15 +16,10 @@ import { RenovationGallery } from './components/RenovationGallery';
 import { MethodIllustration } from './components/MethodIllustration';
 import { HeroAxoBanner } from './components/hero-axo/svg/HeroAxoBanner';
 
-function chooseProject(type: string, label: string) {
-  window.dispatchEvent(new CustomEvent('project-interest', { detail: { type, label } }));
-}
-
 function Hero() {
   return <section id="accueil" className="hero hero-axo-banner">
     <div className="container hero-inner">
       <div className="hero-copy">
-        <span className="drawing-label hero-eyebrow"><span className="drawing-cross" aria-hidden="true" />Le lieu. L’idée. Le dessin.</span>
         <h1>ARCHITECTURE<br />DESIGN<br /><span>RÉNOVATION</span></h1>
         <p>Des rangements mieux pensés, une pièce à réorganiser, un intérieur à transformer.</p>
         <div className="hero-actions">
@@ -44,7 +38,7 @@ function Hero() {
 function HomeNeeds() {
   return <section id="expertise" className="container home-needs" aria-labelledby="home-needs-title">
     <h2 id="home-needs-title">Par où commencer</h2>
-    <div className="needs-compact"><div>{expertise.map((item, index) => <a className="text-link need-link" key={item.title} href={sitePath("#project-form")} aria-labelledby={`need-${index}`} onClick={() => chooseProject(item.type, item.type)}><span className="need-copy"><span id={`need-${index}`} className="need-title">{item.title}</span><span className="need-examples">{item.examples}</span></span><Arrow diagonal /></a>)}</div></div>
+    <div className="needs-compact"><div>{expertise.map((item, index) => <a className="text-link need-link" key={item.title} href={sitePath("#project-form")} aria-labelledby={`need-${index}`}><span className="need-copy"><span id={`need-${index}`} className="need-title">{item.title}</span><span className="need-examples">{item.examples}</span></span><Arrow diagonal /></a>)}</div></div>
   </section>;
 }
 
@@ -78,7 +72,7 @@ function Approach() {
   const stages = [
     { visual: 'quote' as const, label: 'Devis', title: process[0].title, text: process[0].text, output: process[0].output },
     { visual: 'design' as const, label: 'Rendu 3D · Dossier complet', title: process[1].title, text: process[1].text },
-    { visual: 'review' as const, label: 'Vérification', title: 'Vérification avec le client', text: process[1].output },
+    { visual: 'review' as const, label: 'Vérification', title: 'Échange avec le client', text: process[1].output },
     { visual: 'works' as const, label: 'Travaux', title: process[2].title, text: process[2].text, output: process[2].output },
   ];
   return <section id="approche" className="section container approach-section">
@@ -106,18 +100,24 @@ function About() {
   </section>;
 }
 
+// Contact : un appel à Ethan remplace le formulaire. L'ancre #project-form, visée par les
+// boutons de l'en-tête, des besoins et des fiches, désigne désormais cet appel à l'action.
+// Deux rangées : introduction et appel, puis informations pratiques et questions ; sur
+// mobile, l'appel suit directement l'introduction.
 function Contact() {
-  const draft = contact.mode === 'draft';
   return <section id="contact" className="section contact-section">
     <div className="container contact-layout">
-      <div className="contact-copy"><span className="eyebrow"><span>03</span>Votre projet</span><h2>{draft ? <>Donnons forme<br />à votre idée.</> : <>Parlons de<br />votre espace.</>}</h2><p>{draft ? 'Décrivez la pièce, vos envies et les contraintes que vous connaissez déjà. Vous pourrez télécharger un récapitulatif pour organiser vos idées.' : 'Décrivez l’espace et ce qui vous manque aujourd’hui. Votre projet peut encore être ouvert.'}</p>
-        <div className="contact-direct"><h3>Vous préférez en parler directement ?</h3><p>Échangez avec {ethanContact.name} pour préciser votre besoin.</p><a className="text-link" href={sitePath(ethanContact.href)}><span>Appeler {ethanContact.name}<span className="contact-number">{ethanContact.phone}</span></span><Arrow diagonal /></a></div>
-        {demoContent.enabled && <div className="contact-area"><h3>Zone d’intervention</h3><p>{demoContent.area.title}</p><p>{demoContent.area.detail}</p><span>Secteur d’exemple pour la maquette.</span><h3>Contact par email</h3><p className="demo-email">{demoContent.email}</p><span>Adresse fictive de présentation, sans réception.</span></div>}
-        <div className="questions">{questions.map(item => <details key={item.question}><summary>{item.question}<Arrow /></summary><p>{item.answer}</p></details>)}</div>
-        {site.email && <a className="text-link" href={sitePath('mailto:' + site.email)}>{site.email}<Arrow diagonal /></a>}
-        {site.phone && <a className="text-link" href={sitePath('tel:' + site.phone.replace(/\s/g, ''))}>{site.phone}</a>}
+      <div className="contact-copy"><span className="eyebrow"><span>03</span>Votre projet</span><h2>Parlons de<br />votre espace.</h2><p>Décrivez l’espace et ce qui vous manque aujourd’hui. Votre projet peut encore être ouvert.</p></div>
+      <div id="project-form" className="contact-call">
+        <h3>Appelez {ethanContact.name}</h3>
+        <p>Échangez avec {ethanContact.name} pour préciser votre besoin.</p>
+        <a className="button contact-call-button" href={sitePath(ethanContact.href)}><span>Appeler {ethanContact.name}<span className="contact-number">{ethanContact.phone}</span></span><Arrow diagonal /></a>
       </div>
-      <ContactForm />
+      {(demoContent.enabled || site.email) && <div className="contact-details">
+        {demoContent.enabled && <div className="contact-area"><h3>Zone d’intervention</h3><p>{demoContent.area.title}</p><p>{demoContent.area.detail}</p><span>Secteur d’exemple pour la maquette.</span><h3>Contact par email</h3><p className="demo-email">{demoContent.email}</p><span>Adresse fictive de présentation, sans réception.</span></div>}
+        {site.email && <a className="text-link" href={sitePath('mailto:' + site.email)}>{site.email}<Arrow diagonal /></a>}
+      </div>}
+      <div className="questions">{questions.map(item => <details key={item.question}><summary>{item.question}<Arrow /></summary><p>{item.answer}</p></details>)}</div>
     </div>
   </section>;
 }
@@ -150,7 +150,7 @@ function RenovationPage({ renovation }: { renovation: Renovation }) {
 function LegalPage({ privacy }: { privacy: boolean }) {
   const legal = demoContent.enabled ? demoContent.legal : site.legal;
   const items = [['Éditeur du site', legal.company], ['Statut', legal.status], ['Adresse', legal.address], ['Immatriculation', legal.registration], ['Directeur de publication', legal.publicationDirector], ['Hébergement', legal.hosting]];
-  return <><Header home={false} /><main id="main" className="legal-page container"><a className="text-link" href={sitePath("/")}>Retour à l’accueil<Arrow /></a><span className="eyebrow">Informations du site</span><h1>{privacy ? 'Confidentialité' : 'Mentions légales'}</h1><p className="legal-draft">Maquette fictive : les informations d’entreprise ci-dessous sont des exemples de présentation à remplacer dans la version définitive.</p>{privacy ? <><h2>Vos informations</h2><p>{site.contactEndpoint ? 'Le formulaire transmet les informations saisies au service configuré afin de traiter votre demande de projet.' : site.email ? 'Le formulaire prépare un message dans votre messagerie. La transmission a lieu uniquement lorsque vous envoyez ce message.' : 'Dans cette version du site, le formulaire ne transmet pas vos réponses à bymood. Il crée un récapitulatif directement dans votre navigateur, que vous pouvez télécharger. Vos coordonnées sont facultatives.'}</p><h2>Navigation et cookies</h2><p>Cette version du site n’utilise ni outil de mesure d’audience ni cookie publicitaire, et ne stocke pas localement vos réponses. La police et les images sont hébergées avec le site. L’hébergeur peut traiter certaines données techniques nécessaires à son fonctionnement.</p><h2>Responsable et contact</h2><p>{legal.company}<br />Contact relatif aux données : {legal.privacyContact}</p><h2>À préciser avant l’activation des demandes</h2><p>Avant d’activer l’envoi de demandes, cette page devra préciser le responsable du traitement, la base juridique, les destinataires, les durées de conservation et les modalités d’exercice des droits, selon les outils effectivement utilisés.</p><p>Durée de conservation : {legal.retention}</p></> : <><dl className="legal-details">{items.map(([key, value]) => <div key={key}><dt>{key}</dt><dd>{value}</dd></div>)}</dl><h2>Visuels et propriété intellectuelle</h2><p>Les compositions avant / après de salles de bains et les photographies des projets Paris, Grenoble et Toulouse présentent des prestations réalisées, statut confirmé par Ethan. Les photographies sont fournies par Ethan ; leurs crédits et droits de diffusion restent à documenter. Les noms des projets restent des intitulés de présentation et ne confirment pas à eux seuls leur localisation.</p><p>Les plans et rendus 3D des études HAVEN et NEMETO proviennent du portfolio d’Aliriza Bay. Ils illustrent un travail de conception et ne représentent pas des chantiers réalisés par bymood.</p><p>Les logos « bymood. » et « By. » constituent l’identité visuelle présentée sur ce site. L’identité de l’éditeur et les droits de diffusion restent à confirmer avant sa publication commerciale.</p></>}</main><Footer /></>;
+  return <><Header home={false} /><main id="main" className="legal-page container"><a className="text-link" href={sitePath("/")}>Retour à l’accueil<Arrow /></a><span className="eyebrow">Informations du site</span><h1>{privacy ? 'Confidentialité' : 'Mentions légales'}</h1><p className="legal-draft">Maquette fictive : les informations d’entreprise ci-dessous sont des exemples de présentation à remplacer dans la version définitive.</p>{privacy ? <><h2>Vos informations</h2><p>Ce site ne comporte pas de formulaire et ne collecte aucune information saisie. Pour parler d’un projet, vous appelez directement {ethanContact.name} au {ethanContact.phone}.</p><h2>Navigation et cookies</h2><p>Cette version du site n’utilise ni outil de mesure d’audience ni cookie publicitaire, et ne stocke pas localement vos réponses. La police et les images sont hébergées avec le site. L’hébergeur peut traiter certaines données techniques nécessaires à son fonctionnement.</p><h2>Responsable et contact</h2><p>{legal.company}<br />Contact relatif aux données : {legal.privacyContact}</p><h2>À préciser avant l’activation des demandes</h2><p>Si un envoi de demandes en ligne est ajouté, cette page devra préciser le responsable du traitement, la base juridique, les destinataires, les durées de conservation et les modalités d’exercice des droits, selon les outils effectivement utilisés.</p><p>Durée de conservation : {legal.retention}</p></> : <><dl className="legal-details">{items.map(([key, value]) => <div key={key}><dt>{key}</dt><dd>{value}</dd></div>)}</dl><h2>Visuels et propriété intellectuelle</h2><p>Les compositions avant / après de salles de bains et les photographies des projets Paris, Grenoble et Toulouse présentent des prestations réalisées, statut confirmé par Ethan. Les photographies sont fournies par Ethan ; leurs crédits et droits de diffusion restent à documenter. Les noms des projets restent des intitulés de présentation et ne confirment pas à eux seuls leur localisation.</p><p>Les plans et rendus 3D des études HAVEN et NEMETO proviennent du portfolio d’Aliriza Bay. Ils illustrent un travail de conception et ne représentent pas des chantiers réalisés par bymood.</p><p>Les logos « bymood. » et « By. » constituent l’identité visuelle présentée sur ce site. L’identité de l’éditeur et les droits de diffusion restent à confirmer avant sa publication commerciale.</p></>}</main><Footer /></>;
 }
 
 function SiteContent({ path = '/' }: { path?: string }) {

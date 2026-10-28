@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 
 const source = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const repository = 'https://github.com/ethancohhh/bymood-site.git';
-const siteUrl = 'https://ethancohhh.github.io/bymood-site/';
+const siteUrl = 'https://bymood.fr/';
 
 function run(command, args, cwd = source, options = {}) {
   const result = spawnSync(command, args, {

@@ -390,17 +390,6 @@
 .annotation-number { font-size: 12px; color: var(--color-taupe); margin-right: 14px; }
 .annotation-notes details > p { margin-block: 8px 14px; font-size: 14px; line-height: 1.8; }
 
-.contact-form { scroll-margin-top: 32px; }
-.project-selection { border: 1px solid var(--color-line-dark); padding: 18px 20px; margin-bottom: 28px; }
-.project-selection p { color: var(--color-on-dark); }
-.project-selection p > span { display: block; font-size: 12px; margin-bottom: 6px; }
-.project-selection strong { font-family: var(--font-heading); font-style: normal; font-size: 20px; line-height: 1.4; display: block; }
-.selection-change { display: inline-flex; align-items: center; justify-content: space-between; gap: 18px; min-height: 44px; background: transparent; border: 0; padding: 8px 0 0; color: var(--color-on-dark); text-decoration: underline; text-underline-offset: 4px; font-size: 13px; }
-.form-status.has-result { border: 1px solid var(--color-line-dark); padding: 24px; margin-top: 28px; animation: detail-enter 240ms ease; }
-.contact-form .form-status h3 { font-size: 21px; line-height: 1.4; color: var(--color-on-dark); margin-bottom: 16px; }
-.contact-form .form-status p { color: var(--color-on-dark); font-size: 14px; }
-.contact-form .form-status .button { margin-top: 20px; background: var(--color-paper); color: var(--color-primary); border-color: var(--color-paper); }
-
 .image-viewer { position: fixed; width: min(1280px, calc(100% - 48px)); max-width: none; height: min(900px, calc(100dvh - 48px)); max-height: none; padding: 0; border: 1px solid var(--color-line); background: var(--color-paper); color: var(--color-primary); overflow: hidden; }
 .image-viewer::backdrop { background: rgb(12 29 37 / .86); }
 .image-viewer[open] { animation: viewer-enter 200ms ease; }
@@ -444,7 +433,6 @@
   .viewer-toolbar > div { gap: 8px; }
   .viewer-bottom { flex-direction: column; align-items: flex-start; gap: 12px; padding: 12px; }
   .viewer-pagination { align-self: flex-end; }
-  .form-status.has-result { padding: 18px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .image-frame img { transform: none !important; }

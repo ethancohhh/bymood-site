@@ -1,6 +1,6 @@
 import { chromium } from 'playwright';
 import AxeBuilder from '@axe-core/playwright';
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, writeFile } from 'node:fs/promises';
 import assert from 'node:assert/strict';
 
 const base = process.env.QA_URL || 'http://127.0.0.1:4173';
@@ -97,7 +97,7 @@ try {
     assert.equal(await page.locator('.hero-actions a').innerText(), 'Catalogue');
     assert.equal(await page.locator('.hero-actions a').getAttribute('href'), new URL(base + '/catalogue/').pathname);
     assert.equal(await page.locator('nav a').filter({ hasText: 'Réalisations' }).count(), 0);
-    const smallLabels = await page.locator('.field label, .form-privacy, .document-comparison figcaption, .need-examples').evaluateAll(elements => elements.filter(element => parseFloat(getComputedStyle(element).fontSize) < 12).map(element => element.className));
+    const smallLabels = await page.locator('.document-comparison figcaption, .need-examples').evaluateAll(elements => elements.filter(element => parseFloat(getComputedStyle(element).fontSize) < 12).map(element => element.className));
     assert.deepEqual(smallLabels, [], 'Functional text must remain readable');
     assert.ok(geometry.scroll <= width, `Overflow at ${width}: ${geometry.scroll}`);
     const initialMetrics = await page.evaluate(() => window.__qaMetrics);
@@ -109,7 +109,10 @@ try {
     await page.locator('#approche').screenshot({ path: `qa/approche-${width}.png` });
     await page.locator('.contact-copy').screenshot({ path: `qa/contact-copy-${width}.png` });
     assert.equal(await page.locator('a[href*="example.com"], a[href*="bymood.example"]').count(), 0, 'No fictitious contact destinations');
-    assert.equal(await page.locator('.contact-direct a').getAttribute('href'), 'tel:+33666513040');
+    // Contact : un appel à Ethan, sans formulaire.
+    assert.equal(await page.locator('form').count(), 0, 'No contact form');
+    assert.equal(await page.locator('#project-form a').getAttribute('href'), 'tel:+33666513040');
+    assert.match(await page.locator('#project-form a').innerText(), /Appeler Ethan[\s\S]*06 66 51 30 40/);
     const audit = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
     reports.push({ width, errors, initialMetrics, violations: audit.violations.map(item => ({ id: item.id, impact: item.impact, description: item.description, nodes: item.nodes.map(node => ({ target: node.target, summary: node.failureSummary })) })) });
     assert.deepEqual(errors, [], 'Browser errors');
@@ -121,20 +124,11 @@ try {
       await page.keyboard.press('Escape');
       assert.equal(await page.getByRole('button', { name: 'Menu', exact: true }).getAttribute('aria-expanded'), 'false');
       await page.getByRole('button', { name: 'Menu', exact: true }).click();
-      await page.locator('#main-navigation').getByRole('link', { name: 'Préparer mon projet', exact: true }).click();
+      await page.locator('#main-navigation').getByRole('link', { name: 'Parler de votre projet', exact: true }).click();
       await page.waitForTimeout(300);
       assert.equal(await page.getByRole('button', { name: 'Menu', exact: true }).getAttribute('aria-expanded'), 'false');
     }
-    await page.locator('#project').selectOption('Bibliothèque / rangement');
-    const clippedOptions = await page.locator('select').evaluateAll(selects => selects.flatMap(select => {
-      const style = getComputedStyle(select);
-      const canvas = document.createElement('canvas').getContext('2d');
-      canvas.font = `${style.fontStyle} ${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
-      const available = select.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight) - 20;
-      return Array.from(select.options).filter(option => canvas.measureText(option.text).width > available).map(option => ({ field: select.id, text: option.text, available }));
-    }));
-    assert.deepEqual(clippedOptions, [], `Select labels must fit at ${width}`);
-    await page.locator('.contact-form').screenshot({ path: `qa/form-${width}.png` });
+    await page.locator('.contact-call').screenshot({ path: `qa/contact-call-${width}.png` });
     if (width === 1440) {
       for (const [label, value] of [
         ['Créer des rangements adaptés à votre pièce', 'Bibliothèque / rangement'],
@@ -142,7 +136,7 @@ try {
         ['Repenser l’aménagement d’une pièce', 'Rénovation intérieure'],
       ]) {
         await page.getByRole('link', { name: label, exact: true }).click();
-        assert.equal(await page.locator('#project').inputValue(), value);
+        assert.equal(new URL(page.url()).hash, '#project-form', value);
       }
       assert.equal(await page.getByRole('slider').count(), 0, 'A plan and a perspective must not use an before/after slider');
       assert.equal(await page.locator('.catalogue-card, .renovation-card, .study-card').count(), 0, 'Detailed galleries belong to the catalogue, not the homepage');
@@ -150,31 +144,6 @@ try {
       assert.equal(await page.locator('.process-step').count(), 4);
       assert.deepEqual(await page.locator('main > section[id]').evaluateAll(sections => sections.map(section => section.id)), ['accueil', 'approche', 'expertise', 'a-propos', 'contact']);
       assert.equal(await page.locator('#home-needs-title').innerText(), 'Par où commencer');
-      await page.getByRole('link', { name: 'Aménager un espace pour un nouvel usage', exact: true }).click();
-      assert.equal(await page.locator('#project').inputValue(), 'Optimisation d’espace');
-      await page.locator('#form-notice').waitFor({ state: 'visible' });
-      assert.ok((await page.locator('#form-notice').innerText()).includes('il n’envoie pas de demande à notre équipe'));
-      assert.equal(await page.locator('#email').evaluate(field => field.required), false);
-      await page.getByRole('button', { name: 'Créer mon récapitulatif' }).click();
-      await page.getByRole('alert').waitFor();
-      await page.locator('#name').fill('Test visuel');
-      await page.locator('#email').fill('test@example.com');
-      await page.locator('#city').fill('Versailles');
-      await page.locator('#message').fill('Étudier un bureau intégré avec rangements.');
-      await page.getByRole('button', { name: 'Créer mon récapitulatif' }).click();
-      await page.getByRole('link', { name: 'Télécharger le récapitulatif' }).waitFor();
-      assert.ok((await page.getByRole('status').innerText()).includes('Aucune demande n’a été envoyée à bymood.'));
-      const downloadPromise = page.waitForEvent('download');
-      await page.getByRole('link', { name: 'Télécharger le récapitulatif' }).click();
-      const download = await downloadPromise;
-      assert.equal(download.suggestedFilename(), 'mon-projet-renovation.txt');
-      const downloadedText = await readFile(await download.path(), 'utf8');
-      assert.ok(downloadedText.includes('Optimisation d’espace') && downloadedText.includes('bureau intégré'));
-      await page.locator('#message').fill('Une nouvelle idée, sans coordonnées.');
-      assert.equal(await page.getByRole('link', { name: 'Télécharger le récapitulatif' }).count(), 0, 'An edited draft must not keep a stale download');
-      await page.locator('#name').fill(''); await page.locator('#email').fill(''); await page.locator('#city').fill('');
-      await page.getByRole('button', { name: 'Créer mon récapitulatif' }).click();
-      await page.getByRole('link', { name: 'Télécharger le récapitulatif' }).waitFor();
       await page.locator('.questions summary').first().click();
       assert.equal(await page.locator('.questions details').first().evaluate(details => details.open), true);
       await page.screenshot({ path: 'qa/contact.png' });
@@ -226,7 +195,6 @@ try {
       for (const [slug, type] of [['coin-tv-rangements', 'Bibliothèque / rangement'], ['piece-multifonction', 'Optimisation d’espace'], ['salle-de-bains', 'Salle d’eau']]) {
         await page.locator('#explore-service').selectOption(slug);
         await page.locator(`#${slug} .service-cta`).click();
-        assert.equal(await page.locator('#project').inputValue(), type);
         assert.equal(new URL(page.url()).hash, '#project-form');
       }
       await prepareCapture(page);
@@ -255,8 +223,8 @@ try {
   const page = await browser.newPage();
   await page.goto(base, { waitUntil: 'networkidle' });
   assert.ok(await page.locator('.reveal-pending').count() > 0, 'Scroll enhancement should activate below the fold');
-  await page.locator('#name').focus();
-  assert.equal(await page.locator('.contact-form').evaluate(form => getComputedStyle(form).opacity), '1', 'Keyboard focus reveals its content immediately');
+  await page.locator('#project-form a').focus();
+  assert.equal(await page.locator('.contact-call').evaluate(block => getComputedStyle(block).opacity), '1', 'Keyboard focus reveals its content immediately');
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.waitForFunction(() => document.querySelectorAll('.reveal-pending').length === 0);
   assert.equal(await page.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior), 'auto');
@@ -270,7 +238,7 @@ try {
   assert.equal(await staticPage.locator('.renovation-card, .study-card').count(), 0);
   assert.equal(await staticPage.locator('.prototype-notice').count(), 0);
   assert.equal(await staticPage.locator('.reveal-pending').count(), 0);
-  assert.equal(await staticPage.getByRole('button', { name: 'Créer mon récapitulatif' }).isDisabled(), true, 'Without JavaScript, answers must not be submitted in the URL');
+  assert.equal(await staticPage.locator('#project-form a').getAttribute('href'), 'tel:+33666513040', 'Without JavaScript, the call stays available');
   await staticPage.locator('.hero-actions a').click();
   await staticPage.waitForURL(base + '/catalogue/');
   await staticPage.locator('.catalogue-renovation-card').first().waitFor();
@@ -279,7 +247,7 @@ try {
   await staticPage.waitForURL(base + '/prestations/#coin-tv-rangements');
   await staticPage.locator('.service-detail').first().waitFor();
   assert.equal(await staticPage.locator('.service-detail').count(), 3);
-  assert.equal(await staticPage.getByRole('button', { name: 'Créer mon récapitulatif' }).isDisabled(), true);
+  assert.equal(await staticPage.locator('form').count(), 0);
   await noJs.close();
 } finally {
   await writeFile('qa/report.json', JSON.stringify(reports, null, 2));

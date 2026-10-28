@@ -11,12 +11,8 @@ export const brand = {
 // Ajouter uniquement des destinations officielles confirmées.
 export const socialLinks: { label: string; href: string }[] = [];
 export const ethanContact = { name: 'Ethan', phone: '06 66 51 30 40', href: 'tel:+33666513040' };
-export const contactMode = site.contactEndpoint ? 'endpoint' : site.email ? 'email' : 'draft';
-export const contact = {
-  mode: contactMode,
-  cta: contactMode === 'draft' ? 'Préparer mon projet' : 'Parler de votre projet',
-  submit: contactMode === 'draft' ? 'Créer mon récapitulatif' : contactMode === 'email' ? 'Préparer mon email' : 'Présenter mon projet',
-};
+// Les demandes passent par un appel à Ethan : aucun formulaire sur le site.
+export const contact = { cta: 'Parler de votre projet' };
 
 // Ancres conservées pour les liens des versions précédentes.
 export const navigation = [

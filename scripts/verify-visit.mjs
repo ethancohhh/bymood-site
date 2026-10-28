@@ -35,14 +35,7 @@ try {
     assert.equal(await pin.getAttribute('aria-expanded'), 'false');
     await page.locator('#coin-tv-rangements .service-cta').click();
     assert.equal(new URL(page.url()).hash, '#project-form');
-    assert.match(await page.locator('.project-selection').innerText(), /Coin TV & rangements/);
-    assert.equal(await page.locator('#project').inputValue(), 'Bibliothèque / rangement');
-    await page.getByRole('button', { name: 'Modifier le projet' }).click();
-    assert.equal(await page.locator('#project').evaluate(element => element === document.activeElement), true);
-    await page.locator('#project').selectOption('Salle d’eau');
-    assert.match(await page.locator('.project-selection').innerText(), /Salle d’eau/);
-    assert.doesNotMatch(await page.locator('.project-selection').innerText(), /Coin TV/);
-    await page.locator('#project-form').screenshot({ path: `qa/visit-selection-${width}.png` });
+    await page.locator('#project-form').screenshot({ path: `qa/visit-call-${width}.png` });
     await navigate('coin-tv-rangements');
     await page.locator('#coin-tv-rangements .annotation-heading a').click();
     const modal = page.getByRole('dialog');
@@ -94,15 +87,9 @@ try {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   assert.equal(await universe.locator('.image-frame img').evaluate(element => getComputedStyle(element).transform), 'none');
   await page.goto(base + '/#project-form');
-  await page.locator('#project').selectOption('Optimisation d’espace');
-  await page.locator('#message').fill('Créer un coin bureau près de la fenêtre.');
-  await page.getByRole('button', { name: 'Créer mon récapitulatif' }).click();
-  await page.getByRole('link', { name: 'Télécharger le récapitulatif' }).waitFor();
-  assert.match(await page.getByRole('status').innerText(), /Aucune demande n’a été envoyée/);
-  await page.getByRole('status').screenshot({ path: 'qa/visit-result.png' });
-  await page.locator('#message').fill('Une autre idée.');
-  assert.equal(await page.locator('.has-result').count(), 0);
-  checks.push({ scenario: 'Menu animé, resize, survol, réduction des mouvements et récapitulatif' });
+  assert.equal(await page.locator('#project-form a').getAttribute('href'), 'tel:+33666513040');
+  await page.locator('#project-form').screenshot({ path: 'qa/visit-result.png' });
+  checks.push({ scenario: 'Menu animé, resize, survol, réduction des mouvements et appel à Ethan' });
   await page.close();
 
   for (const width of [375, 1440]) {
@@ -136,7 +123,7 @@ try {
   await staticPage.locator('#piece-multifonction .annotated-stage a').click();
   const popup = await popupPromise; await popup.waitForLoadState();
   assert.match(popup.url(), /haven-bedroom-1600.webp/); await popup.close();
-  assert.equal(await staticPage.getByRole('button', { name: 'Créer mon récapitulatif' }).isDisabled(), true);
+  assert.equal(await staticPage.locator('form').count(), 0);
   checks.push({ scenario: 'Sans JavaScript : ancres, explications et agrandissement de secours' });
   await noJs.close();
 } finally {

@@ -10,9 +10,6 @@ import { ServiceNavigation } from './ServiceNavigation';
 import { AnnotatedImage } from './AnnotatedImage';
 
 export function ServicesPage({ contactSection }: { contactSection: ReactNode }) {
-  function chooseProject(type: string, label: string) {
-    window.dispatchEvent(new CustomEvent('project-interest', { detail: { type, label } }));
-  }
   return <><Header home={false} currentPath="/prestations/" /><main id="main" className="services-page">
     <div className="container services-intro">
       <a className="text-link" href={sitePath("/catalogue/")}><Arrow />Retour au catalogue</a>
@@ -26,7 +23,7 @@ export function ServicesPage({ contactSection }: { contactSection: ReactNode }) 
         <div className="service-heading"><span className="eyebrow">0{index + 1} · {service.status === 'completed' ? 'Prestation réalisée' : 'Inspiration d’aménagement'}</span><h2 id={`title-${service.slug}`}>{service.title}</h2><p>{service.summary}</p></div>
         <div className="service-layout">
           <figure className="service-media">{service.image.startsWith('haven-') ? <AnnotatedImage name={service.image} alt={service.alt} group="services" caption={service.caption} /> : <a href={sitePath(`/images/${service.image}-1600.webp`)} target="_blank" rel="noopener" data-viewer="services" data-alt={service.alt} data-caption={service.caption} aria-label={`Agrandir : ${service.title}`}><Picture name={service.image} alt={service.alt} /></a>}<figcaption>{service.caption}</figcaption></figure>
-          <div className="service-description"><span className="service-reading-label">Le projet en bref</span><h3>{service.status === 'completed' ? 'Un besoin similaire ?' : 'Votre besoin'}</h3><p>{service.need}</p><h3>{service.status === 'completed' ? 'La transformation réalisée' : 'La transformation envisagée'}</h3><p>{service.example}</p><span className="service-example-note">{service.status === 'completed' ? 'Prestation réalisée. Un projet similaire nécessite un périmètre et un devis adaptés à votre logement.' : 'Inspiration issue d’une étude 3D ; scénario d’aménagement à adapter à votre logement.'}</span><a className="button service-cta" href={sitePath("#project-form")} onClick={() => chooseProject(service.type, service.title)}>{contact.cta}<span className="sr-only"> : {service.title}</span><Arrow diagonal /></a></div>
+          <div className="service-description"><span className="service-reading-label">Le projet en bref</span><h3>{service.status === 'completed' ? 'Un besoin similaire ?' : 'Votre besoin'}</h3><p>{service.need}</p><h3>{service.status === 'completed' ? 'La transformation réalisée' : 'La transformation envisagée'}</h3><p>{service.example}</p><span className="service-example-note">{service.status === 'completed' ? 'Prestation réalisée. Un projet similaire nécessite un périmètre et un devis adaptés à votre logement.' : 'Inspiration issue d’une étude 3D ; scénario d’aménagement à adapter à votre logement.'}</span><a className="button service-cta" href={sitePath("#project-form")}>{contact.cta}<span className="sr-only"> : {service.title}</span><Arrow diagonal /></a></div>
         </div>
         <div className="service-scope">
           <div><h3>Ce que peut comprendre l’accompagnement</h3><ul>{service.included.map(item => <li key={item}>{item}</li>)}</ul></div>

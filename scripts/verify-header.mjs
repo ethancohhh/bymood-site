@@ -19,7 +19,7 @@ try {
       await page.getByRole('button', { name: 'Menu', exact: true }).click();
       assert.equal(await page.locator('.catalogue-panel a:visible').count(), 3);
       assert.equal(await page.evaluate(() => document.body.style.overflow), 'hidden');
-      const cta = nav.getByRole('link', { name: 'Préparer mon projet', exact: true });
+      const cta = nav.getByRole('link', { name: 'Parler de votre projet', exact: true });
       await cta.focus(); await page.keyboard.press('Tab');
       assert.equal(await page.getByRole('button', { name: 'Fermer', exact: true }).evaluate(e => e === document.activeElement), true);
       await page.keyboard.press('Shift+Tab'); assert.equal(await cta.evaluate(e => e === document.activeElement), true);
@@ -61,7 +61,7 @@ try {
     await page.waitForURL(base + '/#approche');
     assert.ok(await page.locator('#approche').evaluate(e => e.getBoundingClientRect().top >= document.querySelector('header').getBoundingClientRect().bottom - 2));
     if (width <= 900) await page.getByRole('button', { name: 'Menu', exact: true }).click();
-    await nav.getByRole('link', { name: 'Préparer mon projet', exact: true }).click();
+    await nav.getByRole('link', { name: 'Parler de votre projet', exact: true }).click();
     await page.waitForURL(base + '/#project-form');
     assert.ok(await page.locator('#project-form').evaluate(e => e.getBoundingClientRect().top >= document.querySelector('header').getBoundingClientRect().bottom - 2));
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
