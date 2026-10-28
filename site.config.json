@@ -2,7 +2,7 @@
   "name": "bymood.",
   "nameStatus": "Identité visuelle du site — logos fournis par Ethan ; identité légale à renseigner",
   "url": "https://bymood.fr/",
-  "indexing": false,
+  "indexing": true,
   "email": "",
   "phone": "",
   "contactEndpoint": "",
