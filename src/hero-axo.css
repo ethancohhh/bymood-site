@@ -61,9 +61,9 @@
   .axo-guides { animation: axo-appear 700ms ease 2300ms both; }
   .hero-axo.is-paused * { animation-play-state: paused; }
 }
-/* Arbres : léger balancement, sur grand écran seulement (le quartier est masqué, donc coûteux à repeindre). */
+/* Arbres : un seul balancement de 5 s à l'arrivée, puis repos (WCAG 2.2.2), sur grand écran seulement (le quartier est masqué, donc coûteux à repeindre). */
 @media (prefers-reduced-motion: no-preference) and (min-width: 1024px) and (hover: hover) {
-  .axo-canopy { animation: axo-sway 7s ease-in-out infinite alternate; }
+  .axo-canopy { animation: axo-sway 5s ease-in-out both; }
 }
 @media (prefers-reduced-motion: reduce) {
   .axo-level-shift, .axo-city-shift { transform: none; transition: none; }
@@ -76,7 +76,7 @@
   65% { fill-opacity: 0; }
   to { stroke-dasharray: 1; stroke-dashoffset: 0; fill-opacity: 1; }
 }
-@keyframes axo-sway { from { transform: rotate(-.7deg); } to { transform: rotate(.7deg); } }
+@keyframes axo-sway { 25% { transform: rotate(-.7deg); } 75% { transform: rotate(.7deg); } }
 
 /* Bannière du hero. La maison occupe 61 % à 87 % de la largeur du dessin (centre à 74 %).
    Écran large : le dessin remplit la hauteur du hero, calé à droite, derrière le texte ;

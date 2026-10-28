@@ -12,7 +12,7 @@ export const brand = {
 export const socialLinks: { label: string; href: string }[] = [];
 export const ethanContact = { name: 'Ethan', phone: '06 66 51 30 40', href: 'tel:+33666513040' };
 // Les demandes passent par un appel à Ethan : aucun formulaire sur le site.
-export const contact = { cta: 'Parler de votre projet' };
+export const contact = { cta: 'Contact' };
 
 // Ancres conservées pour les liens des versions précédentes.
 export const navigation = [
@@ -92,7 +92,7 @@ export const questions = [
 ];
 
 // Prestations réalisées : statut confirmé par Ethan le 23 octobre 2026.
-// Crédits photographiques et localisations précises restent à documenter.
+// Photographies de bymood. (confirmé par Ethan le 28 octobre 2026) ; localisations précises à documenter.
 export type RenovationPair = {
   title: string; description: string;
   before: { image: string; alt: string };

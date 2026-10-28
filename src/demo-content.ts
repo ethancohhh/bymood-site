@@ -1,20 +1,21 @@
 /** Données de maquette et pistes d’aménagement ; statuts des visuels explicités par entrée. */
 export const demoContent = {
   enabled: true,
-  notice: 'Maquette de présentation · Informations d’entreprise et coordonnées d’exemple à adapter.',
+  notice: 'Zone d’intervention et adresse email d’exemple, à confirmer.',
   area: {
     title: 'Paris et l’ouest parisien',
     detail: 'Paris, Versailles, Saint-Germain-en-Laye et les communes voisines.',
   },
   email: 'contact@bymood.example',
   legal: {
-    company: 'bymood. — entreprise fictive de démonstration',
-    status: 'Entreprise de rénovation et d’aménagement — exemple de présentation',
-    address: 'Adresse d’exemple · Versailles, Yvelines',
-    registration: 'Identifiant professionnel à remplacer dans la version définitive',
-    publicationDirector: 'Responsable de la maquette bymood.',
-    hosting: 'GitHub Pages · GitHub, Inc., San Francisco, États-Unis',
-    privacyContact: 'contact@bymood.example — adresse fictive, sans réception',
+    company: 'Aliriza Bay, entrepreneur individuel (EI), exerçant sous le nom bymood.',
+    status: 'Entreprise individuelle (micro-entreprise)',
+    address: '3 rue du Labyrinthe, 91350 Grigny',
+    registration: 'SIRET 130 994 403 00017',
+    publicationDirector: 'Ethan Cohen',
+    contact: 'Ethan · 06 66 51 30 40',
+    hosting: 'GitHub Pages · GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis · +1 877 448 4820',
+    privacyContact: 'Ethan · 06 66 51 30 40',
     retention: 'Aucune donnée saisie : le site ne comporte pas de formulaire',
   },
 };
@@ -48,7 +49,7 @@ export const exampleServices = [
     need: 'La salle de bains ne correspond plus à vos usages ou à vos goûts. Vous souhaitez préciser ce qui peut être conservé, remplacé ou déplacé.',
     example: 'La baignoire sous la fenêtre en arche est remplacée par une douche vitrée. Les revêtements beiges veinés, la porte en bois clair et les équipements noirs composent la nouvelle ambiance.',
     image: 'renovation-3', alt: 'Prestation réalisée : salle de bains avant et après le remplacement d’une baignoire par une douche.',
-    caption: 'Prestation réalisée · Salle de bains avant / après · Photographies fournies par Ethan.',
+    caption: 'Prestation réalisée · Salle de bains avant / après · Photographies bymood.',
     included: ['Échange sur les usages, les équipements et les contraintes connues.', 'Proposition d’agencement et sélection des matériaux et équipements.', 'Définition des travaux, des intervenants et des étapes au devis.'],
     limits: 'Les réseaux, l’étanchéité, la ventilation et les contraintes du bâtiment doivent être examinés avant de fixer le périmètre des travaux.',
     budget: 'État de l’existant, déplacement des équipements, préparation des supports, matériaux et accès au chantier.',

@@ -79,6 +79,8 @@ export function Header({ home = true, currentPath = '' }: { home?: boolean; curr
         <span>{open ? 'Fermer' : 'Menu'}</span><span className="menu-lines" aria-hidden="true"><i /><i /></span>
       </button>
       <nav ref={nav} id="main-navigation" className={`navigation ${enhanced ? 'is-enhanced' : ''} ${open ? 'is-open' : ''}`} aria-label="Navigation principale" inert={enhanced && mobile && !open ? true : undefined}>
+        {navigation.filter(([, id]) => id !== '/catalogue/').map(([label, id]) => <a key={id} href={sitePath(href(id))} aria-current={home && active === id ? 'location' : undefined} onClick={close}>{label}</a>)}
+        <a href={sitePath(href('project-form'))} aria-current={home && active === 'contact' ? 'location' : undefined} onClick={close}>{contact.cta}</a>
         <div className="catalogue-navigation" ref={catalogue} onBlur={event => {
           if (!mobile && !event.currentTarget.contains(event.relatedTarget as Node | null)) setCatalogueOpen(false);
         }}>
@@ -91,8 +93,6 @@ export function Header({ home = true, currentPath = '' }: { home?: boolean; curr
             </a>)}
           </div>
         </div>
-        {navigation.filter(([, id]) => id !== '/catalogue/').map(([label, id]) => <a key={id} href={sitePath(href(id))} aria-current={home && active === id ? 'location' : undefined} onClick={close}>{label}</a>)}
-        <a className="nav-cta" href={sitePath(href('project-form'))} onClick={close}>{contact.cta}<Arrow diagonal /></a>
       </nav>
       <span className="header-ruler" aria-hidden="true" />
     </header>

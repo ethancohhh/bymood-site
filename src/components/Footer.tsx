@@ -10,7 +10,7 @@ export function Footer() {
     <SocialLinks />
     <div className="footer-bottom"><nav aria-label="Navigation de pied de page">{navigation.map(([label, id]) => <a key={id} href={sitePath(id.startsWith('/') ? id : `/#${id}`)}>{label}</a>)}</nav><div className="legal-links"><a href={sitePath("/mentions-legales/")}>Mentions légales</a><a href={sitePath("/confidentialite/")}>Confidentialité</a></div></div>
     {site.email && <a className="footer-contact" href={sitePath(`mailto:${site.email}`)}>{site.email}</a>}
-    {demoContent.enabled && <p className="footer-note">Maquette de présentation · Informations d’entreprise d’exemple.</p>}
+    {demoContent.enabled && <p className="footer-note">{demoContent.notice}</p>}
     <p className="footer-note">© 2026 {site.name} · Études de conception : Aliriza Bay.</p>
   </footer>;
 }

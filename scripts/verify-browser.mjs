@@ -124,7 +124,7 @@ try {
       await page.keyboard.press('Escape');
       assert.equal(await page.getByRole('button', { name: 'Menu', exact: true }).getAttribute('aria-expanded'), 'false');
       await page.getByRole('button', { name: 'Menu', exact: true }).click();
-      await page.locator('#main-navigation').getByRole('link', { name: 'Parler de votre projet', exact: true }).click();
+      await page.locator('#main-navigation').getByRole('link', { name: 'Contact', exact: true }).click();
       await page.waitForTimeout(300);
       assert.equal(await page.getByRole('button', { name: 'Menu', exact: true }).getAttribute('aria-expanded'), 'false');
     }

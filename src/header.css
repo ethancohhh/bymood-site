@@ -1,4 +1,4 @@
-/* Navigation : un cartouche continu, un seul bouton principal. */
+/* Navigation : un cartouche continu, un seul bouton principal (Catalogue). */
 :root { --header-height: 100px; }
 html { scroll-padding-top: calc(var(--header-height) + 24px); }
 html.has-service-nav { scroll-padding-top: calc(var(--header-height) + 110px); }
@@ -17,19 +17,16 @@ html.has-service-nav { scroll-padding-top: calc(var(--header-height) + 110px); }
 .header-ruler::after { right: -5px; }
 .navigation { display: flex; align-items: center; gap: clamp(20px, 2.2vw, 32px); font: 400 13px/1.5 var(--font-technical); }
 .navigation > a, .nav-catalogue { position: relative; display: inline-flex; align-items: center; min-height: 44px; white-space: nowrap; }
-.navigation > a:not(.nav-cta)::after, .nav-catalogue::after { content: ''; position: absolute; height: 1px; left: 0; right: 0; bottom: 7px; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform 200ms ease; }
+.navigation > a::after, .nav-catalogue::after { content: ''; position: absolute; height: 1px; left: 0; right: 0; bottom: 7px; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform 200ms ease; }
 .navigation > a[aria-current]::after, .nav-catalogue[aria-current]::after,
-.navigation > a:not(.nav-cta):hover::after, .nav-catalogue:hover::after { transform: scaleX(1); }
-.nav-cta { display: inline-flex; align-items: center; justify-content: space-between; gap: 14px; padding: 13px 17px; min-height: 48px; border: 1px solid var(--color-primary); border-radius: 2px; background: var(--color-primary); color: var(--color-paper); transition: background 200ms ease; }
-.nav-cta:hover { background: var(--color-primary-hover); }
-.nav-cta .arrow { width: 18px; }
-.nav-cta:hover .arrow { transform: translate(2px, -2px); }
+.navigation > a:hover::after, .nav-catalogue:hover::after { transform: scaleX(1); }
 .catalogue-navigation { position: relative; }
-.catalogue-control { display: flex; align-items: center; gap: 2px; }
-.catalogue-toggle { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; background: transparent; }
+.catalogue-control { display: flex; align-items: center; gap: 2px; min-height: 48px; padding-left: 17px; border: 1px solid var(--color-primary); border-radius: 2px; background: var(--color-primary); color: var(--color-paper); transition: background 200ms ease; }
+.catalogue-control:hover { background: var(--color-primary-hover); }
+.catalogue-toggle { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; background: transparent; color: inherit; }
 .catalogue-toggle .arrow { width: 17px; height: 17px; }
 .catalogue-toggle[aria-expanded='true'] .arrow { transform: rotate(180deg); }
-.catalogue-panel { position: absolute; left: -22px; top: calc(100% + 12px); width: 370px; padding: 8px 20px; background: var(--color-paper); border: 1px solid var(--color-line); border-top: 2px solid var(--color-primary); }
+.catalogue-panel { position: absolute; right: 0; top: calc(100% + 12px); width: 370px; padding: 8px 20px; background: var(--color-paper); border: 1px solid var(--color-line); border-top: 2px solid var(--color-primary); }
 .catalogue-panel[hidden], .catalogue-toggle[hidden], .menu-toggle[hidden] { display: none; }
 .catalogue-panel > a { display: grid; grid-template-columns: 24px minmax(0, 1fr) 18px; align-items: center; gap: 14px; min-height: 88px; padding-block: 16px; border-bottom: 1px solid var(--color-line); }
 .catalogue-panel > a:last-child { border-bottom: 0; }
@@ -58,7 +55,8 @@ html.has-service-nav { scroll-padding-top: calc(var(--header-height) + 110px); }
   .navigation { display: none; }
   .navigation.is-enhanced { display: flex; position: fixed; inset: var(--header-height) 0 0; flex-direction: column; align-items: stretch; justify-content: flex-start; gap: 0; padding: 20px var(--gutter) 32px; background: var(--color-paper); overflow-y: auto; overscroll-behavior: contain; visibility: hidden; opacity: 0; transform: translateY(-8px); pointer-events: none; transition: opacity 220ms ease, transform 220ms ease, visibility 0s 220ms; }
   .navigation.is-enhanced.is-open { visibility: visible; opacity: 1; transform: none; pointer-events: auto; transition-delay: 0s; }
-  .catalogue-control { border-bottom: 1px solid var(--color-line); }
+  .catalogue-control { min-height: 0; padding-left: 0; border: 0; border-bottom: 1px solid var(--color-line); border-radius: 0; background: transparent; color: inherit; }
+  .catalogue-control:hover { background: transparent; }
   .nav-catalogue { min-height: 48px; font-size: 18px; }
   .catalogue-toggle { display: none; }
   .catalogue-panel { position: static; width: auto; padding: 4px 0 12px; border: 0; animation: none !important; }
@@ -66,10 +64,9 @@ html.has-service-nav { scroll-padding-top: calc(var(--header-height) + 110px); }
   .catalogue-panel > a:last-child { border-bottom: 1px solid var(--color-line); }
   .catalogue-nav-title { font-size: 13px; }
   .catalogue-nav-description { margin-top: 3px; }
-  .navigation > a:not(.nav-cta) { min-height: 56px; border-bottom: 1px solid var(--color-line); font-size: 16px; }
-  .navigation > a:not(.nav-cta)::after, .nav-catalogue::after { display: none; }
+  .navigation > a { min-height: 56px; border-bottom: 1px solid var(--color-line); font-size: 16px; }
+  .navigation > a::after, .nav-catalogue::after { display: none; }
   .navigation > a[aria-current], .nav-catalogue[aria-current] { text-decoration: underline; text-underline-offset: 6px; }
-  .navigation > .nav-cta { align-self: flex-start; margin-top: 24px; font-size: 13px; }
   .navigation-fallback { display: grid; padding: 16px var(--gutter); border-bottom: 1px solid var(--color-line); font: 13px/1.6 var(--font-technical); }
   .navigation-fallback a { min-height: 44px; display: flex; align-items: center; }
 }
