@@ -8,7 +8,7 @@ const template = await readFile('dist/index.html', 'utf8');
 const base = site.url ? site.url.replace(/\/$/, '') : '';
 const isIndexable = (path: string) => !path.includes('404') && !path.includes('mentions') && !path.includes('confidentialite');
 // Fiche entreprise lue par les moteurs de recherche (accueil seulement) ; zone d’intervention sans adresse publiée.
-const business = JSON.stringify({ '@context': 'https://schema.org', '@type': 'HomeAndConstructionBusiness', name: site.name, url: base + '/', telephone: '+33666513040', image: base + '/images/social.jpg', logo: base + '/brand/bymood-monogram.png', areaServed: [{ '@type': 'City', name: 'Paris' }, { '@type': 'AdministrativeArea', name: 'Île-de-France' }], description: 'Architecture intérieure, design et rénovation : conception 3D, choix des fournitures et organisation des travaux.' }).replaceAll('<', '\\u003c');
+const business = JSON.stringify({ '@context': 'https://schema.org', '@type': 'HomeAndConstructionBusiness', name: site.name, url: base + '/', telephone: '+33666513040', image: base + '/images/social.jpg', logo: base + '/brand/bymood-monogram-512.png', areaServed: [{ '@type': 'City', name: 'Paris' }, { '@type': 'AdministrativeArea', name: 'Île-de-France' }], description: 'Architecture intérieure, design et rénovation : conception 3D, choix des fournitures et organisation des travaux.' }).replaceAll('<', '\\u003c');
 const escape = (value: string) => value.replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
 for (const page of pages) {
   const output = page.path.endsWith('.html') ? `dist${page.path}` : `dist${page.path}index.html`;

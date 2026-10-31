@@ -72,7 +72,7 @@ export function Header({ home = true, currentPath = '' }: { home?: boolean; curr
     <a className="skip-link" href={sitePath('#main')} aria-label="En savoir plus — aller au contenu">En savoir plus</a>
     <header className={`header ${open ? 'menu-open' : ''}`}>
       <a className="brand" href={sitePath(href('accueil'))} aria-label={`${site.name}, accueil`}>
-        <img className="brand-wordmark" src={sitePath('/brand/bymood-wordmark.png')} alt={site.name} width={2179} height={721} />
+        <img className="brand-wordmark" src={sitePath('/brand/bymood-wordmark-420.webp')} alt={site.name} width={420} height={139} />
         <span className="brand-caption">{brand.signature}</span>
       </a>
       <button ref={toggle} className="menu-toggle" hidden={!enhanced} aria-expanded={open} aria-controls="main-navigation" onClick={() => setOpen(!open)}>

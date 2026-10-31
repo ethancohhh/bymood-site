@@ -142,5 +142,37 @@
   "toulouse-5-avant": [
     1200,
     900
+  ],
+  "approche-besoins": [
+    1280,
+    720
+  ],
+  "approche-chiffrer": [
+    1600,
+    1067
+  ],
+  "approche-echanger": [
+    1500,
+    949
+  ],
+  "approche-realisation": [
+    500,
+    334
+  ],
+  "paris-1-superpose-avant": [
+    1064,
+    798
+  ],
+  "paris-1-superpose-apres": [
+    1064,
+    798
+  ],
+  "paris-3-superpose-avant": [
+    1200,
+    800
+  ],
+  "paris-3-superpose-apres": [
+    1200,
+    800
   ]
 }

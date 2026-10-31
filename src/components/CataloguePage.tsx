@@ -1,4 +1,5 @@
 import { sitePath } from "../urls";
+import { useEffect } from 'react';
 import { contact, projects, renovations } from '../data';
 import { exampleServices } from '../demo-content';
 import { Header } from './Header';
@@ -8,6 +9,19 @@ import { ScrollReveals } from './ScrollReveals';
 import { ArchitecturalDrawing } from './ArchitecturalDrawing';
 
 export function CataloguePage() {
+  // Arrivée depuis le bouton « Nos réalisations » de l'accueil : défilement vers la section.
+  useEffect(() => {
+    let target: string | null = null;
+    try { target = sessionStorage.getItem('catalogue-scroll'); sessionStorage.removeItem('catalogue-scroll'); } catch { return; }
+    const section = target && document.getElementById(target);
+    if (!section) return;
+    const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const timer = window.setTimeout(() => {
+      section.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'start' });
+      history.replaceState(null, '', '#' + target);
+    }, smooth ? 400 : 0);
+    return () => window.clearTimeout(timer);
+  }, []);
   return <><Header home={false} currentPath="/catalogue/" /><main id="main" className="catalogue-page">
     <div className="container catalogue-intro">
       <ArchitecturalDrawing className="catalogue-drawing" />

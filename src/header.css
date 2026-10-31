@@ -12,9 +12,6 @@ html.has-service-nav { scroll-padding-top: calc(var(--header-height) + 110px); }
 .brand-wordmark { display: block; width: 210px; height: auto; }
 .brand-caption { display: block; font-size: 12px; line-height: 1.4; color: var(--color-muted); }
 .header-ruler { position: absolute; left: max(var(--gutter), calc((100% - var(--container)) / 2)); right: max(var(--gutter), calc((100% - var(--container)) / 2)); bottom: 0; height: 1px; background: var(--drawing-guide); pointer-events: none; }
-.header-ruler::before, .header-ruler::after { content: '+'; position: absolute; top: -10px; font: 18px/20px var(--font-technical); color: var(--color-primary); background: var(--color-paper); }
-.header-ruler::before { left: -5px; }
-.header-ruler::after { right: -5px; }
 .navigation { display: flex; align-items: center; gap: clamp(20px, 2.2vw, 32px); font: 400 13px/1.5 var(--font-technical); }
 .navigation > a, .nav-catalogue { position: relative; display: inline-flex; align-items: center; min-height: 44px; white-space: nowrap; }
 .navigation > a::after, .nav-catalogue::after { content: ''; position: absolute; height: 1px; left: 0; right: 0; bottom: 7px; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform 200ms ease; }

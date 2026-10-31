@@ -455,6 +455,10 @@
 .renovation-pair-grid figcaption { display: flex; align-items: center; justify-content: space-between; gap: 16px; color: var(--color-primary); font-size: 13px; margin-bottom: 10px; }
 .renovation-pair-grid .text-link { font-size: 12px; gap: 8px; }
 .renovation-pair-grid .text-link .arrow { width: 16px; }
+.renovation-pair .comparison { max-width: 1000px; }
+.renovation-pair-links { display: flex; flex-wrap: wrap; gap: 8px 28px; margin-top: 6px; }
+.renovation-pair-links .text-link { font-size: 12px; gap: 8px; min-height: 44px; color: var(--color-primary); }
+.renovation-pair-links .text-link .arrow { width: 16px; }
 .pair-media { display: flex; align-items: center; background: var(--color-sand-light); aspect-ratio: 3 / 2; }
 .pair-media img { width: 100%; height: 100%; object-fit: contain; }
 @media (max-width: 767px) {

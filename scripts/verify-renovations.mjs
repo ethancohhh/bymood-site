@@ -3,12 +3,12 @@ import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
 
 const base = process.env.QA_URL || 'http://127.0.0.1:4173';
-const cases = [{ city: 'paris', slug: 'renovation-salon-cheminee', pairs: 4 }, { city: 'grenoble', slug: 'renovation-cuisine-ouverte-salon', pairs: 3 }, { city: 'toulouse', slug: 'renovation-cuisine-entree-rangements', pairs: 5 }];
+const cases = [{ city: 'paris', slug: 'renovation-salon-cheminee', pairs: 4, superposed: 2 }, { city: 'grenoble', slug: 'renovation-cuisine-ouverte-salon', pairs: 3, superposed: 0 }, { city: 'toulouse', slug: 'renovation-cuisine-entree-rangements', pairs: 5, superposed: 0 }];
 const reports = [];
 const browser = await chromium.launch({ channel: 'chrome', headless: true });
 await mkdir('qa', { recursive: true });
 try {
-  for (const { city, slug, pairs } of cases) {
+  for (const { city, slug, pairs, superposed } of cases) {
     const context = await browser.newContext({ viewport: { width: 375, height: 900 }, reducedMotion: 'reduce' });
     const page = await context.newPage();
     const errors = [];
@@ -21,6 +21,21 @@ try {
     assert.match(await page.locator('.project-example-note').innerText(), /Prestation réalisée/);
     assert.equal(await page.locator('.project-end .button').getAttribute('href'), new URL(base + '/').pathname + '#project-form');
     assert.deepEqual(await page.locator('.renovation-gallery img').evaluateAll(images => images.filter(image => !image.complete || !image.naturalWidth).map(image => image.src)), []);
+    // Comparateur à ligne pour les seules paires alignées ; les autres restent côte à côte.
+    assert.equal(await page.locator('.comparison').count(), superposed);
+    assert.equal(await page.locator('.renovation-pair-grid').count(), pairs - superposed);
+    if (superposed) {
+      const handle = page.locator('.comparison-handle').first();
+      assert.equal(await handle.getAttribute('aria-valuenow'), '50');
+      await handle.focus(); await page.keyboard.press('ArrowLeft'); await page.keyboard.press('Home');
+      assert.equal(await handle.getAttribute('aria-valuenow'), '0');
+      await page.keyboard.press('End');
+      assert.equal(await page.locator('.comparison-before').first().evaluate(element => element.style.clipPath), 'inset(0px 0% 0px 0px)');
+      const viewport = page.locator('.comparison-viewport').first(); await viewport.scrollIntoViewIfNeeded();
+      const box = await viewport.boundingBox();
+      await page.mouse.click(box.x + box.width * .25, box.y + box.height * .5);
+      assert.ok(Math.abs(Number(await handle.getAttribute('aria-valuenow')) - 25) <= 2, 'Click moves the line');
+    }
     for (const width of [320, 375, 768, 1024, 1440]) {
       await page.setViewportSize({ width, height: 900 });
       assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `${city}: overflow at ${width}`);
@@ -41,7 +56,7 @@ try {
     assert.match(await page.locator('.viewer-stage img').getAttribute('src'), new RegExp(`${city}-1-apres-1600.webp$`));
     await page.keyboard.press('Escape');
     assert.ok(await cover.evaluate(element => element === document.activeElement));
-    const firstBefore = page.locator('.renovation-gallery .pair-media').first();
+    const firstBefore = page.locator('.renovation-gallery [data-viewer-order="0"]').first();
     await firstBefore.focus(); await page.keyboard.press('Enter');
     for (let index = 0; index < pairs * 2; index++) {
       const expected = `${city}-${Math.floor(index / 2) + 1}-${index % 2 ? 'apres' : 'avant'}-1600.webp`;

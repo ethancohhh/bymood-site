@@ -97,6 +97,8 @@ export type RenovationPair = {
   title: string; description: string;
   before: { image: string; alt: string };
   after: { image: string; alt: string };
+  // Photos recadrées pour se superposer exactement (même point de vue) : comparateur à ligne.
+  superposed?: { before: string; after: string };
 };
 export type Renovation = {
   slug: string; title: string; image: string; alt: string;
@@ -104,8 +106,15 @@ export type Renovation = {
   category?: string; pairs?: RenovationPair[];
 };
 
+// Seules ces paires partagent le même point de vue ; les autres restent côte à côte.
+const superposedPairs = ['paris-1', 'paris-3'];
+
 function photoPair(city: string, number: number, title: string, description: string, before: string, after: string): RenovationPair {
-  return { title, description, before: { image: `${city}-${number}-avant`, alt: `Avant : ${before}` }, after: { image: `${city}-${number}-apres`, alt: `Après : ${after}` } };
+  const key = `${city}-${number}`;
+  return {
+    title, description, before: { image: `${key}-avant`, alt: `Avant : ${before}` }, after: { image: `${key}-apres`, alt: `Après : ${after}` },
+    ...(superposedPairs.includes(key) && { superposed: { before: `${key}-superpose-avant`, after: `${key}-superpose-apres` } }),
+  };
 }
 
 export const renovations: Renovation[] = [

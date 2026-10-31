@@ -29,7 +29,14 @@ try {
     const page = await context.newPage();
     await page.goto(base);
     await page.locator('.hero-actions a').click();
-    await page.waitForURL(base + '/catalogue/');
+    await page.waitForURL(url => /\/catalogue\/(#renovation)?$/.test(url.pathname + url.hash));
+    // Le bouton mène aux prestations réalisées, avec défilement animé quand JavaScript est actif.
+    let reached = false;
+    for (let attempt = 0; attempt < 30 && !reached; attempt++) {
+      reached = new URL(page.url()).hash === '#renovation' && Math.abs(await page.locator('#renovation').evaluate(e => e.getBoundingClientRect().top)) < 200;
+      if (!reached) await page.waitForTimeout(100);
+    }
+    assert.ok(reached, `Hero button must lead to #renovation (${width}, JS ${javaScriptEnabled})`);
     await page.locator('.catalogue-services .catalogue-card').first().waitFor();
     assert.equal(await page.locator('.catalogue-renovation-card').count(), 6);
     reports.push({ scenario: 'Premier clic du hero vers Catalogue', width, javaScriptEnabled, violations: [] });
@@ -94,8 +101,8 @@ try {
     const geometry = await page.evaluate(() => ({ width: innerWidth, scroll: document.documentElement.scrollWidth, primary: getComputedStyle(document.documentElement).getPropertyValue('--color-primary').trim() }));
     assert.equal(geometry.primary, '#173B4B');
     assert.equal(await page.locator('.hero-actions a').count(), 1);
-    assert.equal(await page.locator('.hero-actions a').innerText(), 'Catalogue');
-    assert.equal(await page.locator('.hero-actions a').getAttribute('href'), new URL(base + '/catalogue/').pathname);
+    assert.equal(await page.locator('.hero-actions a').innerText(), 'Nos réalisations');
+    assert.equal(await page.locator('.hero-actions a').getAttribute('href'), new URL(base + '/catalogue/').pathname + '#renovation');
     assert.equal(await page.locator('nav a').filter({ hasText: 'Réalisations' }).count(), 0);
     const smallLabels = await page.locator('.document-comparison figcaption, .need-examples').evaluateAll(elements => elements.filter(element => parseFloat(getComputedStyle(element).fontSize) < 12).map(element => element.className));
     assert.deepEqual(smallLabels, [], 'Functional text must remain readable');
@@ -240,9 +247,11 @@ try {
   assert.equal(await staticPage.locator('.reveal-pending').count(), 0);
   assert.equal(await staticPage.locator('#project-form a').getAttribute('href'), 'tel:+33666513040', 'Without JavaScript, the call stays available');
   await staticPage.locator('.hero-actions a').click();
-  await staticPage.waitForURL(base + '/catalogue/');
+  await staticPage.waitForURL(base + '/catalogue/#renovation');
   await staticPage.locator('.catalogue-renovation-card').first().waitFor();
   assert.equal(await staticPage.locator('.catalogue-renovation-card').count(), 6);
+  // Depuis #renovation, Playwright ne stabilise pas le défilement sans JavaScript : la suite repart du haut.
+  await staticPage.goto(base + '/catalogue/');
   await staticPage.locator('.catalogue-services .catalogue-card').first().click();
   await staticPage.waitForURL(base + '/prestations/#coin-tv-rangements');
   await staticPage.locator('.service-detail').first().waitFor();

@@ -66,7 +66,7 @@ try {
     const staticPage = await staticContext.newPage(); await staticPage.goto(base);
     assert.equal(await staticPage.getByRole('img', { name: 'Une maison dessinée en vue éclatée' }).count(), 1);
     assert.equal(await staticPage.locator('.axo-wall polygon').first().evaluate(e => getComputedStyle(e).strokeDasharray), 'none');
-    await staticPage.locator('.hero-actions a').click(); await staticPage.waitForURL(base + '/catalogue/');
+    await staticPage.locator('.hero-actions a').click(); await staticPage.waitForURL(base + '/catalogue/#renovation');
     checks.push({ width, scenario: 'Dessin complet et navigation sans JavaScript' }); await staticContext.close();
   }
 } finally {

@@ -13,7 +13,6 @@ import { SocialLinks } from './components/SocialLinks';
 import { ScrollReveals } from './components/ScrollReveals';
 import { ImageViewer } from './components/ImageViewer';
 import { RenovationGallery } from './components/RenovationGallery';
-import { MethodIllustration } from './components/MethodIllustration';
 import { HeroAxoBanner } from './components/hero-axo/svg/HeroAxoBanner';
 
 function Hero() {
@@ -21,9 +20,14 @@ function Hero() {
     <div className="container hero-inner">
       <div className="hero-copy">
         <h1>ARCHITECTURE<br />DESIGN<br /><span>RÉNOVATION</span></h1>
-        <p>Des rangements mieux pensés, une pièce à réorganiser, un intérieur à transformer.</p>
+        <p>Découvrez nos réalisations en cliquant juste en dessous.</p>
         <div className="hero-actions">
-          <a className="button" href={sitePath("/catalogue/")}>Catalogue<Arrow diagonal /></a>
+          <a className="button" href={sitePath("/catalogue/#renovation")} onClick={event => {
+            // Ouvre le catalogue en haut de page, puis le fait défiler jusqu'aux réalisations.
+            if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+            try { sessionStorage.setItem('catalogue-scroll', 'renovation'); } catch { return; }
+            event.preventDefault(); window.location.assign(sitePath('/catalogue/'));
+          }}>Nos réalisations<Arrow diagonal /></a>
         </div>
         <SocialLinks />
       </div>
@@ -58,7 +62,7 @@ function StudyDocuments({ project }: { project: Project }) {
     beforeAlt={project.plan.alt} afterAlt={project.focus.alt}
     group={project.slug} afterName={project.focus.image}
     documentLabels={project.slug === 'haven' ? ['Agrandir le plan du rez-de-chaussée de HAVEN', 'Agrandir le rendu 3D de la bibliothèque HAVEN'] : ['Agrandir le plan de NEMETO', 'Agrandir le rendu 3D de l’escalier NEMETO']}
-    beforeLabel={project.plan.caption} afterLabel={project.focus.caption} mode="plan-render"
+    beforeLabel={project.plan.caption} afterLabel={project.focus.caption}
   />;
 }
 
@@ -70,17 +74,17 @@ function Decisions({ project }: { project: Project }) {
 
 function Approach() {
   const stages = [
-    { visual: 'quote' as const, label: 'Devis', title: process[0].title, text: process[0].text, output: process[0].output },
-    { visual: 'design' as const, label: 'Rendu 3D · Dossier complet', title: process[1].title, text: process[1].text },
-    { visual: 'review' as const, label: 'Vérification', title: 'Échange avec le client', text: process[1].output },
-    { visual: 'works' as const, label: 'Travaux', title: process[2].title, text: process[2].text, output: process[2].output },
+    { visual: 'quote' as const, image: 'approche-besoins', alt: 'Poignée de main autour d’une table, au début d’un projet', label: 'Devis', title: process[0].title, text: process[0].text, output: process[0].output },
+    { visual: 'design' as const, image: 'approche-chiffrer', alt: 'Chiffrage d’un projet à la calculatrice', label: 'Rendu 3D · Dossier complet', title: process[1].title, text: process[1].text },
+    { visual: 'review' as const, image: 'approche-echanger', alt: 'Échange autour d’une table entre deux personnes, devant un ordinateur', label: 'Vérification', title: 'Échanger avec le client', text: process[1].output },
+    { visual: 'works' as const, image: 'approche-realisation', alt: 'Un artisan présente les plans du chantier à un couple', label: 'Travaux', title: process[2].title, text: process[2].text, output: process[2].output },
   ];
   return <section id="approche" className="section container approach-section">
     <SectionTitle number="01" label="Notre approche" text="Nous avançons par étapes pour passer de vos besoins à une proposition concrète, puis à des travaux clairement définis.">Un accompagnement complet, de l’idée à la réalisation.</SectionTitle>
     <p className="approach-intro">Visualisez votre futur intérieur en 3D, puis définissons ensemble les fournitures et l’organisation des travaux.</p>
     <ol className="method-grid approach-visual-grid">{stages.map((stage, index) => <li className="process-step" key={stage.visual}>
       <div className="method-stage-heading"><span className="item-number"><span>0{index + 1}</span></span><span className="method-stage-label">{stage.label}</span></div>
-      <MethodIllustration stage={stage.visual} />
+      <figure className="method-photo"><Picture name={stage.image} alt={stage.alt} sizes="(max-width: 767px) 100vw, (max-width: 1179px) 45vw, 25vw" /></figure>
       <h3>{stage.title}</h3><p>{stage.text}</p>
       {stage.output && <span className="method-output">{stage.output}</span>}
       {stage.visual === 'review' && <details className="method-detail"><summary>Un cadre clair avant les travaux<Arrow /></summary><p>Avant le démarrage, nous précisons ensemble le périmètre, les fournitures, les éventuelles exclusions et le calendrier. Le suivi s’appuie sur ces éléments. À la réception, nous faisons le point avec vous sur les travaux et les éventuelles reprises nécessaires.</p></details>}

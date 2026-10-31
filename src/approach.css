@@ -8,22 +8,8 @@
 .method-stage-heading { display: flex; align-items: center; gap: 12px; position: relative; }
 .method-stage-heading .item-number { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; width: 40px; height: 40px; border: 1px solid var(--drawing-contour); border-radius: 50%; background: var(--color-paper); font: 12px var(--font-technical); color: var(--color-primary); }
 .method-stage-label { position: relative; padding-right: 8px; background: var(--color-paper); font: 12px/1.6 var(--font-technical); color: var(--color-primary); }
-.method-illustration { display: block; width: 100%; height: 170px; margin-block: 24px; stroke: var(--color-primary); stroke-width: 1; }
-.method-illustration :is(path, rect, circle) { vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-linejoin: round; }
-.method-guide { stroke: var(--drawing-guide); stroke-width: .7; }
-.method-paper { fill: var(--color-white); }
-.method-paper-back { fill: var(--color-sand-light); stroke: var(--drawing-contour); }
-.method-strong { stroke-width: 1.5; }
-.method-tool { fill: var(--color-sand); }
-.method-signature { stroke: var(--color-taupe); }
-.method-room-floor { fill: var(--color-sand-light); }
-.method-room-wall { fill: var(--color-paper); }
-.method-swatch-one { fill: var(--color-sand); stroke: var(--color-line); }
-.method-swatch-two { fill: #cbd0c9; stroke: var(--color-line); }
-.method-swatch-three { fill: var(--color-primary); }
-.method-dialogue { fill: var(--color-paper); }
-.method-approval { fill: var(--color-primary); }
-.method-check { stroke: var(--color-paper); stroke-width: 1.8; }
+.method-photo { aspect-ratio: 4 / 3; margin: 24px 0; overflow: hidden; border: 1px solid var(--drawing-guide); background: var(--color-white); }
+.method-photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .approach-visual-grid .process-step h3 { margin: 0 0 16px; font-size: 23px; line-height: 1.35; }
 .approach-visual-grid .process-step > p { font-size: 14px; line-height: 1.85; }
 .approach-visual-grid .method-output { padding-top: 14px; border-top: 1px solid var(--color-line); margin-top: 22px; line-height: 1.8; }
@@ -36,19 +22,18 @@
   .approach-visual-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px 36px; }
   .approach-visual-grid .process-step::before { right: -36px; }
   .approach-visual-grid .process-step:nth-child(even)::before { right: 0; }
-  .method-illustration { height: 155px; max-width: 260px; margin-inline: auto; }
 }
 @media (max-width: 767px) {
   .approach-section { padding-bottom: 40px; }
   .approach-section .heading-content h2 { font-size: clamp(25px, 7.6vw, 31px); }
   .approach-section .approach-intro { margin-bottom: 30px; }
   .approach-visual-grid { grid-template-columns: minmax(0, 1fr); gap: 28px; }
-  .approach-visual-grid .process-step { display: grid; grid-template-columns: minmax(0, 1fr) 104px; gap: 0 10px; grid-template-areas: 'stage visual' 'title visual' 'body body' 'output output' 'detail detail'; border-bottom: 1px solid var(--color-line); padding-bottom: 28px; }
+  .approach-visual-grid .process-step { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-areas: 'stage' 'visual' 'title' 'body' 'output' 'detail'; border-bottom: 1px solid var(--color-line); padding-bottom: 28px; }
   .approach-visual-grid .process-step::before { display: none; }
   .method-stage-heading { grid-area: stage; align-items: flex-start; gap: 10px; margin-bottom: 14px; }
   .method-stage-heading .item-number { position: static; width: 32px; height: 32px; }
   .method-stage-label { padding-top: 4px; padding-right: 0; }
-  .method-illustration { grid-area: visual; width: 104px; height: 104px; margin: 0; align-self: center; }
+  .method-photo { grid-area: visual; margin: 0 0 20px; }
   .approach-visual-grid .process-step h3 { grid-area: title; font-size: 22px; margin: 0; align-self: start; }
   .approach-visual-grid .process-step > p { grid-area: body; margin-top: 18px; font-size: 15px; }
   .approach-visual-grid .method-output { grid-area: output; margin-top: 16px; padding-top: 0; border: 0; }
