@@ -153,7 +153,15 @@
 .hero-reference { animation: none; }
 .hero-reference-stage { padding: 24px 0; }
 .hero-reference-image { display: block; width: 100%; height: auto; mix-blend-mode: multiply; }
+.hero-reference-caption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 24px; padding-top: 12px; color: var(--color-primary); }
+.hero-reference-caption > span:first-child { max-width: 360px; }
+.hero-reference-caption > span:last-child { margin-left: auto; white-space: nowrap; }
+@media (max-width: 1179px) {
+  .hero-reference-caption { flex-direction: column; gap: 8px; }
+  .hero-reference-caption > span:last-child { margin-left: 0; }
+}
 @media (max-width: 767px) {
   .hero { padding-bottom: 32px; }
   .hero-reference-stage { padding-block: 12px 18px; }
+  .hero-reference-caption { padding-top: 0; }
 }

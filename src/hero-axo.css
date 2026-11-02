@@ -86,8 +86,11 @@
 .hero-banner { position: absolute; inset: 0; z-index: -1; margin: 0; pointer-events: none; }
 .hero-banner-stage { position: absolute; inset: 0; overflow: hidden; }
 .hero-banner .hero-axo { position: absolute; top: 0; right: 0; height: 100%; width: auto; aspect-ratio: 12 / 5; }
+.hero-banner .hero-reference-caption { position: absolute; left: 0; right: 0; bottom: 18px; padding-top: 0; }
 @media (max-width: 1179px) {
   .hero-axo-banner .hero-copy { max-width: 400px; }
+  .hero-banner .hero-reference-caption { flex-direction: row; }
+  .hero-banner .hero-reference-caption > span:last-child { margin-left: auto; }
 }
 /* Tablette et mobile : le dessin passe sous le texte, recadré sur la maison.
    --k : largeur du dessin rapportée à celle de l'écran. */
@@ -97,7 +100,10 @@
   .hero-banner { --k: 2; position: relative; inset: auto; z-index: auto; margin-top: 12px; }
   .hero-banner-stage { position: relative; height: calc(var(--k) * 100vw / 2.4); }
   .hero-banner .hero-axo { left: calc(50% - var(--k) * 74%); right: auto; width: calc(var(--k) * 100%); }
+  .hero-banner .hero-reference-caption { position: static; margin-top: 4px; }
 }
 @media (max-width: 767px) {
   .hero-banner { --k: 3.2; }
+  .hero-banner .hero-reference-caption { flex-direction: column; gap: 6px; }
+  .hero-banner .hero-reference-caption > span:last-child { margin-left: 0; }
 }

@@ -34,6 +34,7 @@ function Hero() {
     </div>
     <figure className="hero-banner">
       <div className="hero-banner-stage"><HeroAxoBanner /></div>
+      <figcaption className="container hero-reference-caption drawing-label"><span>« Les détails ne sont pas des détails. Ils font le design. »</span><span>Charles Eames</span></figcaption>
     </figure>
   </section>;
 }
