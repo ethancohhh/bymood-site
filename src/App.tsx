@@ -34,7 +34,6 @@ function Hero() {
     </div>
     <figure className="hero-banner">
       <div className="hero-banner-stage"><HeroAxoBanner /></div>
-      <figcaption className="container hero-reference-caption drawing-label"><span>Concevoir l’espace, jusque dans les détails.</span><span>Illustration</span></figcaption>
     </figure>
   </section>;
 }

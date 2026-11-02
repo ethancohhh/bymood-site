@@ -17,10 +17,9 @@ try {
     assert.equal(await page.getByRole('img', { name: 'Une maison dessinée en vue éclatée' }).count(), 1);
     assert.equal(await page.locator('.hero-image img, .hero-plan').count(), 0);
     assert.deepEqual(photos, [], 'The replaced photographs must not be downloaded on the homepage');
-    assert.deepEqual(await page.locator('.hero-reference-caption > span').allTextContents(), ['Concevoir l’espace, jusque dans les détails.', 'Illustration']);
+    assert.equal(await page.locator('.hero-reference-caption').count(), 0);
     assert.equal(await page.locator('.hero-axo image, .hero-colophon').count(), 0);
-    // Légende dans le hero ; sur grand écran, la maison ne passe jamais sous le texte.
-    assert.ok(await page.locator('.hero-reference-caption').evaluate(e => e.getBoundingClientRect().bottom <= document.querySelector('.hero').getBoundingClientRect().bottom));
+    // Sur grand écran, la maison ne passe jamais sous le texte.
     if (width >= 1024) assert.ok(await page.evaluate(() => document.querySelector('.axo-house').getBoundingClientRect().left >= document.querySelector('.hero-copy').getBoundingClientRect().right), 'The house must stay right of the hero text');
     else assert.ok(await page.evaluate(() => document.querySelector('.hero-banner').getBoundingClientRect().top >= document.querySelector('.hero-copy').getBoundingClientRect().bottom), 'The drawing must sit below the hero text');
     assert.notEqual(await page.locator('.hero').evaluate(e => getComputedStyle(e).backgroundColor), await page.locator('body').evaluate(e => getComputedStyle(e).backgroundColor));
