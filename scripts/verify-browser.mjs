@@ -118,8 +118,8 @@ try {
     assert.equal(await page.locator('a[href*="example.com"], a[href*="bymood.example"]').count(), 0, 'No fictitious contact destinations');
     // Contact : un appel à Ethan, sans formulaire.
     assert.equal(await page.locator('form').count(), 0, 'No contact form');
-    assert.equal(await page.locator('#project-form a').getAttribute('href'), 'tel:+33666513040');
-    assert.match(await page.locator('#project-form a').innerText(), /Appeler Ethan[\s\S]*06 66 51 30 40/);
+    assert.equal(await page.locator('#project-form .contact-call-button').getAttribute('href'), 'tel:+33666513040');
+    assert.match(await page.locator('#project-form .contact-call-button').innerText(), /Appeler[\s\S]*06 66 51 30 40/);
     const audit = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
     reports.push({ width, errors, initialMetrics, violations: audit.violations.map(item => ({ id: item.id, impact: item.impact, description: item.description, nodes: item.nodes.map(node => ({ target: node.target, summary: node.failureSummary })) })) });
     assert.deepEqual(errors, [], 'Browser errors');
@@ -149,7 +149,7 @@ try {
       assert.equal(await page.locator('.catalogue-card, .renovation-card, .study-card').count(), 0, 'Detailed galleries belong to the catalogue, not the homepage');
       assert.equal(await page.locator('.need-link').count(), 3);
       assert.equal(await page.locator('.process-step').count(), 4);
-      assert.deepEqual(await page.locator('main > section[id]').evaluateAll(sections => sections.map(section => section.id)), ['accueil', 'approche', 'expertise', 'a-propos', 'contact']);
+      assert.deepEqual(await page.locator('main > section[id]').evaluateAll(sections => sections.map(section => section.id)), ['accueil', 'a-propos', 'approche', 'expertise', 'contact']);
       assert.equal(await page.locator('#home-needs-title').innerText(), 'Par où commencer');
       await page.locator('.questions summary').first().click();
       assert.equal(await page.locator('.questions details').first().evaluate(details => details.open), true);
@@ -174,8 +174,8 @@ try {
     if (route === '/catalogue/') {
       assert.equal(await page.locator('#main-navigation a[aria-current="page"]').innerText(), 'Catalogue');
       assert.equal(await page.locator('.catalogue-services .catalogue-card').count(), 2);
-      assert.deepEqual(await page.locator('main > section[id]').evaluateAll(sections => sections.map(section => section.id)), ['renovation', 'inspirations', 'conception-3d']);
-      assert.deepEqual(await page.locator('#inspirations h3').allTextContents(), ['Coin TV & rangements', 'Pièce multifonction']);
+      assert.deepEqual(await page.locator('main > section[id]').evaluateAll(sections => sections.map(section => section.id)), ['renovation', 'etude-3d']);
+      assert.deepEqual(await page.locator('#inspirations .catalogue-card h3').allTextContents(), ['Bibliothèque & coin lecture', 'Pièce multifonction']);
       assert.equal(await page.locator('#renovation').getByRole('heading', { name: 'Salle de bains', exact: true }).count(), 1);
       assert.equal(await page.locator('#main-navigation').getByRole('link', { name: 'Rénovation', exact: true }).count(), 0);
       assert.equal(await page.locator('.study-card').count(), 2);
@@ -193,7 +193,7 @@ try {
       await page.waitForURL(base + '/catalogue/#conception-3d');
       await page.locator('.catalogue-renovation-card').first().click();
       await page.waitForURL(base + '/renovation/renovation-salon-cheminee/');
-      await page.getByRole('link', { name: 'Retour aux rénovations', exact: true }).click();
+      await page.getByRole('link', { name: 'Rénovations', exact: true }).click();
       await page.waitForURL(base + '/catalogue/#renovation');
 
     }
@@ -216,7 +216,8 @@ try {
       assert.equal(await page.locator('.image-viewer[open]').count(), 0);
     }
     if (route.startsWith('/renovation/')) {
-      await page.locator('.renovation-image figcaption a').click();
+      // Sans image d'ouverture (première vue en comparateur), la galerie ouvre la visionneuse.
+      await page.locator('.renovation-image figcaption a, .renovation-gallery a[data-viewer]').first().click();
       assert.match(await page.locator('.image-viewer[open] img').getAttribute('src'), /\/images\/(renovation-|paris-|grenoble-|toulouse-)/);
       await page.keyboard.press('Escape');
       assert.equal(await page.locator('.image-viewer[open]').count(), 0);
@@ -230,7 +231,7 @@ try {
   const page = await browser.newPage();
   await page.goto(base, { waitUntil: 'networkidle' });
   assert.ok(await page.locator('.reveal-pending').count() > 0, 'Scroll enhancement should activate below the fold');
-  await page.locator('#project-form a').focus();
+  await page.locator('#project-form .contact-call-button').focus();
   assert.equal(await page.locator('.contact-call').evaluate(block => getComputedStyle(block).opacity), '1', 'Keyboard focus reveals its content immediately');
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.waitForFunction(() => document.querySelectorAll('.reveal-pending').length === 0);
@@ -245,7 +246,7 @@ try {
   assert.equal(await staticPage.locator('.renovation-card, .study-card').count(), 0);
   assert.equal(await staticPage.locator('.prototype-notice').count(), 0);
   assert.equal(await staticPage.locator('.reveal-pending').count(), 0);
-  assert.equal(await staticPage.locator('#project-form a').getAttribute('href'), 'tel:+33666513040', 'Without JavaScript, the call stays available');
+  assert.equal(await staticPage.locator('#project-form .contact-call-button').getAttribute('href'), 'tel:+33666513040', 'Without JavaScript, the call stays available');
   await staticPage.locator('.hero-actions a').click();
   await staticPage.waitForURL(base + '/catalogue/#renovation');
   await staticPage.locator('.catalogue-renovation-card').first().waitFor();

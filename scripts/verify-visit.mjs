@@ -87,7 +87,7 @@ try {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   assert.equal(await universe.locator('.image-frame img').evaluate(element => getComputedStyle(element).transform), 'none');
   await page.goto(base + '/#project-form');
-  assert.equal(await page.locator('#project-form a').getAttribute('href'), 'tel:+33666513040');
+  assert.equal(await page.locator('#project-form .contact-call-button').getAttribute('href'), 'tel:+33666513040');
   await page.locator('#project-form').screenshot({ path: 'qa/visit-result.png' });
   checks.push({ scenario: 'Menu animé, resize, survol, réduction des mouvements et appel à Ethan' });
   await page.close();

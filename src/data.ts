@@ -17,8 +17,8 @@ export const contact = { cta: 'Contact' };
 // Ancres conservées pour les liens des versions précédentes.
 export const navigation = [
   ['Catalogue', '/catalogue/'],
-  ['Approche', 'approche'],
   ['Équipe', 'a-propos'],
+  ['Approche', 'approche'],
 ] as const;
 
 export const expertise = [
@@ -88,7 +88,6 @@ export const questions = [
   { question: 'Comment le budget se construit-il ?', answer: 'Les dimensions, les fournitures, l’état de l’existant et les interventions nécessaires permettent de construire le devis. Chaque devis est établi pour votre projet, après un premier échange.' },
   { question: 'Peut-on adapter ces réalisations à mon logement ?', answer: 'Nos réalisations et inspirations servent de point de départ. Les usages, les dimensions, les éléments à conserver et les contraintes du logement permettent de préciser une proposition adaptée.' },
   { question: 'Que peut comprendre votre projet ?', answer: 'Selon votre besoin, l’accompagnement associe conception, choix des fournitures et travaux. Le devis précise les prestations prévues, les exclusions et les conditions de réalisation.' },
-  { question: 'De quoi ai-je besoin pour commencer ?', answer: 'Indiquez la ville, la pièce concernée, quelques dimensions si vous les connaissez et ce que vous souhaitez améliorer. Une première idée du budget est utile, sans être obligatoire.' },
 ];
 
 // Prestations réalisées : statut confirmé par Ethan le 23 octobre 2026.
@@ -121,7 +120,7 @@ export const renovations: Renovation[] = [
   {
     slug: 'renovation-salon-cheminee', title: 'Projet rénovation de salon et cheminée', category: 'Pièces de vie & aménagement', image: 'paris-1-apres',
     alt: 'Après : salon aux tons clairs, cheminée blanche, étagères en bois et canapé d’angle.',
-    summary: 'Un salon aux tons clairs, une cuisine recomposée et un bureau intégré : quatre regards sur la transformation d’un intérieur.',
+    summary: 'Un salon aux tons clairs, une cuisine recomposée et un bureau intégré.',
     changes: [
       { title: 'Unifier les ambiances', text: 'Des tons clairs et des touches de bois relient les différentes pièces, du salon à la cuisine.' },
       { title: 'Donner une place à chaque usage', text: 'Un bureau pour deux personnes prend place contre un mur, à proximité de l’escalier.' },
@@ -129,7 +128,7 @@ export const renovations: Renovation[] = [
     ],
     pairs: [
       photoPair('paris', 1, 'Le salon', 'La cheminée noire et les motifs muraux laissent place à une composition blanche, accompagnée d’étagères en bois et d’assises claires.', 'salon avec cheminée noire, motifs muraux et canapés en cuir sombre.', 'salon aux tons clairs, cheminée blanche, étagères en bois et canapé d’angle.'),
-      photoPair('paris', 2, 'La cuisine', 'Les façades sombres sont remplacées par une palette blanche et grise. Des étagères ouvertes et un îlot complètent la composition.', 'cuisine avec meubles en bois sombre et plan de travail beige autour de l’évier.', 'cuisine blanche avec îlot gris, étagères en bois et crédence à motifs hexagonaux.'),
+      photoPair('paris', 2, 'La cuisine', 'Les façades sombres sont remplacées par une palette de couleur plus claire. Des étagères ouvertes et un îlot central sont ajoutés.', 'cuisine avec meubles en bois sombre et plan de travail beige autour de l’évier.', 'cuisine blanche avec îlot gris, étagères en bois et crédence à motifs hexagonaux.'),
       photoPair('paris', 3, 'Le bureau et l’escalier', 'À la place du canapé, un plan de travail accueille deux assises. Des rangements hauts et bas accompagnent ce nouvel espace de bureau.', 'canapé clair, aquarium et escalier recouvert de moquette.', 'bureau à deux places avec rangements en bois et escalier aux marches en bois.'),
       photoPair('paris', 4, 'La salle de bains', 'La nouvelle vue associe un meuble double vasque en bois, des miroirs encadrés et une grande paroi vitrée dans une palette claire.', 'salle de bains aux murs sombres avec meuble vasque, miroir mural et carrelage clair.', 'salle de bains avec meuble double vasque en bois, miroirs encadrés et paroi vitrée.'),
     ],

@@ -80,7 +80,7 @@ function Approach() {
     { visual: 'works' as const, image: 'approche-realisation', alt: 'Un artisan présente les plans du chantier à un couple', label: 'Travaux', title: process[2].title, text: process[2].text, output: process[2].output },
   ];
   return <section id="approche" className="section container approach-section">
-    <SectionTitle number="01" label="Notre approche" text="Nous avançons par étapes pour passer de vos besoins à une proposition concrète, puis à des travaux clairement définis.">Un accompagnement complet, de l’idée à la réalisation.</SectionTitle>
+    <SectionTitle number="02" label="Notre approche" text="Nous avançons par étapes pour passer de vos besoins à une proposition concrète, puis à des travaux clairement définis.">Un accompagnement complet, de l’idée à la réalisation.</SectionTitle>
     <p className="approach-intro">Visualisez votre futur intérieur en 3D, puis définissons ensemble les fournitures et l’organisation des travaux.</p>
     <ol className="method-grid approach-visual-grid">{stages.map((stage, index) => <li className="process-step" key={stage.visual}>
       <div className="method-stage-heading"><span className="item-number"><span>0{index + 1}</span></span><span className="method-stage-label">{stage.label}</span></div>
@@ -95,10 +95,10 @@ function Approach() {
 function About() {
   return <section id="a-propos" className="section team-section">
     <div className="container team-layout">
-      <div className="team-intro"><span className="eyebrow"><span>02</span>Notre équipe</span></div>
+      <div className="team-intro"><span className="eyebrow"><span>01</span>Notre équipe</span></div>
       <dl className="team-grid">
         <div><dt><span className="team-portrait"><img src={sitePath("/team/ethan.webp")} className="portrait-ethan" alt="Portrait d’Ethan Cohen, en charge de la relation client" width={1200} height={800} loading="lazy" /></span>Ethan Cohen<span>Relation client & suivi de projet</span></dt><dd className="team-phone"><a href={sitePath(ethanContact.href)}>{ethanContact.phone}</a></dd><dd>Votre interlocuteur pour comprendre vos besoins, préciser le projet et suivre les échanges à chaque étape.</dd></div>
-        <div><dt><span className="team-portrait"><img src={sitePath("/team/aliriza.webp")} alt="Portrait d’Aliriza Bay, en charge de la conception et du design" width={640} height={682} loading="lazy" /></span>Aliriza Bay<span>Architecte d’intérieur & designer</span></dt><dd className="team-phone"><a href={sitePath("tel:+33764230084")}>07 64 23 00 84</a></dd><dd>Conception des aménagements, rendus 3D et coordination des intervenants, de la préparation au suivi du chantier.</dd></div>
+        <div><dt><span className="team-portrait"><img src={sitePath("/team/aliriza.webp")} className="portrait-aliriza" alt="Portrait d’Aliriza Bay, en charge de la conception et du design" width={640} height={682} loading="lazy" /></span>Aliriza Bay<span>Architecte d’intérieur & designer</span></dt><dd className="team-phone"><a href={sitePath("tel:+33764230084")}>07 64 23 00 84</a></dd><dd>Conception des aménagements, rendus 3D et coordination des intervenants, de la préparation au suivi du chantier.</dd></div>
       </dl>
     </div>
   </section>;
@@ -113,13 +113,13 @@ function Contact() {
     <div className="container contact-layout">
       <div className="contact-copy"><span className="eyebrow"><span>03</span>Votre projet</span><h2>Parlons de<br />votre espace.</h2><p>Décrivez l’espace et ce qui vous manque aujourd’hui. Votre projet peut encore être ouvert.</p></div>
       <div id="project-form" className="contact-call">
-        <h3>Appelez {ethanContact.name}</h3>
-        <p>Échangez avec {ethanContact.name} pour préciser votre besoin.</p>
-        <a className="button contact-call-button" href={sitePath(ethanContact.href)}><span>Appeler {ethanContact.name}<span className="contact-number">{ethanContact.phone}</span></span><Arrow diagonal /></a>
+        <h3>Un premier échange</h3>
+        <p>Par téléphone ou par e-mail, {ethanContact.name} vous répond pour discuter de vos projets.</p>
+        <a className="button contact-call-button" href={sitePath(ethanContact.href)}><span>Appeler<span className="contact-number">{ethanContact.phone}</span></span><Arrow diagonal /></a>
+        {site.email && <a className="text-link contact-mail" href={'mailto:' + site.email}>{site.email}<Arrow diagonal /></a>}
       </div>
-      {(demoContent.enabled || site.email) && <div className="contact-details">
-        {demoContent.enabled && <div className="contact-area"><h3>Zone d’intervention</h3><p>{demoContent.area.title}</p><p>{demoContent.area.detail}</p></div>}
-        {site.email && <a className="text-link" href={sitePath('mailto:' + site.email)}>{site.email}<Arrow diagonal /></a>}
+      {demoContent.enabled && <div className="contact-details">
+        <div className="contact-area"><h3>Zone d’intervention</h3><p>{demoContent.area.title}</p></div>
       </div>}
       <div className="questions">{questions.map(item => <details key={item.question}><summary>{item.question}<Arrow /></summary><p>{item.answer}</p></details>)}</div>
     </div>
@@ -141,12 +141,12 @@ function ProjectPage({ project }: { project: Project }) {
 
 function RenovationPage({ renovation }: { renovation: Renovation }) {
   return <><Header home={false} currentPath={`/renovation/${renovation.slug}/`} /><main id="main" className="project-page renovation-page container">
-    <a className="back-link text-link" href={sitePath("/catalogue/#renovation")}><Arrow />Retour aux rénovations</a>
+    <a className="back-link text-link" href={sitePath("/catalogue/#renovation")}><Arrow />Rénovations</a>
     <div className="project-page-heading"><div><span className="eyebrow">Rénovation · Prestation réalisée</span><h1>{renovation.title}</h1><p>{renovation.summary}</p></div></div>
-    {renovation.pairs && <p className="project-example-note">Prestation réalisée · Les vues avant / après présentent les transformations de cet intérieur.</p>}
-    <RenovationImage renovation={renovation} eager group={renovation.pairs ? renovation.slug : undefined} />
+    {/* Première vue en comparateur : la page s'ouvre directement sur lui, sans image d'ouverture. */}
+    {!renovation.pairs?.[0]?.superposed && <RenovationImage renovation={renovation} eager group={renovation.pairs ? renovation.slug : undefined} />}
     {renovation.pairs && <RenovationGallery renovation={renovation} />}
-    <section className="project-decisions"><span className="eyebrow">Lecture des images</span><h2>Ce qui change.</h2><ol className="study-decisions">{renovation.changes.map((change, index) => <li key={change.title}><span className="item-number">0{index + 1}</span><h3>{change.title}</h3><p>{change.text}</p></li>)}</ol><p className="source-note">Prestation réalisée · Photographies bymood. Les commentaires décrivent les transformations visibles.</p></section>
+    <section className="project-decisions"><span className="eyebrow">Lecture des images</span><h2>Ce qui change.</h2><ol className="study-decisions">{renovation.changes.map((change, index) => <li key={change.title}><span className="item-number">0{index + 1}</span><h3>{change.title}</h3><p>{change.text}</p></li>)}</ol><p className="source-note">Prestation réalisée · Photographies bymood.</p></section>
     <div className="project-end"><h2>Et votre<br />{renovation.pairs ? 'intérieur ?' : 'salle de bains ?'}</h2><a className="button" href={sitePath("/#project-form")}>{contact.cta}<Arrow diagonal /></a></div>
   </main><Footer /><ScrollReveals /></>;
 }
@@ -154,7 +154,7 @@ function RenovationPage({ renovation }: { renovation: Renovation }) {
 function LegalPage({ privacy }: { privacy: boolean }) {
   const legal = demoContent.enabled ? demoContent.legal : site.legal;
   const items: [string, string][] = [['Éditeur du site', legal.company], ['Statut', legal.status], ['Adresse', legal.address], ['Immatriculation', legal.registration], ['Directeur de publication', legal.publicationDirector], ...('contact' in legal ? [['Contact', legal.contact] as [string, string]] : []), ['Hébergement', legal.hosting]];
-  return <><Header home={false} /><main id="main" className="legal-page container"><a className="text-link" href={sitePath("/")}>Retour à l’accueil<Arrow /></a><span className="eyebrow">Informations du site</span><h1>{privacy ? 'Confidentialité' : 'Mentions légales'}</h1>{privacy ? <><h2>Vos informations</h2><p>Ce site ne comporte pas de formulaire et ne collecte aucune information saisie. Pour parler d’un projet, vous appelez directement {ethanContact.name} au {ethanContact.phone}.</p><h2>Navigation et cookies</h2><p>Ce site n’utilise ni outil de mesure d’audience ni cookie publicitaire, et ne stocke pas localement vos réponses. La police et les images sont hébergées avec le site. L’hébergeur peut traiter certaines données techniques nécessaires à son fonctionnement.</p><h2>Responsable et contact</h2><p>{legal.company}<br />Contact relatif aux données : {legal.privacyContact}</p><p>Durée de conservation : {legal.retention}</p></> : <><dl className="legal-details">{items.map(([key, value]) => <div key={key}><dt>{key}</dt><dd>{value}</dd></div>)}</dl></>}</main><Footer /></>;
+  return <><Header home={false} /><main id="main" className="legal-page container"><a className="text-link" href={sitePath("/")}>Retour à l’accueil<Arrow /></a><span className="eyebrow">Informations du site</span><h1>{privacy ? 'Confidentialité' : 'Mentions légales'}</h1>{privacy ? <><h2>Vos informations</h2><p>Ce site ne comporte pas de formulaire et ne collecte aucune information saisie. Pour parler d’un projet, vous appelez directement {ethanContact.name} au {ethanContact.phone} ou écrivez à {site.email}.</p><h2>Navigation et cookies</h2><p>Ce site n’utilise ni outil de mesure d’audience ni cookie publicitaire, et ne stocke pas localement vos réponses. La police et les images sont hébergées avec le site. L’hébergeur peut traiter certaines données techniques nécessaires à son fonctionnement.</p><h2>Responsable et contact</h2><p>{legal.company}<br />Contact relatif aux données : {legal.privacyContact}</p><p>Durée de conservation : {legal.retention}</p></> : <><dl className="legal-details">{items.map(([key, value]) => <div key={key}><dt>{key}</dt><dd>{value}</dd></div>)}</dl></>}</main><Footer /></>;
 }
 
 function SiteContent({ path = '/' }: { path?: string }) {
@@ -168,7 +168,7 @@ function SiteContent({ path = '/' }: { path?: string }) {
   const project = projects.find(item => path === '/projets/' + item.slug + '/' || path === '/projets/' + item.slug);
   if (project) return <ProjectPage project={project} />;
   if (path !== '/') return <><Header home={false} /><main id="main" className="legal-page container"><span className="eyebrow">404</span><h1>Cette page n’existe pas, ou a changé d’adresse.</h1><a className="button" href={sitePath("/")}>Retour à l’accueil<Arrow /></a></main><Footer /></>;
-  return <><Header /><main id="main"><Hero /><Approach /><HomeNeeds /><About /><Contact /></main><Footer /><ScrollReveals /></>;
+  return <><Header /><main id="main"><Hero /><About /><Approach /><HomeNeeds /><Contact /></main><Footer /><ScrollReveals /></>;
 }
 
 export function App({ path = '/' }: { path?: string }) {

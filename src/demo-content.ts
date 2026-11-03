@@ -3,7 +3,6 @@ export const demoContent = {
   enabled: true,
   area: {
     title: 'Paris et Île-de-France',
-    detail: 'Nous intervenons à domicile, à Paris et en Île-de-France.',
   },
   legal: {
     company: 'Aliriza Bay, entrepreneur individuel (EI), exerçant sous le nom bymood.',
@@ -11,23 +10,23 @@ export const demoContent = {
     address: '3 rue du Labyrinthe, 91350 Grigny',
     registration: 'SIRET 130 994 403 00017',
     publicationDirector: 'Ethan Cohen',
-    contact: 'Ethan · 06 66 51 30 40',
+    contact: 'Ethan · 06 66 51 30 40 · bymood.fr@gmail.com',
     hosting: 'GitHub Pages · GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis · +1 877 448 4820',
-    privacyContact: 'Ethan · 06 66 51 30 40',
+    privacyContact: 'Ethan · 06 66 51 30 40 · bymood.fr@gmail.com',
     retention: 'Aucune donnée saisie : le site ne comporte pas de formulaire',
   },
 };
 
 export const exampleServices = [
   {
-    status: 'inspiration' as const, slug: 'coin-tv-rangements', title: 'Coin TV & rangements', type: 'Bibliothèque / rangement',
-    summary: 'Organiser le mur du salon pour réunir écran, livres et objets du quotidien dans un ensemble cohérent.',
-    need: 'Votre mobilier s’est accumulé au fil du temps et le salon manque de rangement. Vous cherchez une composition qui rassemble les usages sans encombrer la pièce.',
-    example: 'Dans un salon d’appartement, une composition associe des caissons bas fermés, des étagères et une place pour l’écran. Les références, les finitions et les dimensions sont choisies pour la pièce.',
+    status: 'inspiration' as const, slug: 'coin-tv-rangements', title: 'Bibliothèque & coin lecture', type: 'Bibliothèque / rangement',
+    summary: 'Réunir livres, objets et rangements sur un même mur, avec un coin lecture à ses pieds.',
+    need: 'Vos livres et objets sont dispersés et le salon manque de rangements. Vous cherchez un ensemble qui les rassemble et un endroit où vous poser pour lire.',
+    example: 'Sur un mur du salon, une bibliothèque associe placards bas fermés, étagères éclairées et colonnes de rangement. Devant, un fauteuil, un pouf et une petite table forment un coin lecture. Les finitions et les dimensions sont choisies pour la pièce.',
     image: 'haven-library', alt: 'Bibliothèque et coin lecture du rendu 3D HAVEN, utilisés comme inspiration d’aménagement.',
     caption: 'Inspiration · Étude HAVEN, conception Aliriza Bay · Rendu 3D.',
     included: ['Échange sur les usages, les dimensions et les équipements à conserver.', 'Proposition d’implantation, sélection du mobilier et des finitions.', 'Organisation de la fourniture et de la pose prévues au devis.'],
-    limits: 'La reprise des murs, les modifications électriques et l’intégration d’équipements audiovisuels se définissent séparément selon le logement.',
+    limits: 'La reprise des murs, l’éclairage intégré et les modifications électriques se définissent séparément selon le logement.',
     budget: 'Dimensions de la composition, mobilier standard ou fabriqué sur mesure, matériaux, éclairage et conditions de pose.',
   },
   {

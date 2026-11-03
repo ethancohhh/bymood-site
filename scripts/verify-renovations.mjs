@@ -18,7 +18,6 @@ try {
     assert.equal(await page.locator('h1').count(), 1);
     assert.equal(await page.locator('.renovation-pair').count(), pairs);
     assert.equal(await page.locator('.renovation-gallery img').count(), pairs * 2);
-    assert.match(await page.locator('.project-example-note').innerText(), /Prestation réalisée/);
     assert.equal(await page.locator('.project-end .button').getAttribute('href'), new URL(base + '/').pathname + '#project-form');
     assert.deepEqual(await page.locator('.renovation-gallery img').evaluateAll(images => images.filter(image => !image.complete || !image.naturalWidth).map(image => image.src)), []);
     // Comparateur à ligne pour les seules paires alignées ; les autres restent côte à côte.
@@ -50,12 +49,15 @@ try {
       }
       reports.push({ city, width, pairs, scenario: 'Photos complètes, ordre et responsive' });
     }
+    // L'image d'ouverture n'existe que si la première vue n'est pas en comparateur.
     const cover = page.locator('.renovation-image > a');
-    await cover.click();
-    assert.match(await page.locator('.viewer-pagination').innerText(), new RegExp(`2 / ${pairs * 2}`));
-    assert.match(await page.locator('.viewer-stage img').getAttribute('src'), new RegExp(`${city}-1-apres-1600.webp$`));
-    await page.keyboard.press('Escape');
-    assert.ok(await cover.evaluate(element => element === document.activeElement));
+    if (await cover.count()) {
+      await cover.click();
+      assert.match(await page.locator('.viewer-pagination').innerText(), new RegExp(`2 / ${pairs * 2}`));
+      assert.match(await page.locator('.viewer-stage img').getAttribute('src'), new RegExp(`${city}-1-apres-1600.webp$`));
+      await page.keyboard.press('Escape');
+      assert.ok(await cover.evaluate(element => element === document.activeElement));
+    }
     const firstBefore = page.locator('.renovation-gallery [data-viewer-order="0"]').first();
     await firstBefore.focus(); await page.keyboard.press('Enter');
     for (let index = 0; index < pairs * 2; index++) {

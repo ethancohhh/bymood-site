@@ -100,6 +100,22 @@
 .catalogue-services.catalogue-inspirations .catalogue-card { display: flex; grid-row: auto; }
 .catalogue-inspirations .catalogue-card:nth-child(2) { margin-top: 80px; }
 .catalogue-services.catalogue-inspirations .catalogue-card-copy { padding-top: 22px; }
+/* Rubrique 02 sur fond bleu : inspirations et études regroupées, arêtes de cubes en arrière-plan. */
+.catalogue-concept { position: relative; overflow: hidden; isolation: isolate; }
+.catalogue-concept > .container { position: relative; z-index: 1; }
+.concept-cubes { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.concept-cubes svg { position: absolute; height: auto; aspect-ratio: 1; stroke: var(--color-sand); opacity: .3; }
+.concept-cubes path { vector-effect: non-scaling-stroke; stroke-width: 1px; }
+.concept-cubes .concept-cube-hidden { stroke-dasharray: 4 6; opacity: .6; }
+.concept-cubes svg.is-secondary { opacity: .2; }
+.concept-block { scroll-margin-top: calc(var(--header-height) + 24px); }
+.concept-block + .concept-block { margin-top: 110px; }
+.concept-subheading { display: flex; flex-direction: column; gap: 12px; margin-bottom: 44px; padding-top: 18px; border-top: 1px solid var(--color-line-dark); font-size: clamp(22px, 2vw, 28px); line-height: 1.35; color: var(--color-on-dark); }
+.catalogue-concept .drawing-label, .catalogue-concept .catalogue-entry-number > span { color: var(--color-sand); }
+.catalogue-concept .catalogue-entry-number { border-top-color: var(--color-line-dark); }
+.catalogue-concept .study-plan .drawing-label { color: var(--color-primary); }
+.catalogue-concept .catalogue-card-copy h3 { color: var(--color-on-dark); }
+.catalogue-concept .catalogue-card-copy p { color: #e2e6df; }
 
 @media (prefers-reduced-motion: no-preference) {
 }
@@ -146,6 +162,9 @@
   .study-visual { padding-bottom: 44px; }
   .catalogue-studies .study-card h3 { font-size: 36px; }
   .catalogue-inspirations .catalogue-card:nth-child(2) { margin-top: 0; }
+  .concept-block + .concept-block { margin-top: 72px; }
+  .concept-cubes svg { max-width: 45vw; }
+  .concept-cubes svg.is-secondary { display: none; }
 }
 
 /* Référence architecturale fournie : fichier original, filigrane conservé. */

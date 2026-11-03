@@ -4,9 +4,9 @@ import { brand, contact, navigation, site } from '../data';
 import { Arrow } from './ui';
 
 const catalogueSections = [
-  { number: '01', title: 'Prestations réalisées', text: 'Transformations avant / après', anchor: 'renovation' },
-  { number: '02', title: 'Inspirations', text: 'Idées d’aménagement', anchor: 'inspirations' },
-  { number: '03', title: 'Conception & rendus 3D', text: 'Plans, volumes et études', anchor: 'conception-3d' },
+  { title: 'Prestations réalisées', anchor: 'renovation' },
+  { title: 'Inspirations', anchor: 'inspirations' },
+  { title: 'Conception & rendus 3D', anchor: 'conception-3d' },
 ];
 
 export function Header({ home = true, currentPath = '' }: { home?: boolean; currentPath?: string }) {
@@ -19,8 +19,16 @@ export function Header({ home = true, currentPath = '' }: { home?: boolean; curr
   const toggle = useRef<HTMLButtonElement>(null);
   const catalogue = useRef<HTMLDivElement>(null);
   const catalogueToggle = useRef<HTMLButtonElement>(null);
+  const hoverTimer = useRef(0);
   const href = (id: string) => id.startsWith('/') ? id : `${home ? '' : '/'}#${id}`;
   const close = () => { setOpen(false); setCatalogueOpen(false); };
+  // Sur ordinateur, le survol ouvre les rubriques ; un court délai laisse le temps de rejoindre le panneau.
+  const hover = (opening: boolean) => {
+    if (mobile) return;
+    window.clearTimeout(hoverTimer.current);
+    hoverTimer.current = window.setTimeout(() => setCatalogueOpen(opening), opening ? 0 : 180);
+  };
+  useEffect(() => () => window.clearTimeout(hoverTimer.current), []);
   const inCatalogue = currentPath === '/catalogue/' || /^\/(prestations|projets|renovation)\//.test(currentPath);
 
   useEffect(() => {
@@ -81,16 +89,14 @@ export function Header({ home = true, currentPath = '' }: { home?: boolean; curr
       <nav ref={nav} id="main-navigation" className={`navigation ${enhanced ? 'is-enhanced' : ''} ${open ? 'is-open' : ''}`} aria-label="Navigation principale" inert={enhanced && mobile && !open ? true : undefined}>
         {navigation.filter(([, id]) => id !== '/catalogue/').map(([label, id]) => <a key={id} href={sitePath(href(id))} aria-current={home && active === id ? 'location' : undefined} onClick={close}>{label}</a>)}
         <a href={sitePath(href('project-form'))} aria-current={home && active === 'contact' ? 'location' : undefined} onClick={close}>{contact.cta}</a>
-        <div className="catalogue-navigation" ref={catalogue} onBlur={event => {
+        <div className="catalogue-navigation" ref={catalogue} onPointerEnter={event => { if (event.pointerType === 'mouse') hover(true); }} onPointerLeave={event => { if (event.pointerType === 'mouse') hover(false); }} onBlur={event => {
           if (!mobile && !event.currentTarget.contains(event.relatedTarget as Node | null)) setCatalogueOpen(false);
         }}>
           <div className="catalogue-control"><a className="nav-catalogue" href={sitePath('/catalogue/')} aria-current={inCatalogue ? (currentPath === '/catalogue/' ? 'page' : 'location') : undefined} onClick={close}>Catalogue</a>
-            <button ref={catalogueToggle} className="catalogue-toggle" hidden={!enhanced} type="button" aria-label="Rubriques du catalogue" aria-expanded={catalogueOpen} aria-controls="catalogue-navigation-links" onClick={() => setCatalogueOpen(!catalogueOpen)}><svg className="arrow" width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 9 6 6 6-6" stroke="currentColor" strokeWidth="1.4" /></svg></button>
+            <button ref={catalogueToggle} className="catalogue-toggle" hidden={!enhanced} type="button" aria-label="Rubriques du catalogue" aria-expanded={catalogueOpen} aria-controls="catalogue-navigation-links" onClick={event => setCatalogueOpen(event.detail > 0 ? true : !catalogueOpen)}><svg className="arrow" width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 9 6 6 6-6" stroke="currentColor" strokeWidth="1.4" /></svg></button>
           </div>
           <div id="catalogue-navigation-links" className="catalogue-panel" hidden={!mobile && !catalogueOpen}>
-            {catalogueSections.map(section => <a key={section.anchor} href={sitePath(`/catalogue/#${section.anchor}`)} onClick={close}>
-              <span className="catalogue-nav-number">{section.number}</span><span><span className="catalogue-nav-title">{section.title}</span><span className="catalogue-nav-description">{section.text}</span></span><Arrow diagonal />
-            </a>)}
+            {catalogueSections.map(section => <a key={section.anchor} href={sitePath(`/catalogue/#${section.anchor}`)} onClick={close}>{section.title}<Arrow /></a>)}
           </div>
         </div>
       </nav>

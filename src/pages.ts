@@ -2,7 +2,7 @@ import { projects, renovations, site } from './data';
 
 export const pages = [
   { path: '/catalogue/', title: `Catalogue — Prestations & conception 3D | ${site.name}`, description: 'Explorez le catalogue bymood. : prestations réalisées avant / après, inspirations d’aménagement et études de conception 3D.' },
-  { path: '/prestations/', title: `Aménagement — Inspirations & prestation réalisée | ${site.name}`, description: 'Deux inspirations — coin TV et rangements, pièce multifonction — et une prestation réalisée de salle de bains pour comprendre les possibilités d’aménagement.' },
+  { path: '/prestations/', title: `Aménagement — Inspirations & prestation réalisée | ${site.name}`, description: 'Deux inspirations — bibliothèque et coin lecture, pièce multifonction — et une prestation réalisée de salle de bains pour comprendre les possibilités d’aménagement.' },
   { path: '/', title: `Architecture intérieure & rénovation à Paris et en Île-de-France — ${site.name}`, description: 'bymood. vous accompagne dans vos projets d’aménagement et de rénovation intérieure à Paris et en Île-de-France : conception 3D, choix des fournitures et organisation des travaux.' },
   { path: '/mentions-legales/', title: `Mentions légales — ${site.name}`, description: 'Informations légales relatives à l’éditeur et à l’hébergeur du site bymood.' },
   { path: '/confidentialite/', title: `Confidentialité — ${site.name}`, description: 'Données utilisées sur le site bymood. : aucun formulaire, aucun cookie publicitaire, contact par téléphone.' },
