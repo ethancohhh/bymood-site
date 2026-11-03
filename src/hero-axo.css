@@ -87,6 +87,11 @@
 .hero-banner-stage { position: absolute; inset: 0; overflow: hidden; }
 .hero-banner .hero-axo { position: absolute; top: 0; right: 0; height: 100%; width: auto; aspect-ratio: 12 / 5; }
 .hero-banner .hero-reference-caption { position: absolute; left: 0; right: 0; bottom: 18px; padding-top: 0; }
+/* La citation et son auteur se lisent d'un trait, l'auteur juste après le texte, à toutes les tailles. */
+.hero-banner .hero-reference-caption.hero-reference-caption { display: block; }
+.hero-banner .hero-reference-caption > span { display: inline; }
+.hero-banner .hero-reference-caption.hero-reference-caption > span:last-child { margin-left: .5em; white-space: nowrap; }
+.hero-banner .hero-reference-caption > span:last-child::before { content: '— '; }
 @media (max-width: 1179px) {
   .hero-axo-banner .hero-copy { max-width: 400px; }
   .hero-banner .hero-reference-caption { flex-direction: row; }

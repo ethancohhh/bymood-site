@@ -75,7 +75,7 @@ function Decisions({ project }: { project: Project }) {
 function Approach() {
   const stages = [
     { visual: 'quote' as const, image: 'approche-besoins', alt: 'Poignée de main autour d’une table, au début d’un projet', label: 'Devis', title: process[0].title, text: process[0].text, output: process[0].output },
-    { visual: 'design' as const, image: 'approche-chiffrer', alt: 'Chiffrage d’un projet à la calculatrice', label: 'Rendu 3D · Dossier complet', title: process[1].title, text: process[1].text },
+    { visual: 'design' as const, image: 'approche-chiffrer', alt: 'Une conceptrice annote un plan d’aménagement affiché à l’écran', label: 'Rendu 3D · Dossier complet', title: process[1].title, text: process[1].text },
     { visual: 'review' as const, image: 'approche-echanger', alt: 'Échange autour d’une table entre deux personnes, devant un ordinateur', label: 'Vérification', title: 'Échanger avec le client', text: process[1].output },
     { visual: 'works' as const, image: 'approche-realisation', alt: 'Un artisan présente les plans du chantier à un couple', label: 'Travaux', title: process[2].title, text: process[2].text, output: process[2].output },
   ];
