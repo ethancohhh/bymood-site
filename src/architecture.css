@@ -96,7 +96,20 @@
 .catalogue-renovations .catalogue-renovation-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 7%; row-gap: 56px; }
 .catalogue-renovations .catalogue-card:nth-child(even) { margin-top: 68px; }
 .catalogue-renovations .catalogue-card .image-frame { position: relative; border: 1px solid var(--drawing-guide); padding: 12px; }
-.catalogue-end { border-top: 1px solid var(--drawing-guide); }
+/* Section 01 : une image sur deux en arche (motif de l'identité) et un aplat décalé derrière chaque cadre. */
+.catalogue-renovations .catalogue-card .image-frame { box-shadow: 14px 14px 0 var(--color-stone); }
+.catalogue-renovations .catalogue-card:nth-child(even) .image-frame { box-shadow: -14px 14px 0 rgb(23 59 75 / .16); }
+.catalogue-renovations .catalogue-card:nth-child(odd) .image-frame { border-radius: 50% 50% 2px 2px / 34% 34% 2px 2px; }
+.catalogue-renovations .catalogue-card:nth-child(odd) .image-frame img { border-radius: 50% 50% 0 0 / 31% 31% 0 0; }
+/* Fin de page : panneau terre avec arches en filigrane, pour un appel au contact plus visible. */
+.catalogue-end { position: relative; isolation: isolate; overflow: hidden; margin-block: var(--section-space); padding: clamp(48px, 6vw, 84px) clamp(28px, 5vw, 72px); background: var(--color-taupe); color: var(--color-on-dark); border-radius: 2px; }
+.catalogue-end::before, .catalogue-end::after { content: ''; position: absolute; z-index: -1; border: 1px solid rgb(233 222 204 / .32); border-bottom: 0; border-radius: 999px 999px 0 0; pointer-events: none; }
+.catalogue-end::before { width: 420px; height: 520px; right: 9%; bottom: -150px; }
+.catalogue-end::after { width: 300px; height: 400px; right: calc(9% + 60px); bottom: -150px; border-style: dashed; }
+.catalogue-end h2, .catalogue-end .eyebrow { color: var(--color-on-dark); }
+.catalogue-end > .button { background: var(--color-paper); border-color: var(--color-paper); color: var(--color-primary); }
+.catalogue-end > .button:hover { background: var(--color-sand); border-color: var(--color-sand); }
+.catalogue-end :focus-visible { outline-color: var(--color-sand); }
 .catalogue-services.catalogue-inspirations .catalogue-card { display: flex; grid-row: auto; }
 .catalogue-inspirations .catalogue-card:nth-child(2) { margin-top: 80px; }
 .catalogue-services.catalogue-inspirations .catalogue-card-copy { padding-top: 22px; }
@@ -162,6 +175,11 @@
   .study-visual { padding-bottom: 44px; }
   .catalogue-studies .study-card h3 { font-size: 36px; }
   .catalogue-inspirations .catalogue-card:nth-child(2) { margin-top: 0; }
+  .catalogue-renovations .catalogue-card .image-frame { box-shadow: 10px 10px 0 var(--color-stone); }
+  .catalogue-renovations .catalogue-card:nth-child(even) .image-frame { box-shadow: -10px 10px 0 rgb(23 59 75 / .16); }
+  .catalogue-end { width: calc(100% - var(--gutter) * 2); }
+  .catalogue-end::before { width: 260px; height: 340px; right: -60px; bottom: -120px; }
+  .catalogue-end::after { width: 180px; height: 260px; right: -20px; bottom: -120px; }
   .concept-block + .concept-block { margin-top: 72px; }
   .concept-cubes svg { max-width: 45vw; }
   .concept-cubes svg.is-secondary { display: none; }
