@@ -38,9 +38,9 @@ try {
     }
     await page.screenshot({ path: `qa/axo-hero-${width}.png` });
     await page.locator('.hero').screenshot({ path: `qa/axo-banner-${width}.png` });
-    await page.locator('.hero-actions a').click(); await page.waitForURL(base + '/catalogue/');
+    await page.locator('.hero-actions a').click(); await page.waitForURL(base + '/realisations/');
     assert.equal(await page.locator('.study-card').count(), 2);
-    checks.push({ width, scenario: 'Dessin accessible, aucune ancienne photo chargée, dimensions et Catalogue', errors });
+    checks.push({ width, scenario: 'Dessin accessible, aucune ancienne photo chargée, dimensions et Réalisations', errors });
     await context.close();
   }
   for (const width of [375, 1440]) {
@@ -66,7 +66,7 @@ try {
     const staticPage = await staticContext.newPage(); await staticPage.goto(base);
     assert.equal(await staticPage.getByRole('img', { name: 'Une maison dessinée en vue éclatée' }).count(), 1);
     assert.equal(await staticPage.locator('.axo-wall polygon').first().evaluate(e => getComputedStyle(e).strokeDasharray), 'none');
-    await staticPage.locator('.hero-actions a').click(); await staticPage.waitForURL(base + '/catalogue/#renovation');
+    await staticPage.locator('.hero-actions a').click(); await staticPage.waitForURL(base + '/realisations/#renovation');
     checks.push({ width, scenario: 'Dessin complet et navigation sans JavaScript' }); await staticContext.close();
   }
 } finally {

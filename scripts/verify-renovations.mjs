@@ -79,7 +79,7 @@ try {
 
   const staticContext = await browser.newContext({ javaScriptEnabled: false, reducedMotion: 'reduce', viewport: { width: 375, height: 900 } });
   const page = await staticContext.newPage();
-  await page.goto(base + '/catalogue/');
+  await page.goto(base + '/realisations/');
   assert.equal(await page.locator('.catalogue-renovation-card').count(), 6);
   for (const { city, slug, pairs } of cases) {
     await page.goto(`${base}/renovation/${slug}/`);

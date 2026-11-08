@@ -3,7 +3,9 @@ import { useEffect } from 'react';
 import { contact, ethanContact, expertise, process, projects, questions, renovations, site, type Project, type Renovation } from './data';
 import { demoContent } from './demo-content';
 import { ServicesPage } from './components/ServicesPage';
-import { CataloguePage } from './components/CataloguePage';
+import { RealisationsPage } from './components/RealisationsPage';
+import { InspirationsPage, InspirationUniversePage } from './components/InspirationsPage';
+import { universes } from './inspirations';
 import { resolvePage } from './pages';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
@@ -22,11 +24,11 @@ function Hero() {
         <h1>ARCHITECTURE<br />DESIGN<br /><span>RÉNOVATION</span></h1>
         <p>Découvrez nos réalisations en cliquant juste en dessous.</p>
         <div className="hero-actions">
-          <a className="button" href={sitePath("/catalogue/#renovation")} onClick={event => {
-            // Ouvre le catalogue en haut de page, puis le fait défiler jusqu'aux réalisations.
+          <a className="button" href={sitePath("/realisations/#renovation")} onClick={event => {
+            // Ouvre les réalisations en haut de page, puis les fait défiler jusqu'aux prestations réalisées.
             if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-            try { sessionStorage.setItem('catalogue-scroll', 'renovation'); } catch { return; }
-            event.preventDefault(); window.location.assign(sitePath('/catalogue/'));
+            try { sessionStorage.setItem('realisations-scroll', 'renovation'); } catch { return; }
+            event.preventDefault(); window.location.assign(sitePath('/realisations/'));
           }}>Nos réalisations<Arrow diagonal /></a>
         </div>
         <SocialLinks />
@@ -128,7 +130,7 @@ function Contact() {
 
 function ProjectPage({ project }: { project: Project }) {
   return <><Header home={false} currentPath={`/projets/${project.slug}/`} /><main id="main" className="project-page container">
-    <a className="back-link text-link" href={sitePath("/catalogue/#conception-3d")}><Arrow />Retour aux études</a>
+    <a className="back-link text-link" href={sitePath("/realisations/#conception-3d")}><Arrow />Retour aux études</a>
     <div className="project-page-heading"><div><span className="eyebrow">Étude de conception · Aliriza Bay</span><h1>{project.name}</h1><p>{project.subtitle}</p></div><dl><div><dt>Lieu d’étude</dt><dd>{project.location.split(' — ')[0]}</dd></div><div><dt>Surface étudiée</dt><dd>{project.area.split(' — ')[0]}</dd></div><div><dt>Année</dt><dd>{project.year}</dd></div></dl></div>
     <figure className="project-cover"><a href={sitePath(`/images/${project.image}-1600.webp`)} target="_blank" rel="noopener" data-viewer={project.slug} data-alt={project.alt} data-caption={`${project.name} · Rendu 3D, conception Aliriza Bay`} aria-label={`Agrandir la vue d’ensemble de ${project.name}`}><Picture name={project.image} alt={project.alt} eager sizes="100vw" /></a><figcaption>Rendu 3D · Étude de conception</figcaption></figure>
     <div className="project-story"><div><span className="eyebrow">Le défi de conception</span><h2>{project.problem}</h2></div><div><span className="eyebrow">La réponse imaginée</span><p>{project.solution}</p></div></div>
@@ -141,7 +143,7 @@ function ProjectPage({ project }: { project: Project }) {
 
 function RenovationPage({ renovation }: { renovation: Renovation }) {
   return <><Header home={false} currentPath={`/renovation/${renovation.slug}/`} /><main id="main" className="project-page renovation-page container">
-    <a className="back-link text-link" href={sitePath("/catalogue/#renovation")}><Arrow />Rénovations</a>
+    <a className="back-link text-link" href={sitePath("/realisations/#renovation")}><Arrow />Rénovations</a>
     <div className="project-page-heading"><div><span className="eyebrow">Rénovation · Prestation réalisée</span><h1>{renovation.title}</h1><p>{renovation.summary}</p></div></div>
     {/* Première vue en comparateur : la page s'ouvre directement sur lui, sans image d'ouverture. */}
     {!renovation.pairs?.[0]?.superposed && <RenovationImage renovation={renovation} eager group={renovation.pairs ? renovation.slug : undefined} />}
@@ -157,9 +159,20 @@ function LegalPage({ privacy }: { privacy: boolean }) {
   return <><Header home={false} /><main id="main" className="legal-page container"><a className="text-link" href={sitePath("/")}>Retour à l’accueil<Arrow /></a><span className="eyebrow">Informations du site</span><h1>{privacy ? 'Confidentialité' : 'Mentions légales'}</h1>{privacy ? <><h2>Vos informations</h2><p>Ce site ne comporte pas de formulaire et ne collecte aucune information saisie. Pour parler d’un projet, vous appelez directement {ethanContact.name} au {ethanContact.phone} ou écrivez à {site.email}.</p><h2>Navigation et cookies</h2><p>Ce site n’utilise ni outil de mesure d’audience ni cookie publicitaire, et ne stocke pas localement vos réponses. La police et les images sont hébergées avec le site. L’hébergeur peut traiter certaines données techniques nécessaires à son fonctionnement.</p><h2>Responsable et contact</h2><p>{legal.company}<br />Contact relatif aux données : {legal.privacyContact}</p><p>Durée de conservation : {legal.retention}</p></> : <><dl className="legal-details">{items.map(([key, value]) => <div key={key}><dt>{key}</dt><dd>{value}</dd></div>)}</dl></>}</main><Footer /></>;
 }
 
+// Ancienne adresse : renvoie vers la nouvelle en gardant l'ancre (le pré-rendu ajoute aussi une redirection dans <head>).
+function RedirectPage({ to }: { to: string }) {
+  useEffect(() => { window.location.replace(sitePath(to) + window.location.hash); }, [to]);
+  return <><Header home={false} /><main id="main" className="legal-page container"><span className="eyebrow">Nouvelle adresse</span><h1>Cette page a changé d’adresse.</h1><a className="button" href={sitePath(to)}>Voir les réalisations<Arrow /></a></main><Footer /></>;
+}
+
 function SiteContent({ path = '/' }: { path?: string }) {
-  path = resolvePage(path).path;
-  if (path === '/catalogue/') return <CataloguePage />;
+  const page = resolvePage(path);
+  path = page.path;
+  if (page.redirect) return <RedirectPage to={page.redirect} />;
+  if (path === '/realisations/') return <RealisationsPage />;
+  if (path === '/inspirations/') return <InspirationsPage />;
+  const universe = universes.find(item => path === '/inspirations/' + item.slug + '/');
+  if (universe) return <InspirationUniversePage universe={universe} />;
   if (path === '/prestations/') return <ServicesPage contactSection={<Contact />} />;
   if (path === '/mentions-legales/' || path === '/mentions-legales') return <LegalPage privacy={false} />;
   if (path === '/confidentialite/' || path === '/confidentialite') return <LegalPage privacy />;
@@ -175,7 +188,7 @@ export function App({ path = '/' }: { path?: string }) {
   useEffect(() => {
     if (resolvePage(path).path !== '/') return;
     const targets: Record<string, string> = { '#univers': '', '#conception-3d': '#conception-3d', '#realisations': '#conception-3d', '#renovation': '#renovation' };
-    const redirect = () => { if (Object.hasOwn(targets, window.location.hash)) window.location.replace(sitePath('/catalogue/' + targets[window.location.hash])); };
+    const redirect = () => { if (Object.hasOwn(targets, window.location.hash)) window.location.replace(sitePath('/realisations/' + targets[window.location.hash])); };
     redirect(); window.addEventListener('hashchange', redirect);
     return () => window.removeEventListener('hashchange', redirect);
   }, [path]);

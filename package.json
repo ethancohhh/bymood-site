@@ -9,6 +9,7 @@
     "build": "npm run check && vite build && tsx scripts/prerender.tsx",
     "preview": "vite preview --host 127.0.0.1",
     "publish:github": "node scripts/publish-github.mjs",
+    "inspirations": "node scripts/import-inspirations.mjs",
     "test:browser": "node scripts/verify-browser.mjs",
     "test:visit": "node scripts/verify-visit.mjs",
     "test:renovations": "node scripts/verify-renovations.mjs",

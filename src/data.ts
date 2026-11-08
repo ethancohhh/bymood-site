@@ -16,9 +16,10 @@ export const contact = { cta: 'Contact' };
 
 // Ancres conservées pour les liens des versions précédentes.
 export const navigation = [
-  ['Catalogue', '/catalogue/'],
+  ['Réalisations', '/realisations/'],
   ['Équipe', 'a-propos'],
   ['Approche', 'approche'],
+  ['Inspirations', '/inspirations/'],
 ] as const;
 
 export const expertise = [

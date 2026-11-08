@@ -6,10 +6,15 @@ const base = process.env.QA_URL || 'http://127.0.0.1:4173';
 const browser = await chromium.launch({ channel: 'chrome', headless: true });
 const cases = [
   ['/', 200, 'ARCHITECTURE'],
-  ['/catalogue/', 200, 'Des idées concrètes'],
-  ['/catalogue', 200, 'Des idées concrètes'],
-  ['/catalogue/index.html', 200, 'Des idées concrètes'],
+  ['/realisations/', 200, 'Nos réalisations'],
+  ['/realisations', 200, 'Nos réalisations'],
+  ['/realisations/index.html', 200, 'Nos réalisations'],
   ['/catalogue-inconnu/', 404],
+  ['/inspirations/', 200, 'Inspirations'],
+  ['/inspirations', 200, 'Inspirations'],
+  ['/inspirations/cuisine/', 200, 'Cuisine'],
+  ['/inspirations/escalier', 200, 'Escalier'],
+  ['/inspirations/salon/', 404],
   ['/index.html', 200, 'ARCHITECTURE'],
   ['/prestations/', 200, 'Des aménagements'],
   ['/prestations', 200, 'Des aménagements'],
@@ -50,6 +55,9 @@ try {
       const response = await page.goto(base + path, { waitUntil: 'networkidle' });
       assert.equal(response.status(), status, path);
       assert.ok((await page.locator('h1').innerText()).includes(heading || 'Cette page n’existe pas'), path);
+      if (path.startsWith('/inspirations') && status === 200) {
+        assert.equal(await page.locator('meta[name="robots"]').getAttribute('content'), 'noindex, nofollow, noimageindex', path);
+      }
       if (status === 404) {
         assert.equal(await page.title(), 'Page introuvable — bymood.');
         assert.equal(await page.locator('meta[name="robots"]').getAttribute('content'), 'noindex, nofollow');
@@ -65,13 +73,27 @@ try {
   }
   const legacyContext = await browser.newContext();
   const legacyPage = await legacyContext.newPage();
-  for (const [hash, target] of [['univers', '/catalogue/'], ['conception-3d', '/catalogue/#conception-3d'], ['realisations', '/catalogue/#conception-3d'], ['renovation', '/catalogue/#renovation']]) {
+  for (const [hash, target] of [['univers', '/realisations/'], ['conception-3d', '/realisations/#conception-3d'], ['realisations', '/realisations/#conception-3d'], ['renovation', '/realisations/#renovation']]) {
     await legacyPage.goto(base + '/#' + hash);
     await legacyPage.waitForURL(base + target);
-    assert.ok((await legacyPage.locator('h1').innerText()).includes('Des idées concrètes'));
+    assert.ok((await legacyPage.locator('h1').innerText()).includes('Nos réalisations'));
     reports.push({ legacyHash: hash, target });
   }
+  // Ancienne adresse /catalogue/ : redirection avec l'ancre, et sans JavaScript par la balise refresh.
+  for (const [path, target] of [['/catalogue/', '/realisations/'], ['/catalogue', '/realisations/'], ['/catalogue/#inspirations', '/realisations/#inspirations'], ['/catalogue/#renovation', '/realisations/#renovation']]) {
+    await legacyPage.goto(base + path);
+    await legacyPage.waitForURL(base + target);
+    assert.ok((await legacyPage.locator('h1').innerText()).includes('Nos réalisations'));
+    reports.push({ legacyPath: path, target });
+  }
   await legacyContext.close();
+  const staticContext = await browser.newContext({ javaScriptEnabled: false });
+  const staticPage = await staticContext.newPage();
+  await staticPage.goto(base + '/catalogue/');
+  await staticPage.waitForURL(base + '/realisations/');
+  assert.ok((await staticPage.locator('h1').innerText()).includes('Nos réalisations'));
+  reports.push({ legacyPath: '/catalogue/', javaScriptEnabled: false, target: '/realisations/' });
+  await staticContext.close();
   // A host serving the homepage as a fallback must not hydrate it as another page.
   const context = await browser.newContext();
   const home = await (await context.request.get(base)).text();

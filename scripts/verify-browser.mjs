@@ -29,7 +29,7 @@ try {
     const page = await context.newPage();
     await page.goto(base);
     await page.locator('.hero-actions a').click();
-    await page.waitForURL(url => /\/catalogue\/(#renovation)?$/.test(url.pathname + url.hash));
+    await page.waitForURL(url => /\/realisations\/(#renovation)?$/.test(url.pathname + url.hash));
     // Le bouton mène aux prestations réalisées, avec défilement animé quand JavaScript est actif.
     let reached = false;
     for (let attempt = 0; attempt < 30 && !reached; attempt++) {
@@ -39,7 +39,7 @@ try {
     assert.ok(reached, `Hero button must lead to #renovation (${width}, JS ${javaScriptEnabled})`);
     await page.locator('.catalogue-services .catalogue-card').first().waitFor();
     assert.equal(await page.locator('.catalogue-renovation-card').count(), 6);
-    reports.push({ scenario: 'Premier clic du hero vers Catalogue', width, javaScriptEnabled, violations: [] });
+    reports.push({ scenario: 'Premier clic du hero vers Réalisations', width, javaScriptEnabled, violations: [] });
     await context.close();
   }
   for (const width of [375, 1440]) {
@@ -102,8 +102,8 @@ try {
     assert.equal(geometry.primary, '#173B4B');
     assert.equal(await page.locator('.hero-actions a').count(), 1);
     assert.equal(await page.locator('.hero-actions a').innerText(), 'Nos réalisations');
-    assert.equal(await page.locator('.hero-actions a').getAttribute('href'), new URL(base + '/catalogue/').pathname + '#renovation');
-    assert.equal(await page.locator('nav a').filter({ hasText: 'Réalisations' }).count(), 0);
+    assert.equal(await page.locator('.hero-actions a').getAttribute('href'), new URL(base + '/realisations/').pathname + '#renovation');
+    assert.equal(await page.locator('#main-navigation a').filter({ hasText: /^Réalisations$/ }).count(), 1);
     const smallLabels = await page.locator('.document-comparison figcaption, .need-examples').evaluateAll(elements => elements.filter(element => parseFloat(getComputedStyle(element).fontSize) < 12).map(element => element.className));
     assert.deepEqual(smallLabels, [], 'Functional text must remain readable');
     assert.ok(geometry.scroll <= width, `Overflow at ${width}: ${geometry.scroll}`);
@@ -146,7 +146,7 @@ try {
         assert.equal(new URL(page.url()).hash, '#project-form', value);
       }
       assert.equal(await page.getByRole('slider').count(), 0, 'A plan and a perspective must not use an before/after slider');
-      assert.equal(await page.locator('.catalogue-card, .renovation-card, .study-card').count(), 0, 'Detailed galleries belong to the catalogue, not the homepage');
+      assert.equal(await page.locator('.catalogue-card, .renovation-card, .study-card').count(), 0, 'Detailed galleries belong to Réalisations, not the homepage');
       assert.equal(await page.locator('.need-link').count(), 3);
       assert.equal(await page.locator('.process-step').count(), 4);
       assert.deepEqual(await page.locator('main > section[id]').evaluateAll(sections => sections.map(section => section.id)), ['accueil', 'a-propos', 'approche', 'expertise', 'contact']);
@@ -157,7 +157,7 @@ try {
     }
     await context.close();
   }
-  for (const route of ['/catalogue/', '/renovation/renovation-salon-cheminee/', '/renovation/renovation-cuisine-ouverte-salon/', '/renovation/renovation-cuisine-entree-rangements/', '/prestations/', '/projets/haven/', '/projets/nemeto/', '/renovation/moderniser-une-douche/', '/renovation/repenser-une-salle-de-bains/', '/renovation/transformer-une-baignoire-en-douche/', '/mentions-legales/', '/confidentialite/', '/404.html']) {
+  for (const route of ['/realisations/', '/inspirations/', '/inspirations/cuisine/', '/renovation/renovation-salon-cheminee/', '/renovation/renovation-cuisine-ouverte-salon/', '/renovation/renovation-cuisine-entree-rangements/', '/prestations/', '/projets/haven/', '/projets/nemeto/', '/renovation/moderniser-une-douche/', '/renovation/repenser-une-salle-de-bains/', '/renovation/transformer-une-baignoire-en-douche/', '/mentions-legales/', '/confidentialite/', '/404.html']) {
     const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
     const page = await context.newPage();
     const response = await page.goto(base + route, { waitUntil: 'networkidle' });
@@ -171,34 +171,34 @@ try {
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `Route overflow at 320: ${route}`);
     await page.setViewportSize({ width: 375, height: 1000 });
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `Route overflow: ${route}`);
-    if (route === '/catalogue/') {
-      assert.equal(await page.locator('#main-navigation a[aria-current="page"]').innerText(), 'Catalogue');
+    if (route === '/realisations/') {
+      assert.equal(await page.locator('#main-navigation a[aria-current="page"]').innerText(), 'Réalisations');
       assert.equal(await page.locator('.catalogue-services .catalogue-card').count(), 2);
       assert.deepEqual(await page.locator('main > section[id]').evaluateAll(sections => sections.map(section => section.id)), ['renovation', 'etude-3d']);
-      assert.deepEqual(await page.locator('#inspirations .catalogue-card h3').allTextContents(), ['Bibliothèque & coin lecture', 'Pièce multifonction']);
+      assert.deepEqual(await page.locator('#amenagements-3d .catalogue-card h3').allTextContents(), ['Bibliothèque & coin lecture', 'Pièce multifonction']);
       assert.equal(await page.locator('#renovation').getByRole('heading', { name: 'Salle de bains', exact: true }).count(), 1);
       assert.equal(await page.locator('#main-navigation').getByRole('link', { name: 'Rénovation', exact: true }).count(), 0);
       assert.equal(await page.locator('.study-card').count(), 2);
       assert.equal(await page.locator('.catalogue-renovation-card').count(), 6);
       assert.equal(await page.locator('#main-navigation a').filter({ hasText: /^(Prestations|Conception 3D)$/ }).count(), 0);
       await prepareCapture(page);
-      await page.screenshot({ path: 'qa/catalogue-375.png', fullPage: true });
+      await page.screenshot({ path: 'qa/realisations-375.png', fullPage: true });
       await page.locator('.catalogue-services .catalogue-card').first().click();
       await page.waitForURL(base + '/prestations/#coin-tv-rangements');
-      await page.getByRole('link', { name: 'Retour au catalogue', exact: true }).click();
-      await page.waitForURL(base + '/catalogue/');
+      await page.getByRole('link', { name: 'Retour aux réalisations', exact: true }).click();
+      await page.waitForURL(base + '/realisations/#amenagements-3d');
       await page.locator('.study-card').first().click();
       await page.waitForURL(base + '/projets/haven/');
       await page.getByRole('link', { name: 'Retour aux études', exact: true }).click();
-      await page.waitForURL(base + '/catalogue/#conception-3d');
+      await page.waitForURL(base + '/realisations/#conception-3d');
       await page.locator('.catalogue-renovation-card').first().click();
       await page.waitForURL(base + '/renovation/renovation-salon-cheminee/');
       await page.getByRole('link', { name: 'Rénovations', exact: true }).click();
-      await page.waitForURL(base + '/catalogue/#renovation');
+      await page.waitForURL(base + '/realisations/#renovation');
 
     }
     if (route === '/prestations/') {
-      assert.equal(await page.locator('#main-navigation a[aria-current="location"]').innerText(), 'Catalogue');
+      assert.equal(await page.locator('#main-navigation a[aria-current="location"]').innerText(), 'Réalisations');
       for (const [slug, type] of [['coin-tv-rangements', 'Bibliothèque / rangement'], ['piece-multifonction', 'Optimisation d’espace'], ['salle-de-bains', 'Salle d’eau']]) {
         await page.locator('#explore-service').selectOption(slug);
         await page.locator(`#${slug} .service-cta`).click();
@@ -248,11 +248,11 @@ try {
   assert.equal(await staticPage.locator('.reveal-pending').count(), 0);
   assert.equal(await staticPage.locator('#project-form .contact-call-button').getAttribute('href'), 'tel:+33666513040', 'Without JavaScript, the call stays available');
   await staticPage.locator('.hero-actions a').click();
-  await staticPage.waitForURL(base + '/catalogue/#renovation');
+  await staticPage.waitForURL(base + '/realisations/#renovation');
   await staticPage.locator('.catalogue-renovation-card').first().waitFor();
   assert.equal(await staticPage.locator('.catalogue-renovation-card').count(), 6);
   // Depuis #renovation, Playwright ne stabilise pas le défilement sans JavaScript : la suite repart du haut.
-  await staticPage.goto(base + '/catalogue/');
+  await staticPage.goto(base + '/realisations/');
   await staticPage.locator('.catalogue-services .catalogue-card').first().click();
   await staticPage.waitForURL(base + '/prestations/#coin-tv-rangements');
   await staticPage.locator('.service-detail').first().waitFor();

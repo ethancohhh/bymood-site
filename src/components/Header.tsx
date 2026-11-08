@@ -5,8 +5,7 @@ import { Arrow } from './ui';
 
 const catalogueSections = [
   { title: 'Prestations réalisées', anchor: 'renovation' },
-  { title: 'Inspirations', anchor: 'inspirations' },
-  { title: 'Conception & rendus 3D', anchor: 'conception-3d' },
+  { title: 'Études 3D', anchor: 'etude-3d' },
 ];
 
 export function Header({ home = true, currentPath = '' }: { home?: boolean; currentPath?: string }) {
@@ -29,7 +28,9 @@ export function Header({ home = true, currentPath = '' }: { home?: boolean; curr
     hoverTimer.current = window.setTimeout(() => setCatalogueOpen(opening), opening ? 0 : 180);
   };
   useEffect(() => () => window.clearTimeout(hoverTimer.current), []);
-  const inCatalogue = currentPath === '/catalogue/' || /^\/(prestations|projets|renovation)\//.test(currentPath);
+  const inCatalogue = currentPath === '/realisations/' || /^\/(prestations|projets|renovation)\//.test(currentPath);
+  // Liens simples situés hors de l'accueil (Inspirations) : page ou rubrique en cours.
+  const pageCurrent = (id: string) => !id.startsWith('/') ? (home && active === id ? 'location' : undefined) : currentPath === id ? 'page' : currentPath.startsWith(id) ? 'location' : undefined;
 
   useEffect(() => {
     const query = window.matchMedia('(max-width: 900px)');
@@ -87,25 +88,25 @@ export function Header({ home = true, currentPath = '' }: { home?: boolean; curr
         <span>{open ? 'Fermer' : 'Menu'}</span><span className="menu-lines" aria-hidden="true"><i /><i /></span>
       </button>
       <nav ref={nav} id="main-navigation" className={`navigation ${enhanced ? 'is-enhanced' : ''} ${open ? 'is-open' : ''}`} aria-label="Navigation principale" inert={enhanced && mobile && !open ? true : undefined}>
-        {navigation.filter(([, id]) => id !== '/catalogue/').map(([label, id]) => <a key={id} href={sitePath(href(id))} aria-current={home && active === id ? 'location' : undefined} onClick={close}>{label}</a>)}
+        {navigation.filter(([, id]) => id !== '/realisations/').map(([label, id]) => <a key={id} href={sitePath(href(id))} aria-current={pageCurrent(id)} onClick={close}>{label}</a>)}
         <a href={sitePath(href('project-form'))} aria-current={home && active === 'contact' ? 'location' : undefined} onClick={close}>{contact.cta}</a>
         <div className="catalogue-navigation" ref={catalogue} onPointerEnter={event => { if (event.pointerType === 'mouse') hover(true); }} onPointerLeave={event => { if (event.pointerType === 'mouse') hover(false); }} onBlur={event => {
           if (!mobile && !event.currentTarget.contains(event.relatedTarget as Node | null)) setCatalogueOpen(false);
         }}>
-          <div className="catalogue-control"><a className="nav-catalogue" href={sitePath('/catalogue/')} aria-current={inCatalogue ? (currentPath === '/catalogue/' ? 'page' : 'location') : undefined} onClick={close}>Catalogue</a>
-            <button ref={catalogueToggle} className="catalogue-toggle" hidden={!enhanced} type="button" aria-label="Rubriques du catalogue" aria-expanded={catalogueOpen} aria-controls="catalogue-navigation-links" onClick={event => setCatalogueOpen(event.detail > 0 ? true : !catalogueOpen)}><svg className="arrow" width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 9 6 6 6-6" stroke="currentColor" strokeWidth="1.4" /></svg></button>
+          <div className="catalogue-control"><a className="nav-catalogue" href={sitePath('/realisations/')} aria-current={inCatalogue ? (currentPath === '/realisations/' ? 'page' : 'location') : undefined} onClick={close}>Réalisations</a>
+            <button ref={catalogueToggle} className="catalogue-toggle" hidden={!enhanced} type="button" aria-label="Rubriques des réalisations" aria-expanded={catalogueOpen} aria-controls="catalogue-navigation-links" onClick={event => setCatalogueOpen(event.detail > 0 ? true : !catalogueOpen)}><svg className="arrow" width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 9 6 6 6-6" stroke="currentColor" strokeWidth="1.4" /></svg></button>
           </div>
           <div id="catalogue-navigation-links" className="catalogue-panel" hidden={!mobile && !catalogueOpen}>
-            {catalogueSections.map(section => <a key={section.anchor} href={sitePath(`/catalogue/#${section.anchor}`)} onClick={close}>{section.title}<Arrow /></a>)}
+            {catalogueSections.map(section => <a key={section.anchor} href={sitePath(`/realisations/#${section.anchor}`)} onClick={close}>{section.title}<Arrow /></a>)}
           </div>
         </div>
       </nav>
       <span className="header-ruler" aria-hidden="true" />
     </header>
     <noscript><nav className="navigation-fallback" aria-label="Navigation sans JavaScript">
-      <a href={sitePath('/catalogue/')}>Catalogue</a>
-      {catalogueSections.map(section => <a key={section.anchor} href={sitePath(`/catalogue/#${section.anchor}`)}>{section.title}</a>)}
-      {navigation.filter(([, id]) => id !== '/catalogue/').map(([label, id]) => <a key={id} href={sitePath(href(id))}>{label}</a>)}
+      <a href={sitePath('/realisations/')}>Réalisations</a>
+      {catalogueSections.map(section => <a key={section.anchor} href={sitePath(`/realisations/#${section.anchor}`)}>{section.title}</a>)}
+      {navigation.filter(([, id]) => id !== '/realisations/').map(([label, id]) => <a key={id} href={sitePath(href(id))}>{label}</a>)}
       <a href={sitePath(href('project-form'))}>{contact.cta}</a>
     </nav></noscript>
   </>;

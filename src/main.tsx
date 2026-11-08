@@ -9,6 +9,7 @@ import './architecture.css';
 import './hero-axo.css';
 import './header.css';
 import './approach.css';
+import './inspirations.css';
 
 const root = document.getElementById('root')!;
 const page = resolvePage(routePath(window.location.pathname));

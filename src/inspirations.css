@@ -1,0 +1,277 @@
+/* Inspirations : même direction artistique et même structure que catalogue.bymood.fr
+   (catalogue/styles.css), limitées à ces pages ; en-tête et pied de page restent ceux du site. */
+.inspirations {
+  --band-width: 1040px; /* limite l'agrandissement des photos sources (~1 200 px) */
+  --ease: cubic-bezier(.22, .61, .36, 1);
+  display: block;
+  font: italic 400 16px/1.8 var(--font-main);
+}
+.inspirations h1, .inspirations h2 { margin: 0; font: normal 700 1em/1.15 var(--font-heading); letter-spacing: -.035em; color: var(--color-primary); }
+.inspirations .label {
+  font: normal 400 12px/1.4 var(--font-technical);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--color-taupe);
+}
+
+/* Fond : tracés de construction, très discrets, derrière tout le contenu. */
+.inspirations .trace {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  color: var(--color-primary);
+  opacity: .16;
+  pointer-events: none;
+}
+.inspirations .trace path { stroke-width: .7; }
+.inspirations .trace .trace__dash { stroke-dasharray: 4 6; opacity: .7; }
+@media (prefers-reduced-motion: no-preference) {
+  .inspirations .trace path:not(.trace__dash) { stroke-dasharray: 1; animation: trace 2.8s cubic-bezier(.65, 0, .35, 1) var(--d, 0s) both; }
+  .inspirations .trace .trace__dash { animation: trace-fade 2.4s ease var(--d, 0s) both; }
+}
+@keyframes trace { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes trace-fade { from { opacity: 0; } }
+
+/* Accueil : bandeaux */
+.inspirations .intro {
+  width: min(100% - 2 * var(--gutter), var(--band-width));
+  margin: 0 auto;
+  padding: clamp(40px, 7vw, 96px) 0 clamp(28px, 4vw, 48px);
+  display: grid;
+  gap: 16px;
+}
+.inspirations .intro__copy { display: grid; gap: 16px; }
+.inspirations .intro h1 { font-size: clamp(40px, 5vw, 64px); }
+.inspirations .intro p { color: var(--color-muted); max-width: 52ch; }
+
+.inspirations .bands {
+  list-style: none;
+  width: min(100% - 2 * var(--gutter), var(--band-width));
+  margin: 0 auto clamp(48px, 7vw, 96px);
+  padding: 0;
+  display: grid;
+  gap: clamp(12px, 1.6vw, 20px);
+}
+.inspirations .band__link {
+  position: relative;
+  display: block;
+  height: clamp(180px, 26vh, 260px);
+  overflow: hidden;
+  background: var(--color-sand);
+  isolation: isolate;
+}
+.inspirations .band__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(.85);
+  transition: transform 1.1s var(--ease), filter .6s var(--ease);
+}
+.inspirations .band__link::before {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  inset: 0 0 auto;
+  height: 72px;
+  background: linear-gradient(rgb(14 31 39 / .32), transparent);
+  pointer-events: none;
+}
+.inspirations .band__link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--color-primary);
+  opacity: 0;
+  transition: opacity .6s var(--ease);
+}
+.inspirations .band__index, .inspirations .band__count {
+  position: absolute;
+  z-index: 2;
+  top: 18px;
+  font: normal 400 12px/1 var(--font-technical);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--color-on-dark);
+  text-shadow: 0 1px 8px rgb(0 0 0 / .35);
+}
+.inspirations .band__index { left: 20px; }
+.inspirations .band__count { right: 20px; opacity: 0; transition: opacity .5s var(--ease); }
+
+.inspirations .band__title {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(16px, 3vw, 40px);
+  padding: 0 var(--gutter);
+  color: var(--color-on-dark);
+  pointer-events: none;
+}
+.inspirations .band__title span {
+  font: normal 700 clamp(30px, 5.2vw, 68px)/1 var(--font-heading);
+  letter-spacing: .02em;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity .6s var(--ease), transform .8s var(--ease), letter-spacing .9s var(--ease);
+}
+/* Filets d'axe qui se déploient de part et d'autre du titre */
+.inspirations .band__title::before, .inspirations .band__title::after {
+  content: '';
+  flex: 0 1 120px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transition: transform .8s var(--ease) .1s;
+}
+.inspirations .band__title::before { transform-origin: right; }
+.inspirations .band__title::after { transform-origin: left; }
+
+.inspirations .band__link:hover .band__img, .inspirations .band__link:focus-visible .band__img { transform: scale(1.03); filter: saturate(.6); }
+.inspirations .band__link:hover::after, .inspirations .band__link:focus-visible::after { opacity: .52; }
+.inspirations .band__link:hover .band__title span, .inspirations .band__link:focus-visible .band__title span { opacity: 1; transform: none; letter-spacing: -.02em; }
+.inspirations .band__link:hover .band__title::before, .inspirations .band__link:hover .band__title::after,
+.inspirations .band__link:focus-visible .band__title::before, .inspirations .band__link:focus-visible .band__title::after { transform: scaleX(1); }
+.inspirations .band__link:hover .band__count, .inspirations .band__link:focus-visible .band__count { opacity: 1; }
+.inspirations .band__link:focus-visible { outline-offset: -4px; outline-color: var(--color-on-dark); }
+
+/* Écrans tactiles (tablette en rendez-vous) : pas de survol, titre toujours visible */
+@media (hover: none) {
+  .inspirations .band__link::after { opacity: .38; }
+  .inspirations .band__title span { opacity: 1; transform: none; letter-spacing: -.02em; }
+  .inspirations .band__title::before, .inspirations .band__title::after { transform: scaleX(1); }
+  .inspirations .band__count { opacity: 1; }
+}
+
+/* Page catégorie */
+.inspirations .category {
+  width: min(100% - 2 * var(--gutter), var(--container));
+  margin: 0 auto;
+  padding: 24px 0 clamp(48px, 7vw, 100px);
+}
+.inspirations .back {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  margin-top: 8px;
+  font: normal 400 12px/1 var(--font-technical);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+.inspirations .back span { transition: transform .24s var(--ease); }
+.inspirations .back:hover span { transform: translateX(-4px); }
+
+.inspirations .category__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 16px 40px;
+  padding: clamp(24px, 4vw, 48px) 0 clamp(24px, 3vw, 36px);
+  border-bottom: 1px solid var(--color-line);
+  margin-bottom: clamp(24px, 3vw, 40px);
+}
+.inspirations .category__head h1 { font-size: clamp(40px, 6vw, 80px); }
+.inspirations .category__head p { grid-column: 1; color: var(--color-muted); max-width: 56ch; }
+.inspirations .category__head .label { grid-column: 2; grid-row: 1 / span 2; align-self: end; white-space: nowrap; }
+
+.inspirations .grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+  gap: clamp(20px, 2.4vw, 36px) clamp(16px, 2vw, 28px);
+}
+.inspirations .variant { margin: 0; }
+.inspirations .variant__btn {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: var(--color-sand);
+  cursor: zoom-in;
+  overflow: hidden;
+}
+.inspirations .variant__btn img { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; transition: transform .8s var(--ease); }
+.inspirations .variant__btn:hover img { transform: scale(1.025); }
+.inspirations .variant figcaption {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  padding-top: 10px;
+  font-size: 14px;
+  color: var(--color-muted);
+}
+.inspirations .variant figcaption .label { flex: none; }
+
+.inspirations .nextcat {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 24px;
+  margin-top: clamp(24px, 4vw, 48px);
+  padding-top: 24px;
+  border-top: 1px solid var(--color-line);
+}
+.inspirations .nextcat a { font: normal 700 clamp(22px, 2.6vw, 32px)/1.2 var(--font-heading); letter-spacing: -.035em; color: var(--color-primary); }
+.inspirations .nextcat a span { display: inline-block; transition: transform .24s var(--ease); }
+.inspirations .nextcat a:hover span { transform: translateX(6px); }
+
+/* Visionneuse plein écran */
+.inspirations .viewer {
+  width: 100vw;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: #0e1f27;
+  color: var(--color-on-dark);
+}
+.inspirations .viewer::backdrop { background: #0e1f27; }
+.inspirations .viewer[open] { display: grid; place-items: center; animation: fade .35s var(--ease); }
+.inspirations .viewer__figure { margin: 0; display: grid; justify-items: center; gap: 14px; padding: 64px 72px 32px; }
+.inspirations .viewer__img { max-width: 100%; max-height: calc(100dvh - 150px); object-fit: contain; }
+.inspirations .viewer__caption { font-size: 14px; color: #d9d2c4; }
+.inspirations .viewer__caption .label { color: #c9b99e; margin-right: 12px; }
+.inspirations .viewer__btn {
+  position: absolute;
+  min-width: 48px;
+  min-height: 48px;
+  border: 0;
+  background: none;
+  color: var(--color-on-dark);
+  font: normal 400 12px/1 var(--font-technical);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.inspirations .viewer__btn[hidden] { display: none; }
+.inspirations .viewer__btn:focus-visible { outline: 2px solid var(--color-on-dark); outline-offset: 4px; }
+.inspirations .viewer__close { top: 12px; right: 16px; }
+.inspirations .viewer__prev, .inspirations .viewer__next { top: 50%; transform: translateY(-50%); font-size: 22px; }
+.inspirations .viewer__prev { left: 12px; }
+.inspirations .viewer__next { right: 12px; }
+body:has(.inspirations .viewer[open]) { overflow: hidden; }
+
+.inspirations .page-enter { animation: rise .7s var(--ease) both; }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } }
+@keyframes fade { from { opacity: 0; } }
+
+@media (max-width: 767px) {
+  .inspirations .category__head { grid-template-columns: 1fr; }
+  .inspirations .category__head .label { grid-column: 1; grid-row: auto; }
+  .inspirations .band__title::before, .inspirations .band__title::after { flex-basis: 32px; }
+  .inspirations .viewer__figure { padding: 60px 0 24px; }
+  .inspirations .viewer__caption { padding: 0 24px; }
+  .inspirations .viewer__prev, .inspirations .viewer__next { top: auto; bottom: 8px; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .inspirations *, .inspirations *::before, .inspirations *::after { animation: none !important; transition-duration: .01ms !important; }
+}

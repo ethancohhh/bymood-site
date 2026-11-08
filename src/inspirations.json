@@ -1,0 +1,547 @@
+[
+  {
+    "slug": "cuisine",
+    "titre": "Cuisine",
+    "accroche": "Des cuisines en L ouvertes et fonctionnelles, où chaque mètre linéaire travaille.",
+    "couverture": {
+      "id": "08",
+      "legende": "",
+      "ratio": 0.563,
+      "largeurSource": 1180
+    },
+    "variantes": [
+      {
+        "id": "01",
+        "legende": "",
+        "ratio": 0.6667,
+        "largeurSource": 992
+      },
+      {
+        "id": "02",
+        "legende": "",
+        "ratio": 0.6667,
+        "largeurSource": 1024
+      },
+      {
+        "id": "03",
+        "legende": "",
+        "ratio": 0.6667,
+        "largeurSource": 1024
+      },
+      {
+        "id": "04",
+        "legende": "",
+        "ratio": 0.5628,
+        "largeurSource": 941
+      },
+      {
+        "id": "05",
+        "legende": "",
+        "ratio": 0.6654,
+        "largeurSource": 1022
+      },
+      {
+        "id": "06",
+        "legende": "",
+        "ratio": 0.561,
+        "largeurSource": 736
+      },
+      {
+        "id": "07",
+        "legende": "",
+        "ratio": 0.5636,
+        "largeurSource": 1024
+      },
+      {
+        "id": "08",
+        "legende": "",
+        "ratio": 0.563,
+        "largeurSource": 1180
+      },
+      {
+        "id": "09",
+        "legende": "",
+        "ratio": 0.6667,
+        "largeurSource": 1024
+      },
+      {
+        "id": "10",
+        "legende": "",
+        "ratio": 0.6667,
+        "largeurSource": 1024
+      },
+      {
+        "id": "11",
+        "legende": "",
+        "ratio": 0.6667,
+        "largeurSource": 1024
+      },
+      {
+        "id": "12",
+        "legende": "",
+        "ratio": 0.6667,
+        "largeurSource": 736
+      },
+      {
+        "id": "13",
+        "legende": "",
+        "ratio": 0.6667,
+        "largeurSource": 1024
+      },
+      {
+        "id": "14",
+        "legende": "",
+        "ratio": 0.8333,
+        "largeurSource": 1145
+      },
+      {
+        "id": "15",
+        "legende": "",
+        "ratio": 0.8003,
+        "largeurSource": 1122
+      },
+      {
+        "id": "16",
+        "legende": "",
+        "ratio": 0.6667,
+        "largeurSource": 1024
+      }
+    ]
+  },
+  {
+    "slug": "salle-de-bain",
+    "titre": "Salle de bain",
+    "accroche": "Matières, lumière et rangements pour une pièce d'eau simple à vivre.",
+    "couverture": {
+      "id": "05",
+      "legende": "",
+      "ratio": 1,
+      "largeurSource": 1254
+    },
+    "variantes": [
+      {
+        "id": "01",
+        "legende": "",
+        "ratio": 0.6667,
+        "largeurSource": 1024
+      },
+      {
+        "id": "02",
+        "legende": "",
+        "ratio": 0.6667,
+        "largeurSource": 1024
+      },
+      {
+        "id": "03",
+        "legende": "",
+        "ratio": 0.8003,
+        "largeurSource": 1122
+      },
+      {
+        "id": "04",
+        "legende": "",
+        "ratio": 0.6656,
+        "largeurSource": 1023
+      },
+      {
+        "id": "05",
+        "legende": "",
+        "ratio": 1,
+        "largeurSource": 1254
+      },
+      {
+        "id": "06",
+        "legende": "",
+        "ratio": 0.8152,
+        "largeurSource": 750
+      },
+      {
+        "id": "07",
+        "legende": "",
+        "ratio": 0.6667,
+        "largeurSource": 1024
+      },
+      {
+        "id": "08",
+        "legende": "",
+        "ratio": 0.6667,
+        "largeurSource": 1024
+      },
+      {
+        "id": "09",
+        "legende": "",
+        "ratio": 0.7533,
+        "largeurSource": 736
+      },
+      {
+        "id": "10",
+        "legende": "",
+        "ratio": 0.6667,
+        "largeurSource": 736
+      },
+      {
+        "id": "11",
+        "legende": "",
+        "ratio": 0.6667,
+        "largeurSource": 1024
+      },
+      {
+        "id": "12",
+        "legende": "",
+        "ratio": 0.8,
+        "largeurSource": 736
+      },
+      {
+        "id": "13",
+        "legende": "",
+        "ratio": 0.6667,
+        "largeurSource": 1024
+      },
+      {
+        "id": "14",
+        "legende": "",
+        "ratio": 0.75,
+        "largeurSource": 1086
+      },
+      {
+        "id": "15",
+        "legende": "",
+        "ratio": 0.8054,
+        "largeurSource": 1080
+      },
+      {
+        "id": "16",
+        "legende": "",
+        "ratio": 0.6762,
+        "largeurSource": 1178
+      }
+    ]
+  },
+  {
+    "slug": "mur-tv",
+    "titre": "Mur TV",
+    "accroche": "Un mur qui intègre l'écran, les rangements et la lumière en un seul dessin.",
+    "couverture": {
+      "id": "05",
+      "legende": "",
+      "ratio": 0.8,
+      "largeurSource": 2400
+    },
+    "variantes": [
+      {
+        "id": "01",
+        "legende": "",
+        "ratio": 0.768,
+        "largeurSource": 1099
+      },
+      {
+        "id": "02",
+        "legende": "",
+        "ratio": 0.6656,
+        "largeurSource": 1023
+      },
+      {
+        "id": "03",
+        "legende": "",
+        "ratio": 0.6667,
+        "largeurSource": 736
+      },
+      {
+        "id": "04",
+        "legende": "",
+        "ratio": 0.7982,
+        "largeurSource": 1080
+      },
+      {
+        "id": "05",
+        "legende": "",
+        "ratio": 0.8,
+        "largeurSource": 2400
+      },
+      {
+        "id": "06",
+        "legende": "",
+        "ratio": 0.6667,
+        "largeurSource": 1638
+      },
+      {
+        "id": "07",
+        "legende": "",
+        "ratio": 0.6667,
+        "largeurSource": 736
+      },
+      {
+        "id": "08",
+        "legende": "",
+        "ratio": 0.6719,
+        "largeurSource": 688
+      },
+      {
+        "id": "09",
+        "legende": "",
+        "ratio": 0.75,
+        "largeurSource": 1086
+      },
+      {
+        "id": "10",
+        "legende": "",
+        "ratio": 0.5627,
+        "largeurSource": 736
+      },
+      {
+        "id": "11",
+        "legende": "",
+        "ratio": 0.75,
+        "largeurSource": 1086
+      },
+      {
+        "id": "12",
+        "legende": "",
+        "ratio": 0.6715,
+        "largeurSource": 736
+      },
+      {
+        "id": "13",
+        "legende": "",
+        "ratio": 0.6667,
+        "largeurSource": 1024
+      },
+      {
+        "id": "14",
+        "legende": "",
+        "ratio": 0.5625,
+        "largeurSource": 1080
+      },
+      {
+        "id": "15",
+        "legende": "",
+        "ratio": 0.5625,
+        "largeurSource": 675
+      },
+      {
+        "id": "16",
+        "legende": "",
+        "ratio": 0.7609,
+        "largeurSource": 735
+      }
+    ]
+  },
+  {
+    "slug": "cheminee",
+    "titre": "Cheminée",
+    "accroche": "Un foyer qui structure la pièce, de l'insert discret au mur habillé de pierre.",
+    "couverture": {
+      "id": "07",
+      "legende": "",
+      "ratio": 0.72,
+      "largeurSource": 1800
+    },
+    "variantes": [
+      {
+        "id": "01",
+        "legende": "",
+        "ratio": 1,
+        "largeurSource": 1200
+      },
+      {
+        "id": "02",
+        "legende": "",
+        "ratio": 0.561,
+        "largeurSource": 736
+      },
+      {
+        "id": "03",
+        "legende": "",
+        "ratio": 0.6667,
+        "largeurSource": 896
+      },
+      {
+        "id": "04",
+        "legende": "",
+        "ratio": 0.7109,
+        "largeurSource": 910
+      },
+      {
+        "id": "05",
+        "legende": "",
+        "ratio": 0.6667,
+        "largeurSource": 896
+      },
+      {
+        "id": "06",
+        "legende": "",
+        "ratio": 1,
+        "largeurSource": 736
+      },
+      {
+        "id": "07",
+        "legende": "",
+        "ratio": 0.72,
+        "largeurSource": 1800
+      },
+      {
+        "id": "08",
+        "legende": "",
+        "ratio": 0.678,
+        "largeurSource": 1080
+      },
+      {
+        "id": "09",
+        "legende": "",
+        "ratio": 0.6667,
+        "largeurSource": 800
+      },
+      {
+        "id": "10",
+        "legende": "",
+        "ratio": 0.6667,
+        "largeurSource": 1024
+      },
+      {
+        "id": "11",
+        "legende": "",
+        "ratio": 0.6875,
+        "largeurSource": 704
+      },
+      {
+        "id": "12",
+        "legende": "",
+        "ratio": 0.6654,
+        "largeurSource": 682
+      },
+      {
+        "id": "13",
+        "legende": "",
+        "ratio": 1,
+        "largeurSource": 1000
+      },
+      {
+        "id": "14",
+        "legende": "",
+        "ratio": 1,
+        "largeurSource": 1024
+      },
+      {
+        "id": "15",
+        "legende": "",
+        "ratio": 0.75,
+        "largeurSource": 1536
+      },
+      {
+        "id": "16",
+        "legende": "",
+        "ratio": 0.5628,
+        "largeurSource": 941
+      }
+    ]
+  },
+  {
+    "slug": "escalier",
+    "titre": "Escalier",
+    "accroche": "Un escalier pensé comme un objet : structure, matière et rangements intégrés.",
+    "couverture": {
+      "id": "12",
+      "legende": "",
+      "ratio": 0.6667,
+      "largeurSource": 1536
+    },
+    "variantes": [
+      {
+        "id": "01",
+        "legende": "",
+        "ratio": 0.8601,
+        "largeurSource": 818
+      },
+      {
+        "id": "02",
+        "legende": "",
+        "ratio": 0.667,
+        "largeurSource": 735
+      },
+      {
+        "id": "03",
+        "legende": "",
+        "ratio": 0.5623,
+        "largeurSource": 474
+      },
+      {
+        "id": "04",
+        "legende": "",
+        "ratio": 0.8,
+        "largeurSource": 736
+      },
+      {
+        "id": "05",
+        "legende": "",
+        "ratio": 0.6656,
+        "largeurSource": 1023
+      },
+      {
+        "id": "06",
+        "legende": "",
+        "ratio": 0.7497,
+        "largeurSource": 563
+      },
+      {
+        "id": "07",
+        "legende": "",
+        "ratio": 0.6667,
+        "largeurSource": 1024
+      },
+      {
+        "id": "08",
+        "legende": "",
+        "ratio": 0.7996,
+        "largeurSource": 1440
+      },
+      {
+        "id": "09",
+        "legende": "",
+        "ratio": 0.8,
+        "largeurSource": 736
+      },
+      {
+        "id": "10",
+        "legende": "",
+        "ratio": 0.6667,
+        "largeurSource": 896
+      },
+      {
+        "id": "11",
+        "legende": "",
+        "ratio": 0.667,
+        "largeurSource": 667
+      },
+      {
+        "id": "12",
+        "legende": "",
+        "ratio": 0.6667,
+        "largeurSource": 1536
+      },
+      {
+        "id": "13",
+        "legende": "",
+        "ratio": 0.6487,
+        "largeurSource": 1010
+      },
+      {
+        "id": "14",
+        "legende": "",
+        "ratio": 0.6667,
+        "largeurSource": 832
+      },
+      {
+        "id": "15",
+        "legende": "",
+        "ratio": 0.6667,
+        "largeurSource": 768
+      },
+      {
+        "id": "16",
+        "legende": "",
+        "ratio": 0.75,
+        "largeurSource": 1440
+      }
+    ]
+  }
+]

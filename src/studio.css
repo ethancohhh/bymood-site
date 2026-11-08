@@ -481,6 +481,7 @@
 .catalogue-intro > .eyebrow { margin-top: 36px; }
 .catalogue-intro h1 { font-size: clamp(34px, 4.5vw, 62px); line-height: 1.2; margin-top: 24px; max-width: 950px; }
 .catalogue-intro > p { max-width: 680px; margin-top: 24px; }
+.catalogue-intro > p a { color: var(--color-primary); text-decoration: underline; text-underline-offset: 4px; }
 .catalogue-index { display: flex; flex-wrap: wrap; gap: 8px 32px; margin-top: 28px; border-top: 1px solid var(--color-line); padding-top: 14px; }
 .catalogue-index a { display: inline-flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 44px; font-size: 14px; color: var(--color-primary); }
 .catalogue-index a:hover { text-decoration: underline; text-underline-offset: 5px; }

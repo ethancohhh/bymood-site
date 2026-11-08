@@ -80,7 +80,7 @@ try {
   assert.equal(await page.locator('#main-navigation').evaluate(element => element.inert), true);
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.waitForFunction(() => !document.querySelector('#main-navigation').inert);
-  await page.goto(base + '/catalogue/');
+  await page.goto(base + '/realisations/');
   const universe = page.locator('.study-card').last();
   await universe.hover(); await page.waitForTimeout(420);
   assert.ok(await universe.locator('.image-frame img').evaluate(element => new DOMMatrixReadOnly(getComputedStyle(element).transform).a > 1));

@@ -12,18 +12,18 @@ import { AnnotatedImage } from './AnnotatedImage';
 export function ServicesPage({ contactSection }: { contactSection: ReactNode }) {
   return <><Header home={false} currentPath="/prestations/" /><main id="main" className="services-page">
     <div className="container services-intro">
-      <a className="text-link" href={sitePath("/catalogue/")}><Arrow />Retour au catalogue</a>
-      <span className="eyebrow">Inspirations & prestation réalisée</span>
+      <a className="text-link" href={sitePath("/realisations/#amenagements-3d")}><Arrow />Retour aux réalisations</a>
+      <span className="eyebrow">Aménagements 3D & prestation réalisée</span>
       <h1>Des aménagements<br />pour votre quotidien.</h1>
-      <p>Deux inspirations pour repenser vos rangements et les usages d’une pièce, puis une salle de bains réalisée pour observer une transformation avant / après.</p>
+      <p>Deux aménagements imaginés en 3D pour repenser vos rangements et les usages d’une pièce, puis une salle de bains réalisée pour observer une transformation avant / après.</p>
     </div>
     <ServiceNavigation />
     {exampleServices.map((service, index) => <section className="service-detail section" id={service.slug} key={service.slug} aria-labelledby={`title-${service.slug}`}>
       <div className="container">
-        <div className="service-heading"><span className="eyebrow">0{index + 1} · {service.status === 'completed' ? 'Prestation réalisée' : 'Inspiration d’aménagement'}</span><h2 id={`title-${service.slug}`}>{service.title}</h2><p>{service.summary}</p></div>
+        <div className="service-heading"><span className="eyebrow">0{index + 1} · {service.status === 'completed' ? 'Prestation réalisée' : 'Aménagement · Rendu 3D'}</span><h2 id={`title-${service.slug}`}>{service.title}</h2><p>{service.summary}</p></div>
         <div className="service-layout">
           <figure className="service-media">{service.image.startsWith('haven-') ? <AnnotatedImage name={service.image} alt={service.alt} group="services" caption={service.caption} /> : <a href={sitePath(`/images/${service.image}-1600.webp`)} target="_blank" rel="noopener" data-viewer="services" data-alt={service.alt} data-caption={service.caption} aria-label={`Agrandir : ${service.title}`}><Picture name={service.image} alt={service.alt} /></a>}<figcaption>{service.caption}</figcaption></figure>
-          <div className="service-description"><span className="service-reading-label">Le projet en bref</span><h3>{service.status === 'completed' ? 'Un besoin similaire ?' : 'Votre besoin'}</h3><p>{service.need}</p><h3>{service.status === 'completed' ? 'La transformation réalisée' : 'La transformation envisagée'}</h3><p>{service.example}</p><span className="service-example-note">{service.status === 'completed' ? 'Prestation réalisée. Un projet similaire nécessite un périmètre et un devis adaptés à votre logement.' : 'Inspiration en rendu 3D, à adapter à votre logement.'}</span><a className="button service-cta" href={sitePath("#project-form")}>{contact.cta}<span className="sr-only"> : {service.title}</span><Arrow diagonal /></a></div>
+          <div className="service-description"><span className="service-reading-label">Le projet en bref</span><h3>{service.status === 'completed' ? 'Un besoin similaire ?' : 'Votre besoin'}</h3><p>{service.need}</p><h3>{service.status === 'completed' ? 'La transformation réalisée' : 'La transformation envisagée'}</h3><p>{service.example}</p><span className="service-example-note">{service.status === 'completed' ? 'Prestation réalisée. Un projet similaire nécessite un périmètre et un devis adaptés à votre logement.' : 'Aménagement imaginé en rendu 3D, à adapter à votre logement.'}</span><a className="button service-cta" href={sitePath("#project-form")}>{contact.cta}<span className="sr-only"> : {service.title}</span><Arrow diagonal /></a></div>
         </div>
         <div className="service-scope">
           <div><h3>Ce que peut comprendre l’accompagnement</h3><ul>{service.included.map(item => <li key={item}>{item}</li>)}</ul></div>

@@ -17,7 +17,7 @@ try {
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
     if (width <= 900) {
       await page.getByRole('button', { name: 'Menu', exact: true }).click();
-      assert.equal(await page.locator('.catalogue-panel a:visible').count(), 3);
+      assert.equal(await page.locator('.catalogue-panel a:visible').count(), 2);
       assert.equal(await page.evaluate(() => document.body.style.overflow), 'hidden');
       const cta = nav.locator('.catalogue-panel a').last();
       await cta.focus(); await page.keyboard.press('Tab');
@@ -34,7 +34,7 @@ try {
       assert.equal(await page.getByRole('button', { name: 'Menu', exact: true }).evaluate(e => e === document.activeElement), true);
       await page.getByRole('button', { name: 'Menu', exact: true }).click();
     } else {
-      const disclosure = page.getByRole('button', { name: 'Rubriques du catalogue' });
+      const disclosure = page.getByRole('button', { name: 'Rubriques des réalisations' });
       await disclosure.focus(); await page.keyboard.press('Enter');
       assert.equal(await disclosure.getAttribute('aria-expanded'), 'true');
       await page.keyboard.press('Tab');
@@ -52,10 +52,14 @@ try {
       await page.screenshot({ path: `qa/header-dropdown-${width}.png` });
     }
     await page.locator('.catalogue-panel a').nth(1).click();
-    await page.waitForURL(base + '/catalogue/#inspirations');
-    const anchor = await page.locator('#inspirations').evaluate(e => ({ top: e.getBoundingClientRect().top, header: document.querySelector('header').getBoundingClientRect().bottom }));
+    await page.waitForURL(base + '/realisations/#etude-3d');
+    const anchor = await page.locator('#etude-3d').evaluate(e => ({ top: e.getBoundingClientRect().top, header: document.querySelector('header').getBoundingClientRect().bottom }));
     assert.ok(anchor.top >= anchor.header - 2, `Anchor hidden by header at ${width}: ${JSON.stringify(anchor)}`);
     assert.ok(Math.abs(await page.locator('header').evaluate(e => e.getBoundingClientRect().top)) <= 1, 'Header remains visible on scroll');
+    if (width <= 900) await page.getByRole('button', { name: 'Menu', exact: true }).click();
+    await nav.getByRole('link', { name: 'Inspirations', exact: true }).click();
+    await page.waitForURL(base + '/inspirations/');
+    assert.equal(await nav.locator('a[href="/inspirations/"]').getAttribute('aria-current'), 'page');
     if (width <= 900) await page.getByRole('button', { name: 'Menu', exact: true }).click();
     await nav.getByRole('link', { name: 'Approche', exact: true }).click();
     await page.waitForURL(base + '/#approche');
@@ -67,7 +71,7 @@ try {
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
     assert.deepEqual(errors, []);
     await page.screenshot({ path: `qa/header-contact-${width}.png` });
-    checks.push({ width, scenario: 'Catalogue, clavier, fermeture, ancres, bandeau persistant et contact' });
+    checks.push({ width, scenario: 'Réalisations, Inspirations, clavier, fermeture, ancres, bandeau persistant et contact' });
     await context.close();
   }
   const context = await browser.newContext({ viewport: { width: 375, height: 560 } });
@@ -83,8 +87,8 @@ try {
   for (const width of [375, 1440]) {
     const context = await browser.newContext({ viewport: { width, height: 900 }, javaScriptEnabled: false, reducedMotion: 'reduce' });
     const page = await context.newPage(); await page.goto(base);
-    const link = width === 375 ? page.locator('.navigation-fallback').getByRole('link', { name: 'Inspirations', exact: true }) : page.locator('#main-navigation').getByRole('link', { name: 'Catalogue', exact: true });
-    await link.click(); await page.waitForURL(width === 375 ? base + '/catalogue/#inspirations' : base + '/catalogue/');
+    const link = width === 375 ? page.locator('.navigation-fallback').getByRole('link', { name: 'Études 3D', exact: true }) : page.locator('#main-navigation').getByRole('link', { name: 'Réalisations', exact: true });
+    await link.click(); await page.waitForURL(width === 375 ? base + '/realisations/#etude-3d' : base + '/realisations/');
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
     checks.push({ width, scenario: 'Navigation sans JavaScript' }); await context.close();
   }

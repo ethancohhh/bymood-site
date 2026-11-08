@@ -1,4 +1,4 @@
-/* Navigation : un cartouche continu, un seul bouton principal (Catalogue). */
+/* Navigation : un cartouche continu, un seul bouton principal (Réalisations). */
 :root { --header-height: 100px; }
 html { scroll-padding-top: calc(var(--header-height) + 24px); }
 html.has-service-nav { scroll-padding-top: calc(var(--header-height) + 110px); }
